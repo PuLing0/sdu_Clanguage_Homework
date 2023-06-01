@@ -25,10 +25,12 @@ public:
     QString getfinet();
     QString getfinnumber();
     QString getfinprice();
-
+    void on_changebtn_clicked();
+        int flap;
 
 private:
     Ui::changeticketdialog *ui;
+
 };
 
 #endif // CHANGETICKETDIALOG_H

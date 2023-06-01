@@ -6,9 +6,14 @@ changeticketdialog::changeticketdialog(QWidget *parent) :
     ui(new Ui::changeticketdialog)
 {
     ui->setupUi(this);
-    connect(ui->changebtn,&QPushButton::clicked,this,&changeticketdialog::close);
     connect(ui->canclebtn,&QPushButton::clicked,this,&changeticketdialog::close);
 }
+void changeticketdialog::on_changebtn_clicked()
+{
+    this->hide();
+    flap=1;
+}
+
 QString changeticketdialog::getiniid()
 {
     return ui->initialIdlineEdit->text();
