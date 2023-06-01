@@ -530,7 +530,6 @@ void Widget::on_saveBtn_clicked()
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
          datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
-         QFile file("..//Train//"+it->name+".txt");
          QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
          if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
                 return ;
