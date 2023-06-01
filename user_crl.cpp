@@ -124,9 +124,8 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd)
 {
     md5 m;
-    QString _oldpd = QString::fromStdString(m.getMD5(oldpd.toStdString()));
     //先检查账号和旧密码是否对应
-    if (checkUser_Password(ac , _oldpd))
+    if (checkUser_Password(ac , oldpd))
     {
         //检查两次新密码是否输入一致
         if (newpd == renewpd)
