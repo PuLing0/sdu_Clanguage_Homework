@@ -126,18 +126,14 @@ void Widget::loadingdata()
     QTextStream datauser(&fuser);
     while(!datauser.atEnd())
     {
-        QString line = datauser.readLine();
-
         // 逐行输入数据
         QString nm, ps, ac, op_s, gd_s;
-        QTextStream lineStream(&line);
-        lineStream >> nm >> ac >> ps >> gd_s >> op_s;
+        datauser>> nm >> ac >> ps >> gd_s >> op_s;
 
         QVariant op_v(op_s);
         QVariant gd_v(gd_s);
         bool op = op_v.toBool();
         bool gd = gd_v.toBool();
-
         // 将数据赋值给用户
         user u;
         u.setAccount(ac);
@@ -149,7 +145,7 @@ void Widget::loadingdata()
         // 将用户添加到链表中
         userlist.push_back(u);
     }
-
+    userlist.pop_back();
     //关闭文件
     fuser.close();
 
@@ -189,13 +185,30 @@ void Widget::setuserdata(const QList<user>&)
         ui->userWidget->removeRow(row);
     }
 
-    //将车票信息显示到表格中
+    //将用户信息显示到表格中
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
-        int rowcont=ui->userWidget->rowCount();
-        ui->userWidget->insertRow(rowcont);
-        ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
-        ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+        if(it->Over_Power==false)
+        {
+            int rowcont=ui->userWidget->rowCount();
+            ui->userWidget->insertRow(rowcont);
+            ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
+            ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+            QFile userticket("..//Train//"+it->name+".txt");
+                if (!userticket.open(QIODevice::ReadOnly))
+                {
+                          return;
+                }
+                QTextStream datauserticket(&userticket);
+                QString userticketinformation;
+                while (!datauserticket.atEnd())
+                {
+                   QString line = datauserticket.readLine();
+                   userticketinformation+="\n"+line;
+                }
+                userticket.close();
+                ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
+        }
     }
 
 }
