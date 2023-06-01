@@ -15,6 +15,7 @@ SOURCES += \
     chgpddialog.cpp \
     dialog1.cpp \
     dialogaddticket.cpp \
+    form.cpp \
     logindialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     chgpddialog.h \
     dialog1.h \
     dialogaddticket.h \
+    form.h \
     logindialog.h \
     mainwindow.h \
     md5.h \
@@ -56,6 +58,7 @@ FORMS += \
     chgpddialog.ui \
     dialog1.ui \
     dialogaddticket.ui \
+    form.ui \
     mainwindow.ui \
     messagebox1.ui \
     opdialog.ui \
@@ -81,8 +84,6 @@ DISTFILES += \
     Image/manager.png \
     Tomas.jpg \
     User_Data.dat \
-    check.py \
     hchsk.txt \
-    stations.json \
     ticket.txt \
     user.txt

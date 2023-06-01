@@ -13,7 +13,7 @@ using std::string;
 //默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
 user_Crl::user_Crl()
 {
-    QFile file("E:\\documents\\QT\\2023\\month5\\C_homework_new\\login\\login_Vison2\\User_Data.dat");
+    QFile file("..\\Train\\User_Data.dat");
     if (!file.open(QIODevice::ReadWrite))
     {
         // 文件打开失败处理
@@ -75,7 +75,7 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
                 }
 
         //打开文件
-        QFile file("E:\\documents\\QT\\2023\\month5\\C_homework_new\\login\\login_Vison2\\User_Data.dat");
+        QFile file("..\\Train\\User_Data.dat");
         if (file.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             //将用户信息输入到文件中
@@ -153,7 +153,7 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
 
             //文件用户信息修改
             QString newline = u.name + " " + u.account + " " + u.password + " " + (u.gender ? "1" : "0") + " " + (u.Over_Power ? "1" : "0");
-            QFile file("E:\\documents\\QT\\2023\\month5\\C_homework_new\\login\\login_Vison2\\User_Data.dat");
+            QFile file("..\\Train\\User_Data.dat");
             if (file.open(QIODevice::ReadWrite))
             {
                 QTextStream in(&file);

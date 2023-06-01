@@ -54,7 +54,7 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
 void dialog1::on_pushButton_clicked()
 {
     ui->tableWidget_2->show();
-    ui->tableWidget_2->clearContents();
+    ui->tableWidget_2->setRowCount(0);
     int i = 0, row = 0, column = 0;
     while(i < tickets.size()){
             ui->tableWidget_2->insertRow(0);
@@ -62,10 +62,14 @@ void dialog1::on_pushButton_clicked()
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].id));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].beginpoint));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].endpoint));
-            ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].bgT.toString("hh:mm")));
-            ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].edT.toString("hh:mm")));
+            ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].begintime));
+            ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].endtime));
             QString t1;
-            t1 = QString::fromStdString(std::to_string(tickets[i].bgD.daysTo(tickets[i].edD)) +"天"+ std::to_string(tickets[i].edT.hour() - tickets[i].bgT.hour()) +"时"+ std::to_string(tickets[i].edT.minute() - tickets[i].bgT.minute()) +"分");
+            QDate b = QDate::fromString(tickets[i].beginDay, "yyyy-MM-dd");
+            QDate e = QDate::fromString(tickets[i].endDay, "yyyy-MM-dd");
+            QTime bt = QTime::fromString(tickets[i].begintime, "hh:mm");
+            QTime et = QTime::fromString(tickets[i].endtime, "hh:mm");
+            t1 = QString::fromStdString(std::to_string(b.daysTo(e)) +"天"+ std::to_string(et.hour() - bt.hour()) +"时"+ std::to_string(et.minute() - bt.minute()) +"分");
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(t1));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem("改签"));
             ui->tableWidget_2->setItem(row, column, new QTableWidgetItem("退票"));

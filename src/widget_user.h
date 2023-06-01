@@ -15,6 +15,7 @@ class Widget_User : public QWidget
 public:
     Widget_User(QWidget *parent = nullptr);
     ~Widget_User();
+    void setUser(user t);
 
 private slots:
     void on_pushButton_clicked();
@@ -23,7 +24,7 @@ private slots:
     void on_tableWidget_cellDoubleClicked(int row, int column);
     bool refund(ticket a);
     void on_pushButton_3_clicked();
-
+    bool readUsertickets();
     void on_pushButton_4_clicked();
     bool save();
     void get(bool m, ticket a);

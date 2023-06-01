@@ -29,6 +29,7 @@ public:
     bool refund(ticket a);
     QString getid() const;
     QList<ticket> getTickets() const;
+    void setTickets(QList<ticket> t);
 };
 
 #endif // USER_H

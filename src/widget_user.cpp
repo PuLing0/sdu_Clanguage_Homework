@@ -20,6 +20,8 @@ Widget_User::Widget_User(QWidget *parent)
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->textEdit_2->setText("用户名:"+currentUser.getid());
     ui->textEdit_2->setReadOnly(true);
+    ui->tableWidget->setSortingEnabled(true);
+    ui->listWidget->hide();
 }
 
 Widget_User::~Widget_User()
@@ -27,23 +29,26 @@ Widget_User::~Widget_User()
     delete ui;
 }
 
+void Widget_User::setUser(user t){
+    currentUser = t;
+    readUsertickets();
+    ui->textEdit_2->setText("用户名:"+currentUser.getid());
+}
 
 void Widget_User::on_pushButton_clicked()
 {
-    if(!tickets.size()){
+    if(!tickets.size())
         read();
-    }
     ui->tableWidget->setRowCount(0);
     check();
 }
 
 bool Widget_User::read(){
-    QFile fp("C://Users//153724521//Documents//untitled1//ticket.txt");
+    QFile fp("..//Train//ticket.txt");
     if(!fp.open(QIODevice::ReadOnly)){
         return false;
     }
     else {
-        ui->listWidget_2->addItem("载入文件中...");
         QTextStream in(&fp);
         QString bgT, edT, bgD, edD;
         while (!in.atEnd()){
@@ -51,18 +56,43 @@ bool Widget_User::read(){
             in>>t.id;
             in>>t.beginpoint;
             in>>t.endpoint;
-            in>>bgD;
-            t.bgD = QDate::fromString(bgD, "yyyy-MM-dd");
-            in>>bgT;
-            t.bgT = QTime::fromString(bgT, "hh:mm");
-            in>>edD;
-            t.edD = QDate::fromString(edD, "yyyy-MM-dd");
-            in>>edT;
-            t.edT = QTime::fromString(edT, "hh:mm");
+            in>>t.beginDay;
+            in>>t.begintime;
+            in>>t.endDay;
+            in>>t.endtime;
             in>>t.amount;
+            in>>t.price;
             tickets.append(t);
         }
         ui->listWidget_2->addItem("载入文件成功");
+        fp.close();
+        return true;
+    }
+}
+
+bool Widget_User::readUsertickets(){
+    QFile fp("..//Train//" + currentUser.getid() + ".txt");
+    if(!fp.open(QIODevice::ReadOnly)){
+        return false;
+    }
+    else {
+        QList<ticket> temp;
+        QTextStream in(&fp);
+        QString bgT, edT, bgD, edD;
+        while (!in.atEnd()){
+            ticket t;
+            in>>t.id;
+            in>>t.beginpoint;
+            in>>t.endpoint;
+            in>>t.beginDay;
+            in>>t.begintime;
+            in>>t.endDay;
+            in>>t.endtime;
+            t.amount = 1;
+            in>>t.price;
+            temp.append(t);
+        }
+        currentUser.setTickets(temp);
         fp.close();
         return true;
     }
@@ -72,7 +102,7 @@ bool Widget_User::read(){
 void Widget_User::check(){
     QString b = ui->lineEdit->text();
     QString c = ui->lineEdit_2->text();
-    QDate d = ui->dateEdit->date();
+    QString d = ui->dateEdit->date().toString("yyyy-MM-dd");
     if(b == "" || c == ""){
         ui->textEdit->setText("查询失败：信息不完整");
     }        
@@ -80,16 +110,20 @@ void Widget_User::check(){
         int i = 0;
         int row = 0, column = 0;
         while(i < tickets.size() - 1){
-            if(d == tickets[i].bgD && b == tickets[i].beginpoint && c == tickets[i].endpoint){
+            if(d == tickets[i].beginDay && b == tickets[i].beginpoint && c == tickets[i].endpoint){
                 ui->tableWidget->insertRow(0);
                 column = 0;
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].id));
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].beginpoint));
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].endpoint));
-                ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].bgT.toString("hh:mm")));
-                ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].edT.toString("hh:mm")));
+                ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].begintime));
+                ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].endtime));
                 QString t1;
-                t1 = QString::fromStdString(std::to_string(tickets[i].bgD.daysTo(tickets[i].edD)) +"天"+ std::to_string(tickets[i].edT.hour() - tickets[i].bgT.hour()) +"时"+ std::to_string(tickets[i].edT.minute() - tickets[i].bgT.minute()) +"分");
+                QDate b = QDate::fromString(tickets[i].beginDay, "yyyy-MM-dd");
+                QDate e = QDate::fromString(tickets[i].endDay, "yyyy-MM-dd");
+                QTime bt = QTime::fromString(tickets[i].begintime, "hh:mm");
+                QTime et = QTime::fromString(tickets[i].endtime, "hh:mm");
+                t1 = QString::fromStdString(std::to_string(b.daysTo(e)) +"天"+ std::to_string(et.hour() - bt.hour()) +"时"+ std::to_string(et.minute() - bt.minute()) +"分");
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(t1));
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(QString::fromStdString(std::to_string(tickets[i].amount))));
                 if(!mode){
@@ -98,6 +132,7 @@ void Widget_User::check(){
                 else{
                     ui->tableWidget->setItem(row, column, new QTableWidgetItem("改签"));
                 }
+                ui->tableWidget->setItem(row, ++column, new QTableWidgetItem(QString::number(tickets[i].price, 'f', 2)));
             }
             i++;
         }
@@ -135,6 +170,7 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
                         tickets[tickets.indexOf(changingTicket)].amount++;
                         mode = 0;
                         ui->listWidget->clear();
+                        ui->listWidget->hide();
                     }
                     else{
                         t->setText("改了个寂寞");
@@ -165,14 +201,14 @@ void Widget_User::on_pushButton_4_clicked()
 }
 
 bool Widget_User::save(){
-    QFile file(QApplication::applicationDirPath() + "/" + currentUser.getid() + ".txt");
+    QFile file("..//Train//" + currentUser.getid() + ".txt");
     if(file.open(QIODevice::ReadWrite|QIODevice::Text)){
         QTextStream out(&file);
         QList<ticket> t(currentUser.getTickets());
         for(auto i = t.begin(); i != t.end(); i++){
             out << i->id << " " << " " << i->beginpoint << " " << i->endpoint << " "
-                << i->bgD.toString("yyyy-MM-dd") << " " << i->bgT.toString("hh:mm") << " "
-                << i->edD.toString("yyyy-MM-dd") << " " << i->edT.toString("hh:mm") << endl;
+                << i->beginDay << " " << i->begintime << " "
+                << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2) << endl;
         }
         return true;
     }
@@ -186,6 +222,7 @@ void Widget_User::get(bool m, ticket a){
     if(mode){
         changingTicket = a;
         ui->listWidget->addItem(a.id+" 正在改签中...");
+        ui->listWidget->show();
     }
     else {
        changingTicket = a;

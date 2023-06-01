@@ -59,6 +59,10 @@ QList<ticket> user::getTickets() const{
     return tickets;
 }
 
+void user::setTickets(QList<ticket> t){
+    tickets = t;
+}
+
 bool user::change(ticket a, ticket b){
     if(!tickets.contains(b)){
         tickets.removeOne(a);

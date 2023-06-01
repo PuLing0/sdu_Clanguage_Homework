@@ -27,6 +27,8 @@ bool LoginDialog::LoginUser(QString account, QString password)
         {
             //权限为0，进入用户界面
             Widget_User *wu = new Widget_User();
+            user t(account, password);
+            wu->setUser(t);
             wu->show();
             flag = true;
         }
