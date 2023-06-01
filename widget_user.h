@@ -28,6 +28,7 @@ private slots:
     void on_pushButton_4_clicked();
     bool save();
     void get(bool m, ticket a);
+    void timerUpdate();
 private:
     Ui::Widget_User *ui;
     QList<ticket> tickets;
