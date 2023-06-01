@@ -531,11 +531,10 @@ void Widget::on_saveBtn_clicked()
     {
          datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
          QFile file("..//Train//"+it->name+".txt");
-         bool ok = file.open(QIODevice::ReadWrite);
-         if(ok)
-             ;
-         else
-             return;
+         QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
+         if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
+                return ;
+         file_name.close();
     }
 
 
