@@ -82,8 +82,15 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
             QString str = nm + " " + ac + " " + _psd + " " + (gd ? "1" : "0") + " " + (op ? "1" : "0");
             out << str << endl;
             file.close();
-            QMessageBox msgbx;
+
+            //在User_Ticket文件加中生成一个以user.name命名的txt文件，用于存储车票信息
+            QFile file_name("..\\Train\\User_Ticket\\" + nm + ".txt");
+            if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
+                return -1;
+            file_name.close();
+
             //提示注册成功
+            QMessageBox msgbx;
             msgbx.setText("注册成功，请登录！");
             msgbx.exec();
             return true;
