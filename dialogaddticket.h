@@ -21,7 +21,9 @@ public:
     QString getet();
     QString getticket();
     QString getprice();
-    bool isaddclicked();
+    int flap;
+public slots:
+    void saveclicked();
 
 signals:
 

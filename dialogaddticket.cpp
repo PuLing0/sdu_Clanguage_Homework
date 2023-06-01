@@ -7,13 +7,19 @@ dialogaddticket::dialogaddticket(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->canclebtn,&QPushButton::clicked,this,&dialogaddticket::close);
-    connect(ui->addbtn,&QPushButton::clicked,this,&dialogaddticket::close);
+    connect(ui->addbtn,&QPushButton::clicked,this,&dialogaddticket::saveclicked);
 }
 
 dialogaddticket::~dialogaddticket()
 {
     delete ui;
 }
+void dialogaddticket::saveclicked()
+{
+    this->flap=1;
+    this->hide();
+}
+
 QString dialogaddticket::getid()
 {
     QString s=ui->IdlineEdit->text();
@@ -54,8 +60,5 @@ QString dialogaddticket::getprice()
     return s;
 }
 
-bool dialogaddticket::isaddclicked()
-{
-    return ui->addbtn->isDown();
-}
+
 

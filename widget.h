@@ -9,6 +9,7 @@
 #include<QMenu>
 #include"dialogaddticket.h"
 #include"changeticketdialog.h"
+#include"adduserdialog.h"
 namespace Ui {
 class Widget;
 }
@@ -16,7 +17,7 @@ class Widget;
 class Widget : public QWidget
 {
     Q_OBJECT
-friend class dialogaddticket;
+friend class adduserdialog;
 friend class changeticketdialog;
 public:
     explicit Widget(QWidget *parent = 0);
@@ -48,6 +49,7 @@ public slots:
     void on_userList_clicked();
     //点击修改列车信息是触发
     void on_changeticketbtn_clicked();
+
 private:
     Ui::Widget *ui;
     QList<ticket> ticketlist;//车票信息列表

@@ -20,6 +20,7 @@
 #include"adduserdialog.h"
 #include"user.h"
 #include"changeticketdialog.h"
+#include"regdialog.h"
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -86,7 +87,7 @@ Widget::Widget(QWidget *parent) :
 void Widget::loadingdata()
 {
     //打开文件
-    QFile fticket("..\\Train\\hchsk.txt");
+    QFile fticket("..//Train//ticket.txt");
     if (!fticket.open(QIODevice::ReadOnly))
     {
               return;
@@ -96,22 +97,27 @@ void Widget::loadingdata()
     while(!dataticket.atEnd())
     {
         ticket newt;
-        auto str=dataticket.readLine().split('\t');
-        newt.id=str[0];
-        newt.beginpoint=str[1];
-        newt.endpoint=str[2];
-        newt.begintime=str[3];
-        newt.endtime=str[4];
-        newt.amount=str[5].toDouble();
-        newt.price=str[6].toDouble();
+        dataticket>>newt.id;
+        QString bgT, edT, bgD, edD;
+        dataticket>>newt.beginpoint;
+        dataticket>>newt.endpoint;
+        dataticket>>bgD;
+        dataticket>>bgT;
+        dataticket>>edD;
+        dataticket>>edT;
+        newt.begintime=bgD+" "+bgT;
+        newt.endtime=edD+" "+edT;
+        dataticket>>newt.amount;
+        dataticket>>newt.price;
 
         ticketlist.push_back(newt);
     }
+    ticketlist.pop_back();
 
     //关闭文件
     fticket.close();
     //打开文件
-    QFile fuser("..\\Train\\user.txt");
+    QFile fuser("..\\Train\\User_Data.dat");
     if (!fuser.open(QIODevice::ReadOnly))
     {
               return;
@@ -120,12 +126,28 @@ void Widget::loadingdata()
     QTextStream datauser(&fuser);
     while(!datauser.atEnd())
     {
-        user news;
-        auto str=datauser.readLine().split('\t');
-        news.name=str[0];
-        news.account=str[1];
-        news.password=str[2];
-        userlist.push_back(news);
+        QString line = datauser.readLine();
+
+        // 逐行输入数据
+        QString nm, ps, ac, op_s, gd_s;
+        QTextStream lineStream(&line);
+        lineStream >> nm >> ac >> ps >> gd_s >> op_s;
+
+        QVariant op_v(op_s);
+        QVariant gd_v(gd_s);
+        bool op = op_v.toBool();
+        bool gd = gd_v.toBool();
+
+        // 将数据赋值给用户
+        user u;
+        u.setAccount(ac);
+        u.setGender(gd);
+        u.setName(nm);
+        u.setPassword(ps);
+        u.setOP(op);
+
+        // 将用户添加到链表中
+        userlist.push_back(u);
     }
 
     //关闭文件
@@ -210,6 +232,7 @@ void Widget::on_userList_clicked()
     //显示全部信息
     setuserdata(userlist);
 }
+
 //添加新的用户
 void Widget::on_adduserButton_clicked()
 {
@@ -217,44 +240,56 @@ void Widget::on_adduserButton_clicked()
     au->setModal(true);
     au->show();
     au->exec();
+//    QPushButton* btn= qobject_cast<QPushButton*>(sender());
 //    if(au->isaddclicked())
 //    {
-        QString id=au->getid();
-        QString name=au->getname();
-        QString passwd=au->getpw();
-        delete au;
-        if(id.isEmpty()||name.isEmpty()||passwd.isEmpty())
-        {
-            QMessageBox::warning(this,"Warning","信息不全，无法添加！！！");
-        }
-        else
-        {
-            QList<user>::iterator it=userlist.begin();
-            for(;it!=userlist.end();it++)
-            {
-                if(it->account==id||it->name==name)
-                {
+//    QString name = au->getname();
+//    QString account = au->getaccount();
+//    bool gender = au->getgender();
+//    QString password = au->getpassword();
+    QString name = au->name;
+        QString account = au->account;
+        bool gender = au->gender;
+        QString password = au->password;
+   if( au->flap==1)
+   {
+       delete au;
+       if(name.isEmpty()||account.isEmpty()||password.isEmpty())
+       {
+           QMessageBox::warning(this,"Warning","信息不全，无法添加！！！");
+       }
+       else
+       {
+           QList<user>::iterator it=userlist.begin();
+           for(;it!=userlist.end();it++)
+           {
+               if(it->account==account||it->name==name)
+               {
 
-                    QMessageBox::warning(this,"Warning","信息冲突，无法添加！！！");
-                    break;
-                }
-            }
-            if(it==userlist.end())
-            {
-                ui->userWidget->insertRow(ui->userWidget->rowCount());
-                ui->userWidget->scrollToBottom();
-                ui->userWidget->setItem(ui->userWidget->rowCount()-1,0,new QTableWidgetItem(name));
-                ui->userWidget->setItem(ui->userWidget->rowCount()-1,1,new QTableWidgetItem(id));
-                user newu;
-                newu.account=id;
-                newu.name=name;
-                newu.password=passwd;
-                userlist.push_back(newu);
-            }
-        }
-//    }
-//    else
-//        delete au;
+                   QMessageBox::warning(this,"Warning","信息冲突，无法添加！！！");
+                   break;
+               }
+           }
+           if(it==userlist.end())
+           {
+               ui->userWidget->insertRow(ui->userWidget->rowCount());
+               ui->userWidget->scrollToBottom();
+               ui->userWidget->setItem(ui->userWidget->rowCount()-1,0,new QTableWidgetItem(name));
+               ui->userWidget->setItem(ui->userWidget->rowCount()-1,1,new QTableWidgetItem(account));
+               user newu;
+               newu.account=account;
+               newu.name=name;
+               newu.password=password;
+               newu.gender=gender;
+               newu.Over_Power=0;
+               userlist.push_back(newu);
+           }
+       }
+   }
+   else
+       delete au;
+
+
 }
 
 //添加一行新的列车信息
@@ -264,8 +299,8 @@ void Widget::on_addticketButton_clicked()
     da->setModal(true);
     da->show();
     da->exec();
-//    if(da->isaddclicked())
-//    {
+    if(da->flap==1)
+    {
         QString id=da->getid();
         QString ba=da->getba();
         QString ea=da->getea();
@@ -307,7 +342,7 @@ void Widget::on_addticketButton_clicked()
                 newt.endpoint=ea;
                 newt.begintime=bt;
                 newt.endtime=et;
-                newt.amount=t.toDouble();
+                newt.amount=t.toInt();
                 newt.price=pr.toDouble();
                 ticketlist.push_back(newt);
             }
@@ -315,8 +350,8 @@ void Widget::on_addticketButton_clicked()
 //    }
 //    else
 //        delete da;
+    }
 }
-
 //在列车信息列表右键单击时触发
 void Widget::RightClickSlot(QPoint pos)
 {
@@ -454,7 +489,7 @@ void Widget::on_saveBtn_clicked()
 {
 
     //打开文件
-    QFile fticket("..\\Train\\hchsk.txt");
+    QFile fticket("..//Train//ticket.txt");
     if (!fticket.open(QIODevice::WriteOnly))
     {
          return;
@@ -463,13 +498,13 @@ void Widget::on_saveBtn_clicked()
     QTextStream dataticket(&fticket);
     for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
     {
-         dataticket<<it->id<<'\t'<<it->beginpoint<<'\t'<<it->endpoint<<'\t'<<it->begintime<<'\t'<<it->endtime<<'\t'<<it->amount<<'\t'<<it->price<<endl;
+         dataticket<<it->id<<" "<<it->beginpoint<<" "<<it->endpoint<<" "<<it->begintime<<" "<<it->endtime<<" "<<it->amount<<" "<<it->price<<endl;
     }
     //关闭文件
     fticket.close();
 
     //打开文件
-    QFile fuser("..\\Train\\user.txt");
+    QFile fuser("..//Train//User_Data.dat");
     if (!fuser.open(QIODevice::WriteOnly))
     {
               return;
@@ -478,7 +513,7 @@ void Widget::on_saveBtn_clicked()
     QTextStream datauser(&fuser);
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
-         datauser<<it->name<<'\t'<<it->account<<'\t'<<it->password<<endl;
+         datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
     }
 
 
