@@ -12,6 +12,9 @@ dialog1::dialog1(QWidget *parent) :
     ui->setupUi(this);
     ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidget_2->hide();
+
+    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
 }
 
 dialog1::~dialog1()
@@ -22,7 +25,7 @@ dialog1::~dialog1()
 void dialog1::setUser(user t){
     currentUser = t;
     tickets = t.getTickets();
-    ui->textEdit_2->setText("用户名：" + currentUser.getid());
+    ui->label->setText("用户名：" + currentUser.getid());
 }
 
 void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
@@ -53,6 +56,7 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
 
 void dialog1::on_pushButton_clicked()
 {
+    ui->label_2->setText("查询成功");
     ui->tableWidget_2->show();
     ui->tableWidget_2->setRowCount(0);
     int i = 0, row = 0, column = 0;

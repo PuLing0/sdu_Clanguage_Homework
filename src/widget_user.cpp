@@ -9,6 +9,8 @@
 #include<QTextStream>
 #include<prompt1.h>
 #include<dialog1.h>
+#include<QTimer>
+
 
 Widget_User::Widget_User(QWidget *parent)
     : QWidget(parent),
@@ -18,10 +20,15 @@ Widget_User::Widget_User(QWidget *parent)
     mode = 0;
     ui->setupUi(this);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->textEdit_2->setText("用户名:"+currentUser.getid());
-    ui->textEdit_2->setReadOnly(true);
     ui->tableWidget->setSortingEnabled(true);
-    ui->listWidget->hide();
+    ui->label_4->setText("用户名:"+currentUser.getid());
+    ui->label_6->hide();
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Widget_User::timerUpdate);
+    timer->start(1000);
 }
 
 Widget_User::~Widget_User()
@@ -32,7 +39,7 @@ Widget_User::~Widget_User()
 void Widget_User::setUser(user t){
     currentUser = t;
     readUsertickets();
-    ui->textEdit_2->setText("用户名:"+currentUser.getid());
+    ui->label_4->setText("用户名:"+currentUser.getid());
 }
 
 void Widget_User::on_pushButton_clicked()
@@ -64,7 +71,7 @@ bool Widget_User::read(){
             in>>t.price;
             tickets.append(t);
         }
-        ui->listWidget_2->addItem("载入文件成功");
+        ui->label_7->setText("载入文件成功");
         fp.close();
         return true;
     }
@@ -104,7 +111,7 @@ void Widget_User::check(){
     QString c = ui->lineEdit_2->text();
     QString d = ui->dateEdit->date().toString("yyyy-MM-dd");
     if(b == "" || c == ""){
-        ui->textEdit->setText("查询失败：信息不完整");
+        ui->label_5->setText("查询失败：信息不完整");
     }        
     else{
         int i = 0;
@@ -136,7 +143,7 @@ void Widget_User::check(){
             }
             i++;
         }
-        ui->textEdit->setText("查询成功");
+        ui->label_5->setText("查询成功!");
 
     }
 }
@@ -169,8 +176,8 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
                         tickets[i].amount--;
                         tickets[tickets.indexOf(changingTicket)].amount++;
                         mode = 0;
-                        ui->listWidget->clear();
-                        ui->listWidget->hide();
+                        ui->label_6->clear();
+                        ui->label_6->hide();
                     }
                     else{
                         t->setText("改了个寂寞");
@@ -201,7 +208,7 @@ void Widget_User::on_pushButton_4_clicked()
 }
 
 bool Widget_User::save(){
-    QFile file("..//Train//" + currentUser.getid() + ".txt");
+    QFile file("..//Train//User_Ticket//" + currentUser.getid() + ".txt");
     if(file.open(QIODevice::ReadWrite|QIODevice::Text)){
         QTextStream out(&file);
         QList<ticket> t(currentUser.getTickets());
@@ -221,8 +228,8 @@ void Widget_User::get(bool m, ticket a){
     mode = m;
     if(mode){
         changingTicket = a;
-        ui->listWidget->addItem(a.id+" 正在改签中...");
-        ui->listWidget->show();
+        ui->label_6->setText(a.id+" 正在改签中...");
+        ui->label_6->show();
     }
     else {
        changingTicket = a;
@@ -242,4 +249,10 @@ bool Widget_User::refund(ticket a){
         t->setText("退票失败");
         t->show();
     }
+}
+
+void Widget_User::timerUpdate(){
+    QDateTime t = QDateTime::currentDateTime();
+    QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");
+    ui->label_8->setText(s);
 }

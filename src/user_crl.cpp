@@ -82,8 +82,15 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
             QString str = nm + " " + ac + " " + _psd + " " + (gd ? "1" : "0") + " " + (op ? "1" : "0");
             out << str << endl;
             file.close();
-            QMessageBox msgbx;
+
+            //在User_Ticket文件加中生成一个以user.name命名的txt文件，用于存储车票信息
+            QFile file_name("..\\Train\\User_Ticket\\" + nm + ".txt");
+            if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
+                return -1;
+            file_name.close();
+
             //提示注册成功
+            QMessageBox msgbx;
             msgbx.setText("注册成功，请登录！");
             msgbx.exec();
             return true;
@@ -124,9 +131,8 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd)
 {
     md5 m;
-    QString _oldpd = QString::fromStdString(m.getMD5(oldpd.toStdString()));
     //先检查账号和旧密码是否对应
-    if (checkUser_Password(ac , _oldpd))
+    if (checkUser_Password(ac , oldpd))
     {
         //检查两次新密码是否输入一致
         if (newpd == renewpd)

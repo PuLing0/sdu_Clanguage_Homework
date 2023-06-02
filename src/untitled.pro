@@ -84,6 +84,15 @@ DISTFILES += \
     Image/manager.png \
     Tomas.jpg \
     User_Data.dat \
+    User_Ticket/321.txt \
+    User_Ticket/54321.txt \
+    User_Ticket/aaa.txt \
+    User_Ticket/admin.txt \
+    User_Ticket/cccc.txt \
+    User_Ticket/libai.txt \
+    User_Ticket/ppp.txt \
+    User_Ticket/shabi.txt \
+    User_Ticket/sm.txt \
     hchsk.txt \
     ticket.txt \
     user.txt

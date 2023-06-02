@@ -21,10 +21,12 @@
 #include"user.h"
 #include"changeticketdialog.h"
 #include"regdialog.h"
+#include"md5.h"
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
+
     loadingdata();
     ui->setupUi(this);
     //设置单元格不可被编辑
@@ -53,6 +55,9 @@ Widget::Widget(QWidget *parent) :
 
     //设置管理员用户头像图片
     ui->Image->setPixmap(QPixmap(":/Image/manager.png"));
+    ui->labelName->setPixmap(QPixmap("://Image/name.png"));
+
+    //设置背景图片、
 
     //设置打开页面时显示列车表和列车查询选项
     ui->stackedWidget1->setCurrentIndex(0);
@@ -126,18 +131,14 @@ void Widget::loadingdata()
     QTextStream datauser(&fuser);
     while(!datauser.atEnd())
     {
-        QString line = datauser.readLine();
-
         // 逐行输入数据
         QString nm, ps, ac, op_s, gd_s;
-        QTextStream lineStream(&line);
-        lineStream >> nm >> ac >> ps >> gd_s >> op_s;
+        datauser>> nm >> ac >> ps >> gd_s >> op_s;
 
         QVariant op_v(op_s);
         QVariant gd_v(gd_s);
         bool op = op_v.toBool();
         bool gd = gd_v.toBool();
-
         // 将数据赋值给用户
         user u;
         u.setAccount(ac);
@@ -149,7 +150,7 @@ void Widget::loadingdata()
         // 将用户添加到链表中
         userlist.push_back(u);
     }
-
+    userlist.pop_back();
     //关闭文件
     fuser.close();
 
@@ -189,17 +190,35 @@ void Widget::setuserdata(const QList<user>&)
         ui->userWidget->removeRow(row);
     }
 
-    //将车票信息显示到表格中
+    //将用户信息显示到表格中
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
-        int rowcont=ui->userWidget->rowCount();
-        ui->userWidget->insertRow(rowcont);
-        ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
-        ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+        if(it->Over_Power==false)
+        {
+            int rowcont=ui->userWidget->rowCount();
+            ui->userWidget->insertRow(rowcont);
+            ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
+            ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+            QFile userticket("..//Train//User_Ticket//"+it->name+".txt");
+                if (!userticket.open(QIODevice::ReadOnly))
+                {
+                          return;
+                }
+                QTextStream datauserticket(&userticket);
+                QString userticketinformation;
+                while (!datauserticket.atEnd())
+                {
+                   QString line = datauserticket.readLine();
+                   userticketinformation+="\n"+line;
+                }
+                userticket.close();
+                ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
+        }
     }
 
 }
 
+//列车信息列表
 void Widget::on_ticketList_clicked()
 {
     //设置单元格不可被编辑
@@ -217,6 +236,7 @@ void Widget::on_ticketList_clicked()
     setticketdata(ticketlist);
 }
 
+//用户信息列表
 void Widget::on_userList_clicked()
 {
     //设置单元格不可被编辑
@@ -250,7 +270,9 @@ void Widget::on_adduserButton_clicked()
     QString name = au->name;
         QString account = au->account;
         bool gender = au->gender;
-        QString password = au->password;
+        md5 m;
+        QString password = QString::fromStdString(m.getMD5(au->password.toStdString()));
+
    if( au->flap==1)
    {
        delete au;
@@ -283,6 +305,7 @@ void Widget::on_adduserButton_clicked()
                newu.gender=gender;
                newu.Over_Power=0;
                userlist.push_back(newu);
+
            }
        }
    }
@@ -514,6 +537,10 @@ void Widget::on_saveBtn_clicked()
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
          datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
+         QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
+         if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
+                return ;
+         file_name.close();
     }
 
 
@@ -533,56 +560,59 @@ void Widget::on_changeticketbtn_clicked()
     ct->setModal(true);
     ct->show();
     ct->exec();
-    QString iniid=ct->getiniid();
-    QString iniba=ct->getiniba();
-    QString iniea=ct->getiniea();
-    QString inibt=ct->getinibt();
-    QString iniet=ct->getiniet();
-    QString finba=ct->getfinba();
-    QString finea=ct->getfinea();
-    QString finbt=ct->getfinbt();
-    QString finet=ct->getfinet();
-    QString finnumber=ct->getfinnumber();
-    QString finprice=ct->getfinprice();
-    for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
+    if(ct->flap==1)
     {
-        //找到要修改的车票信息
-        if(it->id==iniid&&it->beginpoint==iniba&&it->endpoint==iniea&&it->begintime==inibt&&it->endtime==iniet)
+        QString iniid=ct->getiniid();
+        QString iniba=ct->getiniba();
+        QString iniea=ct->getiniea();
+        QString inibt=ct->getinibt();
+        QString iniet=ct->getiniet();
+        QString finba=ct->getfinba();
+        QString finea=ct->getfinea();
+        QString finbt=ct->getfinbt();
+        QString finet=ct->getfinet();
+        QString finnumber=ct->getfinnumber();
+        QString finprice=ct->getfinprice();
+        for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
         {
-            int flap=0;
-            //检查信息是否有冲突
-            for(QList<ticket>::iterator it1=ticketlist.begin();it1!=ticketlist.end();it1++)
+            //找到要修改的车票信息
+            if(it->id==iniid&&it->beginpoint==iniba&&it->endpoint==iniea&&it->begintime==inibt&&it->endtime==iniet)
             {
-                if(it1->id==iniid&&it1->beginpoint==finba&&it1->endpoint==finea&&it1->begintime==finbt&&it1->endpoint==finet&&QString::number(it1->amount)==finnumber&&QString::number(it1->price)==finprice)
+                int flap=0;
+                //检查信息是否有冲突
+                for(QList<ticket>::iterator it1=ticketlist.begin();it1!=ticketlist.end();it1++)
                 {
-                        QMessageBox::warning(this,"Warning","信息冲突，无法修改！！！");
-                        flap=1;
-                        break;
+                    if(it1->id==iniid&&it1->beginpoint==finba&&it1->endpoint==finea&&it1->begintime==finbt&&it1->endpoint==finet&&QString::number(it1->amount)==finnumber&&QString::number(it1->price)==finprice)
+                    {
+                            QMessageBox::warning(this,"Warning","信息冲突，无法修改！！！");
+                            flap=1;
+                            break;
+                    }
                 }
-            }
 
-            if(flap)
-            {
-                break;
+                if(flap)
+                {
+                    break;
+                }
+                else
+                {
+                    it->beginpoint=finba;
+                    it->endpoint=finea;
+                    it->begintime=finbt;
+                    it->endtime=finet;
+                    it->amount=finnumber.toDouble();
+                    it->price=finprice.toDouble();
+                    QMessageBox::information(this,"提示","修改成功");
+                    setticketdata(ticketlist);
+                }
             }
             else
             {
-                it->beginpoint=finba;
-                it->endpoint=finea;
-                it->begintime=finbt;
-                it->endtime=finet;
-                it->amount=finnumber.toDouble();
-                it->price=finprice.toDouble();
-                QMessageBox::information(this,"提示","修改成功");
-                setticketdata(ticketlist);
+                QMessageBox::warning(this,"Warning","查询不到想要修改的列车，无法修改！！！");
+                break;
             }
-        }
-        else
-        {
-            QMessageBox::warning(this,"Warning","查询不到想要修改的列车，无法修改！！！");
-            break;
-        }
 
+        }
     }
 
 
