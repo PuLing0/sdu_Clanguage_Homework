@@ -38,7 +38,12 @@ Widget_User::~Widget_User()
 
 void Widget_User::setUser(user t){
     currentUser = t;
-    readUsertickets();
+    if(readUsertickets()){
+        ui->label_7->setText("读取数据成功");
+    }
+    else {
+        ui->label_7->setText("读取数据失败");
+    }
     ui->label_4->setText("用户名:"+currentUser.getid());
 }
 
@@ -78,7 +83,7 @@ bool Widget_User::read(){
 }
 
 bool Widget_User::readUsertickets(){
-    QFile fp("..//Train//" + currentUser.getid() + ".txt");
+    QFile fp("..//Train//User_Ticket//" + currentUser.getid() + ".txt");
     if(!fp.open(QIODevice::ReadOnly)){
         return false;
     }
@@ -97,7 +102,8 @@ bool Widget_User::readUsertickets(){
             in>>t.endtime;
             t.amount = 1;
             in>>t.price;
-            temp.append(t);
+            if(t.endtime != "")
+                temp.append(t);
         }
         currentUser.setTickets(temp);
         fp.close();
@@ -215,7 +221,10 @@ bool Widget_User::save(){
         for(auto i = t.begin(); i != t.end(); i++){
             out << i->id << " " << " " << i->beginpoint << " " << i->endpoint << " "
                 << i->beginDay << " " << i->begintime << " "
-                << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2) << endl;
+                << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2);
+            if(i+1 != t.end()){
+                out << endl;
+            }
         }
         return true;
     }
