@@ -97,7 +97,8 @@ bool Widget_User::readUsertickets(){
             in>>t.endtime;
             t.amount = 1;
             in>>t.price;
-            temp.append(t);
+            if(t.endtime != "")
+                temp.append(t);
         }
         currentUser.setTickets(temp);
         fp.close();
