@@ -15,25 +15,25 @@ class Widget_User : public QWidget
 public:
     Widget_User(QWidget *parent = nullptr);
     ~Widget_User();
-    void setUser(user t);
+    void setUser(user t); //设置当前用户
 
 private slots:
-    void on_pushButton_clicked();
-    void check();
-    bool read();
-    void on_tableWidget_cellDoubleClicked(int row, int column);
-    bool refund(ticket a);
-    void on_pushButton_3_clicked();
-    bool readUsertickets();
-    void on_pushButton_4_clicked();
-    bool save();
-    void get(bool m, ticket a);
-    void timerUpdate();
+    void on_pushButton_clicked(); //查询按键
+    void check(); //查询
+    bool read(); //读取票据文件
+    void on_tableWidget_cellDoubleClicked(int row, int column); //双击购买/改签单元格事件
+    bool refund(ticket a); //退票
+    void on_pushButton_3_clicked(); //个人中心按钮
+    bool readUsertickets(); //读取用户已购票据
+    void on_pushButton_4_clicked(); //退出登录按钮
+    bool save(); //保存
+    void get(bool m, ticket a); //窗口间传递changingTicket
+    void timerUpdate(); //时钟
 private:
     Ui::Widget_User *ui;
-    QList<ticket> tickets;
-    user currentUser;
-    bool mode;
-    ticket changingTicket;
+    QList<ticket> tickets; //所有票据
+    user currentUser; //当前用户
+    bool mode; //当前状态
+    ticket changingTicket; //正在操作的票据
 };
 #endif // WIDGET_USER_H
