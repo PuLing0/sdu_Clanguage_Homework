@@ -38,12 +38,7 @@ Widget_User::~Widget_User()
 
 void Widget_User::setUser(user t){
     currentUser = t;
-    if(readUsertickets()){
-        ui->label_7->setText("读取数据成功");
-    }
-    else {
-        ui->label_7->setText("读取数据失败");
-    }
+    readUsertickets();
     ui->label_4->setText("用户名:"+currentUser.getid());
 }
 
@@ -102,8 +97,7 @@ bool Widget_User::readUsertickets(){
             in>>t.endtime;
             t.amount = 1;
             in>>t.price;
-            if(t.endtime != "")
-                temp.append(t);
+            temp.append(t);
         }
         currentUser.setTickets(temp);
         fp.close();
@@ -221,10 +215,7 @@ bool Widget_User::save(){
         for(auto i = t.begin(); i != t.end(); i++){
             out << i->id << " " << " " << i->beginpoint << " " << i->endpoint << " "
                 << i->beginDay << " " << i->begintime << " "
-                << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2);
-            if(i+1 != t.end()){
-                out << endl;
-            }
+                << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2) << endl;
         }
         return true;
     }

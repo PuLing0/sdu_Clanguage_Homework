@@ -21,10 +21,12 @@
 #include"user.h"
 #include"changeticketdialog.h"
 #include"regdialog.h"
+#include"md5.h"
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
+
     loadingdata();
     ui->setupUi(this);
     //设置单元格不可被编辑
@@ -53,6 +55,9 @@ Widget::Widget(QWidget *parent) :
 
     //设置管理员用户头像图片
     ui->Image->setPixmap(QPixmap(":/Image/manager.png"));
+    ui->labelName->setPixmap(QPixmap("://Image/name.png"));
+
+    //设置背景图片、
 
     //设置打开页面时显示列车表和列车查询选项
     ui->stackedWidget1->setCurrentIndex(0);
@@ -194,7 +199,7 @@ void Widget::setuserdata(const QList<user>&)
             ui->userWidget->insertRow(rowcont);
             ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
             ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
-            QFile userticket("..//Train//"+it->name+".txt");
+            QFile userticket("..//Train//User_Ticket//"+it->name+".txt");
                 if (!userticket.open(QIODevice::ReadOnly))
                 {
                           return;
@@ -265,7 +270,9 @@ void Widget::on_adduserButton_clicked()
     QString name = au->name;
         QString account = au->account;
         bool gender = au->gender;
-        QString password = au->password;
+        md5 m;
+        QString password = QString::fromStdString(m.getMD5(au->password.toStdString()));
+
    if( au->flap==1)
    {
        delete au;
