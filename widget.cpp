@@ -66,6 +66,15 @@ Widget::Widget(QWidget *parent) :
     //载入数据
     setticketdata(ticketlist);
 
+    //日历
+    ui->btEdit->setCalendarPopup(true);
+    ui->etEdit->setCalendarPopup(true);
+    ui->btEdit->setDisplayFormat("yyyy-MM-dd");
+    ui->btEdit->setDateTime(QDateTime::currentDateTime());
+    ui->etEdit->setDisplayFormat("yyyy-MM-dd");
+    ui->etEdit->setDateTime(QDateTime::currentDateTime());
+
+
     //设置管理员用户头像图片
     ui->Image->setPixmap(QPixmap(":/Image/manager.png"));
     ui->labelName->setPixmap(QPixmap("://Image/name.png"));
