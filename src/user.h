@@ -23,13 +23,13 @@ public:
     void setName(QString nm);//将用户名设置为nm
     void setOP(bool op); //将用户权限设置为op
 
-    user(QString a, QString b):account(a), password(b){};
-    bool buy(ticket a);
-    bool change(ticket a, ticket b);
-    bool refund(ticket a);
-    QString getid() const;
-    QList<ticket> getTickets() const;
-    void setTickets(QList<ticket> t);
+    user(QString a, QString b):account(a), password(b){}; //合成构造函数
+    bool buy(ticket a); //购票
+    bool change(ticket a, ticket b); //改签
+    bool refund(ticket a); //退票
+    QString getid() const; //获取用户名
+    QList<ticket> getTickets() const; //获取用户已购票据
+    void setTickets(QList<ticket> t); //设置用户已购票据
 };
 
 #endif // USER_H

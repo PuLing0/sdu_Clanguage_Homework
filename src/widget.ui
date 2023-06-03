@@ -631,9 +631,7 @@ background-color: rgb(170, 255, 255);
          <item>
           <widget class="QPushButton" name="searchticketbtn">
            <property name="styleSheet">
-            <string notr="true">QPushButton{
-background-color:rgba(0,0,0,0);
-}</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>查询</string>
@@ -696,10 +694,7 @@ background-color:rgba(0,0,0,0);
          <item>
           <widget class="QPushButton" name="searchuserbtn">
            <property name="styleSheet">
-            <string notr="true">QPushButton
-{
-background-color:rgba(0,0,0,0);
-}</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>查询</string>
