@@ -10,11 +10,12 @@ dialogaddticket::dialogaddticket(QWidget *parent) :
     ui(new Ui::dialogaddticket)
 {
     ui->setupUi(this);
-//    ui->addbtn->setBackgroundColor(QColor(0,188,212));
+    ui->addbtn->setBackgroundColor(QColor(0,188,212));
+    ui->canclebtn->setBackgroundColor(QColor(0,188,212));
     // 设置按钮的样式表
-    QString styleSheet = "background-color: rgb(0, 188, 212);";  // 设置背景颜色为 RGB(0, 188, 212)
-    ui->addbtn->setStyleSheet(styleSheet);
-    ui->canclebtn->setStyleSheet(styleSheet);
+    //QString styleSheet = "background-color: rgb(0, 188, 212);";  // 设置背景颜色为 RGB(0, 188, 212)
+//    ui->addbtn->setStyleSheet(styleSheet);
+//    ui->canclebtn->setStyleSheet(styleSheet);
 
     connect(ui->canclebtn,&QPushButton::clicked,this,&dialogaddticket::close);
     connect(ui->addbtn,&QPushButton::clicked,this,&dialogaddticket::saveclicked);

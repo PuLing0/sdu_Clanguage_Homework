@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "ui_framelessWidget.h"
+#include "ui_mainwindow.h"
 #include "logindialog.h"
 #include "regdialog.h"
 #include "chgpddialog.h"
