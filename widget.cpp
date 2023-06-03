@@ -22,6 +22,11 @@
 #include"changeticketdialog.h"
 #include"regdialog.h"
 #include"md5.h"
+#include"qtmaterialautocomplete.h"
+#include"qtmaterialflatbutton.h"
+#include"qtmaterialradiobutton.h"
+#include"qtmaterialraisedbutton.h"
+#include<QColor>
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -29,6 +34,14 @@ Widget::Widget(QWidget *parent) :
 
     loadingdata();
     ui->setupUi(this);
+    ui->addticketButton->setBackgroundColor(QColor(0,188,212));
+    ui->adduserButton->setBackgroundColor(QColor(0,188,212));
+    ui->changeticketbtn->setBackgroundColor(QColor(0,188,212));
+    ui->saveBtn->setBackgroundColor(QColor(0,188,212));
+    ui->ticketList->setBackgroundColor(QColor(0,188,212));
+    ui->userList->setBackgroundColor(QColor(0,188,212));
+    ui->searchticketbtn->setBackgroundColor(QColor(0,188,212));
+    ui->searchuserbtn->setBackgroundColor(QColor(0,188,212));
     //设置单元格不可被编辑
     ui->ticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     //设置自适应列宽

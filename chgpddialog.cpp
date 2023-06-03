@@ -21,7 +21,9 @@ chgpdDialog::~chgpdDialog()
 // 返回到mainwindow
 void chgpdDialog::on_btn_back_clicked()
 {
-    MainWindow * mw = new MainWindow();
+    framelessWidget * mw = new framelessWidget();
+    mw->setWindowFlags(Qt::FramelessWindowHint);//设置无边框
+    mw->setAttribute(Qt::WA_TranslucentBackground);//设置半透明背景
     mw->show();
     this->hide();
 }

@@ -40,12 +40,12 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>用户名：</string>
+         <string>用户名： </string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="L_Name"/>
+       <widget class="QtMaterialAutoComplete" name="L_Name"/>
       </item>
      </layout>
     </item>
@@ -59,7 +59,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="L_Account"/>
+       <widget class="QtMaterialAutoComplete" name="L_Account"/>
       </item>
      </layout>
     </item>
@@ -73,7 +73,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="L_pswd"/>
+       <widget class="QtMaterialAutoComplete" name="L_pswd"/>
       </item>
      </layout>
     </item>
@@ -108,7 +108,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <item>
-       <widget class="QPushButton" name="BtnReg">
+       <widget class="QtMaterialRaisedButton" name="BtnReg">
         <property name="text">
          <string>注册</string>
         </property>
@@ -128,7 +128,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="BtnBack">
+       <widget class="QtMaterialRaisedButton" name="BtnBack">
         <property name="text">
          <string>返回</string>
         </property>
@@ -139,6 +139,18 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtMaterialAutoComplete</class>
+   <extends>QLineEdit</extends>
+   <header location="global">qtmaterialautocomplete.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QtMaterialRaisedButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qtmaterialraisedbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

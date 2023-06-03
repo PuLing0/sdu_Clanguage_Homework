@@ -42,7 +42,7 @@
    <item row="0" column="1">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="2" column="1">
-      <widget class="QLineEdit" name="BalineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="BalineEdit"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="ealabel">
@@ -52,7 +52,7 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="EtlineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="EtlineEdit"/>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="etlable">
@@ -69,10 +69,10 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="BtlineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="BtlineEdit"/>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="TicketlineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="TicketlineEdit"/>
      </item>
      <item row="9" column="0">
       <spacer name="verticalSpacer">
@@ -88,7 +88,7 @@
       </spacer>
      </item>
      <item row="7" column="1">
-      <widget class="QLineEdit" name="PrlineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="PrlineEdit"/>
      </item>
      <item row="7" column="0">
       <widget class="QLabel" name="label">
@@ -100,14 +100,20 @@
      <item row="8" column="0" colspan="2">
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QPushButton" name="addbtn">
+        <widget class="QtMaterialRaisedButton" name="addbtn">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(87, 253, 255);</string>
+         </property>
          <property name="text">
           <string>save</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="canclebtn">
+        <widget class="QtMaterialRaisedButton" name="canclebtn">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(87, 253, 255);</string>
+         </property>
          <property name="text">
           <string>cancle</string>
          </property>
@@ -143,7 +149,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="IdlineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="IdlineEdit"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="idlabel">
@@ -153,7 +159,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="EalineEdit"/>
+      <widget class="QtMaterialAutoComplete" name="EalineEdit"/>
      </item>
     </layout>
    </item>
@@ -172,6 +178,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtMaterialAutoComplete</class>
+   <extends>QLineEdit</extends>
+   <header location="global">qtmaterialautocomplete.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QtMaterialRaisedButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qtmaterialraisedbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

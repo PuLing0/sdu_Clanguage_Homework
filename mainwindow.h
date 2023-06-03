@@ -1,19 +1,59 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef _MAINWINDOWH_H
+#define _MAINWINDOWH_H
 
 #include <QMainWindow>
+#include <QTimer>
+#include <QMouseEvent>
+#include <QGraphicsDropShadowEffect>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class framelessWidget; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class framelessWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);//默认构造函数
-    ~MainWindow();//默认析构函数
+    framelessWidget(QWidget *parent = nullptr);
+    ~framelessWidget();
+
+private:
+    Ui::framelessWidget *ui;
+    int cornerRadius = 20;
+    QPoint lastPos;
+    QWidget *border = nullptr;
+    QGraphicsDropShadowEffect *windowShadow;
+
+    bool mousePressed = false;
+    enum {AT_LEFT = 1, AT_TOP = 2,  AT_RIGHT = 4, AT_BOTTOM = 8,
+          AT_TOP_LEFT = 3, AT_TOP_RIGHT = 6, AT_BOTTOM_LEFT = 9, AT_BOTTOM_RIGHT = 12};
+    int mouseState;
+    bool maximized = false;
+
+    void Init();
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event){
+        mousePressed = false;
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+        if(event->globalPosition().y() < 2)
+            controlWindowScale();
+#else
+        if(event->globalPos().y() < 2)
+            controlWindowScale();
+#endif
+    }
+    void mouseDoubleClickEvent(QMouseEvent *event)
+    {
+        if(event->y()<60)
+            controlWindowScale();
+    };
+    void resizeEvent(QResizeEvent *event);
+
+    QRect lastGeometry;
+    void controlWindowScale();
 
 private slots:
     void on_btn_login_clicked();//登录按钮
@@ -22,9 +62,5 @@ private slots:
 
     void on_btn_chg_clicked();//修改密码按钮
 
-    void on_checkBox_clicked(bool checked);//显示密码
-
-private:
-    Ui::MainWindow *ui;
 };
-#endif // MAINWINDOW_H
+#endif // _MAINWINDOWH_H

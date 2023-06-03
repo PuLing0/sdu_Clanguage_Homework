@@ -2,11 +2,17 @@
 #include "ui_adduserdialog.h"
 #include<QString>
 #include"user.h"
+#include"qtmaterialautocomplete.h"
+#include"qtmaterialflatbutton.h"
+#include"qtmaterialraisedbutton.h"
+#include<QColor>
 adduserdialog::adduserdialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::adduserdialog)
 {
     ui->setupUi(this);
+    ui->BtnReg->setBackgroundColor(QColor(0,188,212));
+    ui->BtnBack->setBackgroundColor(QColor(0,188,212));
     connect(ui->BtnReg,&QPushButton::clicked,this,&adduserdialog::btnclicked);
     connect(ui->BtnBack,&QPushButton::clicked,this,&adduserdialog::hide);
 }

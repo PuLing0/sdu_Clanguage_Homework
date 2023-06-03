@@ -142,20 +142,17 @@ border-image:url(:/Image/title.png);
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QPushButton" name="ticketList">
+     <widget class="QtMaterialRaisedButton" name="ticketList">
       <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-background-color: rgb(170, 255, 255);
-}</string>
+       <string notr="true"/>
       </property>
       <property name="text">
-       <string>车票查询</string>
+       <string>车票列表</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="addticketButton">
+     <widget class="QtMaterialRaisedButton" name="addticketButton">
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
@@ -168,7 +165,7 @@ background-color: rgb(170, 255, 255);
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="changeticketbtn">
+     <widget class="QtMaterialRaisedButton" name="changeticketbtn">
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
@@ -181,7 +178,7 @@ background-color: rgb(170, 255, 255);
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="userList">
+     <widget class="QtMaterialRaisedButton" name="userList">
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
@@ -194,7 +191,7 @@ background-color: rgb(170, 255, 255);
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="adduserButton">
+     <widget class="QtMaterialRaisedButton" name="adduserButton">
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
@@ -207,7 +204,7 @@ background-color: rgb(170, 255, 255);
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="saveBtn">
+     <widget class="QtMaterialRaisedButton" name="saveBtn">
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
@@ -555,7 +552,7 @@ background-color: rgb(170, 255, 255);
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="baEdit"/>
+             <widget class="QtMaterialAutoComplete" name="baEdit"/>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_2">
@@ -565,7 +562,7 @@ background-color: rgb(170, 255, 255);
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="eaEdit"/>
+             <widget class="QtMaterialAutoComplete" name="eaEdit"/>
             </item>
            </layout>
           </widget>
@@ -629,7 +626,7 @@ background-color: rgb(170, 255, 255);
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="searchticketbtn">
+          <widget class="QtMaterialRaisedButton" name="searchticketbtn">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -676,7 +673,7 @@ background-color: rgb(170, 255, 255);
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="nameEdit"/>
+          <widget class="QtMaterialAutoComplete" name="nameEdit"/>
          </item>
          <item>
           <spacer name="horizontalSpacer_8">
@@ -692,7 +689,7 @@ background-color: rgb(170, 255, 255);
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="searchuserbtn">
+          <widget class="QtMaterialRaisedButton" name="searchuserbtn">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -723,6 +720,18 @@ background-color: rgb(170, 255, 255);
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QtMaterialAutoComplete</class>
+   <extends>QLineEdit</extends>
+   <header location="global">qtmaterialautocomplete.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QtMaterialRaisedButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qtmaterialraisedbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

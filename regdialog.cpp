@@ -35,7 +35,9 @@ bool RegDialog::Gender_Choose()
 //返回mainwindow
 void RegDialog::on_Btn_Back_clicked()
 {
-    MainWindow * mw = new MainWindow();
+    framelessWidget * mw = new framelessWidget();
+    mw->setWindowFlags(Qt::FramelessWindowHint);//设置无边框
+    mw->setAttribute(Qt::WA_TranslucentBackground);//设置半透明背景
     mw->show();
     this->hide();
 }

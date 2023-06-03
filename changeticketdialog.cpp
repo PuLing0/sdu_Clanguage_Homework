@@ -1,11 +1,16 @@
 #include "changeticketdialog.h"
 #include "ui_changeticketdialog.h"
-
+#include"qtmaterialautocomplete.h"
+#include"qtmaterialflatbutton.h"
+#include"qtmaterialraisedbutton.h"
+#include<QColor>
 changeticketdialog::changeticketdialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::changeticketdialog)
 {
     ui->setupUi(this);
+    ui->canclebtn->setBackgroundColor(QColor(0,188,212));
+    ui->changebtn->setBackgroundColor(QColor(0,188,212));
     connect(ui->canclebtn,&QPushButton::clicked,this,&changeticketdialog::close);
 }
 void changeticketdialog::on_changebtn_clicked()

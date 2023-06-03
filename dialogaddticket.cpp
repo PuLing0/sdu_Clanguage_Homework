@@ -1,11 +1,21 @@
 #include "dialogaddticket.h"
 #include "ui_dialogaddticket.h"
+#include"qtmaterialautocomplete.h"
+#include"qtmaterialflatbutton.h"
+#include"qtmaterialraisedbutton.h"
+#include<QColor>
 
 dialogaddticket::dialogaddticket(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialogaddticket)
 {
     ui->setupUi(this);
+//    ui->addbtn->setBackgroundColor(QColor(0,188,212));
+    // 设置按钮的样式表
+    QString styleSheet = "background-color: rgb(0, 188, 212);";  // 设置背景颜色为 RGB(0, 188, 212)
+    ui->addbtn->setStyleSheet(styleSheet);
+    ui->canclebtn->setStyleSheet(styleSheet);
+
     connect(ui->canclebtn,&QPushButton::clicked,this,&dialogaddticket::close);
     connect(ui->addbtn,&QPushButton::clicked,this,&dialogaddticket::saveclicked);
 }

@@ -81,6 +81,7 @@ RESOURCES += \
     imag.qrc \
     imag.qrc \
     imag.qrc \
+    pic/resource.qrc \
     res.qrc \
     res.qrc
 
