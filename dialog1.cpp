@@ -15,6 +15,10 @@ dialog1::dialog1(QWidget *parent) :
     ui->tableWidget_2->hide();
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+    ui->tableWidget_2->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
+    ui->tableWidget_2->setAlternatingRowColors(true);
+    ui->tableWidget_2->horizontalHeader()->setMinimumHeight(30);
+
 }
 
 dialog1::~dialog1()

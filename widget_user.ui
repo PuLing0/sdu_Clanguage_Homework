@@ -26,50 +26,21 @@
    <string>购票查询</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">background-color: rgb(221, 244, 255);</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QtMaterialRaisedButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>70</y>
+     <x>530</x>
+     <y>90</y>
      <width>101</width>
      <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(142, 166, 212);
-font: 75 16pt &quot;等线&quot;;
-border-radius:15px;
-
-QPushButton#pushButton:normal/*鼠标正常时的效果*/
-{
-    color:#000000;
-    background-color:rgb(40, 85, 20); /*改变背景色*/
-    border-style:inset;/*改变边框风格*/
-    padding-left:4px;
-    padding-top:4px;
-}
- 
-/*鼠标悬浮时的效果*/
-QPushButton#pushButton:hover
-{
-    color:#0000ff;
-    background-color:rgb(40, 85, 20); /*改变背景色*/
-    border-style:inset;/*改变边框风格*/
-    padding-left:8px;
-    padding-top:8px;
-}
-/*如果按下与悬浮想同时产生效果，hover必须写在pressed的后面*/
-/*鼠标按下时的效果*/
-QPushButton#pushButton:pressed
-{
-    color:#00ff00;
-    background-color:rgb(40, 85, 20); /*改变背景色*/
-    border-style:inset;/*改变边框风格*/
-    padding-left:6px;
-    padding-top:6px;
-}</string>
+    <string notr="true">
+font: 75 12pt &quot;微软雅黑&quot;;
+background-color: rgb(0,188,212);</string>
    </property>
    <property name="text">
     <string>查询</string>
@@ -85,8 +56,9 @@ QPushButton#pushButton:pressed
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-color: rgb(0, 0, 255);
-font: 10pt &quot;宋体&quot;;</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 10pt &quot;宋体&quot;;
+alternate-background-color: rgb(221, 244, 255);</string>
    </property>
    <row>
     <property name="text">
@@ -139,33 +111,35 @@ font: 10pt &quot;宋体&quot;;</string>
     </property>
    </column>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QtMaterialRaisedButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>1380</x>
+     <x>1390</x>
      <y>10</y>
      <width>101</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 11pt &quot;宋体&quot;;</string>
+    <string notr="true">font: 75 10pt &quot;微软雅黑&quot;;
+background-color: rgb(0,188,212);</string>
    </property>
    <property name="text">
     <string>个人中心</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QtMaterialRaisedButton" name="pushButton_4">
    <property name="geometry">
     <rect>
-     <x>1490</x>
+     <x>1500</x>
      <y>10</y>
      <width>101</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 11pt &quot;宋体&quot;;</string>
+    <string notr="true">font: 75 10pt &quot;微软雅黑&quot;;
+background-color: rgb(0,188,212);</string>
    </property>
    <property name="text">
     <string>退出登录</string>
@@ -174,14 +148,14 @@ font: 10pt &quot;宋体&quot;;</string>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
+     <x>20</x>
+     <y>20</y>
      <width>171</width>
      <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 14pt &quot;宋体&quot;;
+    <string notr="true">font: 14pt &quot;黑体&quot;;
 border-color: rgb(0, 170, 127);</string>
    </property>
    <property name="text">
@@ -191,14 +165,15 @@ border-color: rgb(0, 170, 127);</string>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>160</y>
+     <x>530</x>
+     <y>170</y>
      <width>201</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 12pt &quot;宋体&quot;;</string>
+    <string notr="true">font: 14pt &quot;楷体&quot;;
+color: rgb(255, 0, 0);</string>
    </property>
    <property name="text">
     <string/>
@@ -237,7 +212,7 @@ border-color: rgb(0, 170, 127);</string>
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>40</y>
+     <y>50</y>
      <width>1621</width>
      <height>20</height>
     </rect>
@@ -252,7 +227,7 @@ border-color: rgb(0, 170, 127);</string>
      <x>590</x>
      <y>20</y>
      <width>421</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -262,124 +237,157 @@ border-color: rgb(0, 170, 127);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QtMaterialTextField" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>70</y>
-     <width>241</width>
-     <height>141</height>
+     <x>180</x>
+     <y>130</y>
+     <width>237</width>
+     <height>27</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;宋体&quot;;
-font-weight:bold;</string>
-        </property>
-        <property name="text">
-         <string>出发日期</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDateEdit" name="dateEdit">
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;宋体&quot;;</string>
-        </property>
-        <property name="date">
-         <date>
-          <year>2023</year>
-          <month>1</month>
-          <day>1</day>
-         </date>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;宋体&quot;;
-font-weight:bold;</string>
-        </property>
-        <property name="text">
-         <string>发站</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>130</width>
-          <height>38</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;宋体&quot;;</string>
-        </property>
-        <property name="text">
-         <string>hn</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;宋体&quot;;
-font-weight:bold;</string>
-        </property>
-        <property name="text">
-         <string>到站</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>130</width>
-          <height>38</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEdit_2">
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;宋体&quot;;</string>
-        </property>
-        <property name="text">
-         <string>hb</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+   <property name="styleSheet">
+    <string notr="true">font: 12pt &quot;微软雅黑&quot;;
+background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>hn</string>
+   </property>
+   <property name="placeholderText">
+    <string/>
+   </property>
   </widget>
+  <widget class="QtMaterialTextField" name="lineEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>180</y>
+     <width>237</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 12pt &quot;微软雅黑&quot;;
+background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>hb</string>
+   </property>
+   <property name="placeholderText">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="dateEdit">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>80</y>
+     <width>241</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;宋体&quot;;
+background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="dateTime">
+    <datetime>
+     <hour>0</hour>
+     <minute>0</minute>
+     <second>0</second>
+     <year>2023</year>
+     <month>7</month>
+     <day>11</day>
+    </datetime>
+   </property>
+   <property name="date">
+    <date>
+     <year>2023</year>
+     <month>7</month>
+     <day>11</day>
+    </date>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>161</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;宋体&quot;;
+font-weight:bold;</string>
+   </property>
+   <property name="text">
+    <string>出发日期</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>161</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;宋体&quot;;
+font-weight:bold;</string>
+   </property>
+   <property name="text">
+    <string>出发站</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>170</y>
+     <width>161</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;宋体&quot;;
+font-weight:bold;</string>
+   </property>
+   <property name="text">
+    <string>到站</string>
+   </property>
+  </widget>
+  <zorder>line</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>tableWidget</zorder>
+  <zorder>pushButton_3</zorder>
+  <zorder>pushButton_4</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_7</zorder>
+  <zorder>label_8</zorder>
+  <zorder>lineEdit</zorder>
+  <zorder>lineEdit_2</zorder>
+  <zorder>dateEdit</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtMaterialRaisedButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qtmaterialraisedbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QtMaterialTextField</class>
+   <extends>QLineEdit</extends>
+   <header location="global">qtmaterialtextfield.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

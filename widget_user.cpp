@@ -27,6 +27,12 @@ Widget_User::Widget_User(QWidget *parent)
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
 
+    //ui设置
+    ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
+    ui->tableWidget->setAlternatingRowColors(true);
+    ui->pushButton_3->setTextAlignment(Qt::AlignHCenter);
+
+    ui->tableWidget->horizontalHeader()->setMinimumHeight(30);
     //时钟初始化
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Widget_User::timerUpdate);
