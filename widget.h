@@ -49,6 +49,7 @@ public slots:
     void on_userList_clicked();
     //点击修改列车信息是触发
     void on_changeticketbtn_clicked();
+    void timerUpdate();
 
 private:
     Ui::Widget *ui;

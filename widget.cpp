@@ -28,12 +28,16 @@
 #include"qtmaterialraisedbutton.h"
 #include<QColor>
 #include<QDateTime>
+#include<QTimer>
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
 
+    //加载数据
     loadingdata();
+
+    //配置按钮
     ui->setupUi(this);
     ui->addticketButton->setBackgroundColor(QColor(0,188,212));
     ui->adduserButton->setBackgroundColor(QColor(0,188,212));
@@ -43,8 +47,10 @@ Widget::Widget(QWidget *parent) :
     ui->userList->setBackgroundColor(QColor(0,188,212));
     ui->searchticketbtn->setBackgroundColor(QColor(0,188,212));
     ui->searchuserbtn->setBackgroundColor(QColor(0,188,212));
-    //设置单元格不可被编辑
-    ui->ticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    //配置表格
+    ui->ticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//单元格不可被编辑
+
     //设置自适应列宽
     ui->ticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->ticketWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
@@ -55,6 +61,7 @@ Widget::Widget(QWidget *parent) :
     ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
 
+    //设置选择模式
     ui->ticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
     ui->ticketWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置选择模式，选择单行
     ui->searchticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
@@ -64,10 +71,7 @@ Widget::Widget(QWidget *parent) :
     ui->searchuserwidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
     ui->searchuserwidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置选择模式，选择单行
 
-    //载入数据
-    setticketdata(ticketlist);
-
-    //日历
+    //配置日历
     ui->btEdit->setCalendarPopup(true);
     ui->etEdit->setCalendarPopup(true);
     ui->btEdit->setDisplayFormat("yyyy-MM-dd");
@@ -80,19 +84,29 @@ Widget::Widget(QWidget *parent) :
     ui->Image->setPixmap(QPixmap(":/Image/manager.png"));
     ui->labelName->setPixmap(QPixmap("://Image/name.png"));
 
-    //设置背景图片、
-
     //设置打开页面时显示列车表和列车查询选项
     ui->stackedWidget1->setCurrentIndex(0);
     ui->stackedWidget2->setCurrentIndex(0);
+
+    //载入数据
+    setticketdata(ticketlist);
+
+    //时钟初始化
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Widget::timerUpdate);
+    timer->start(1000);
+
+
+
+
+
+
+
 
     //连接信号
     connect(ui->Exit,&QPushButton::clicked,this,&QWidget::close);//设置退出按钮的功能
 
 
-    //设置用户列表功能
-
-    //设置添加车票按钮功能
     //设置添加用户按钮功能
     ui->ticketWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     RightClick = new QMenu(ui->ticketWidget);                        //右键点击菜单
@@ -102,8 +116,8 @@ Widget::Widget(QWidget *parent) :
 
     connect(ui->ticketWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
     connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
-    connect(ui->userWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
-    connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
+//    connect(ui->userWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
+//    connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
 
 
     //设置车票默认查询方式
@@ -424,7 +438,7 @@ void Widget::RightClickDelete(QAction *act)
 
     //弹出提示框，看是否删除数据
     QMessageBox message(QMessageBox::NoIcon, QString::fromLocal8Bit("warning"),
-                                QString::fromLocal8Bit("Whether to delete the data of this bank"),
+                                QString::fromLocal8Bit("Whether to delete the data of this ticket"),
     QMessageBox::Yes | QMessageBox::No, NULL);
 
     //如确认删除
@@ -546,12 +560,14 @@ void Widget::on_saveBtn_clicked()
     {
          return;
     }
+
     //通过流对象写入文件信息
     QTextStream dataticket(&fticket);
     for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
     {
          dataticket<<it->id<<" "<<it->beginpoint<<" "<<it->endpoint<<" "<<it->begintime<<" "<<it->endtime<<" "<<it->amount<<" "<<it->price<<endl;
     }
+
     //关闭文件
     fticket.close();
 
@@ -561,6 +577,7 @@ void Widget::on_saveBtn_clicked()
     {
               return;
     }
+
     //通过流对象读取文件信息并压入到信息列表中
     QTextStream datauser(&fuser);
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
@@ -573,12 +590,8 @@ void Widget::on_saveBtn_clicked()
     }
 
 
-
-
     //关闭文件
     fuser.close();
-
-
 
 }
 
@@ -644,10 +657,13 @@ void Widget::on_changeticketbtn_clicked()
         }
     }
 
-
-
 }
-
+void Widget::timerUpdate(){
+    /*时钟实现*/
+    QDateTime t = QDateTime::currentDateTime(); //获取当前时间
+    QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");
+    ui->TimeLabel->setText(s); //屏显
+}
 
 
 Widget::~Widget()
