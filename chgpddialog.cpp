@@ -11,6 +11,12 @@ chgpdDialog::chgpdDialog(QWidget *parent) :
     ui(new Ui::chgpdDialog)
 {
     ui->setupUi(this);
+
+    //设置背景白色
+    QPalette pal(this->palette());
+    pal.setColor(QPalette::Background, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(pal);
 }
 
 chgpdDialog::~chgpdDialog()
