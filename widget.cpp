@@ -27,6 +27,7 @@
 #include"qtmaterialradiobutton.h"
 #include"qtmaterialraisedbutton.h"
 #include<QColor>
+#include<QDateTime>
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -136,10 +137,16 @@ void Widget::loadingdata()
         newt.endtime=edD+" "+edT;
         dataticket>>newt.amount;
         dataticket>>newt.price;
-
+        QDateTime bt=QDateTime::fromString(newt.begintime,"yyyy-MM-dd hh:mm");
+        QDateTime curtime=QDateTime::currentDateTime();
+        int days=bt.daysTo(curtime);
+        if(days<=0)
         ticketlist.push_back(newt);
     }
-    ticketlist.pop_back();
+    if(ticketlist.isEmpty())
+        ;
+    else
+        ticketlist.pop_back();
 
     //关闭文件
     fticket.close();
