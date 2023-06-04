@@ -3,8 +3,20 @@
 #include "mainwindow.h"
 #include <string>
 #include <user_crl.h>
+#include <QPainter>
+#include <QPaintEvent>
 
 using std::string;
+
+
+void RegDialog::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+
+    QPainter painter(this);
+    painter.setPen(Qt::black);
+    painter.drawRect(rect().adjusted(0, 0, -1, -1));
+}
 
 //默认构造函数
 RegDialog::RegDialog(QWidget *parent) :
@@ -14,10 +26,11 @@ RegDialog::RegDialog(QWidget *parent) :
     ui->setupUi(this);
 
     //设置背景白色
-    QPalette pal(this->palette());
-    pal.setColor(QPalette::Background, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
+    setStyleSheet("background-color: white;");
+
+    m_bMove = false;
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint |Qt::WindowStaysOnTopHint);
+
 }
 
 //默认析构函数
@@ -60,4 +73,26 @@ void RegDialog::on_Btn_Reg_clicked()
     ui->L_Name->clear();
     ui->L_Account->clear();
     ui->L_pswd->clear();
+}
+
+void RegDialog::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton) // 左键按下
+    {
+        m_bMove = true; // 移动标志位
+        reltvPos = event->pos(); // 按下瞬间获取相对窗口坐标
+    }
+    return QWidget::mousePressEvent(event);
+}
+
+void RegDialog::mouseMoveEvent(QMouseEvent *event)
+{
+    if(m_bMove) move(event->globalPos() - reltvPos);
+    return QWidget::mouseMoveEvent(event);
+}
+
+void RegDialog::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_bMove = false; // 松开后要置为false
+    return QWidget::mouseReleaseEvent(event);
 }

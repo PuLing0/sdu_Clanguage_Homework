@@ -3,8 +3,19 @@
 #include "mainwindow.h"
 #include <string>
 #include <user_crl.h>
+#include <QPainter>
+#include <QPaintEvent>
 
 using std::string;
+
+void chgpdDialog::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+
+    QPainter painter(this);
+    painter.setPen(Qt::black);
+    painter.drawRect(rect().adjusted(0, 0, -1, -1));
+}
 
 chgpdDialog::chgpdDialog(QWidget *parent) :
     QWidget(parent),
@@ -13,10 +24,11 @@ chgpdDialog::chgpdDialog(QWidget *parent) :
     ui->setupUi(this);
 
     //设置背景白色
-    QPalette pal(this->palette());
-    pal.setColor(QPalette::Background, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
+    setStyleSheet("background-color: white;");
+
+
+    m_bMove = false;
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint |Qt::WindowStaysOnTopHint);
 }
 
 chgpdDialog::~chgpdDialog()
@@ -45,3 +57,24 @@ void chgpdDialog::on_btn_chg_clicked()
     uc->ChgUser(account , oldpsd , newpsd , renewpsd);
 }
 
+void chgpdDialog::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton) // 左键按下
+    {
+        m_bMove = true; // 移动标志位
+        reltvPos = event->pos(); // 按下瞬间获取相对窗口坐标
+    }
+    return QWidget::mousePressEvent(event);
+}
+
+void chgpdDialog::mouseMoveEvent(QMouseEvent *event)
+{
+    if(m_bMove) move(event->globalPos() - reltvPos);
+    return QWidget::mouseMoveEvent(event);
+}
+
+void chgpdDialog::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_bMove = false; // 松开后要置为false
+    return QWidget::mouseReleaseEvent(event);
+}

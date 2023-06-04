@@ -92,6 +92,7 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
             //提示注册成功
             QMessageBox msgbx;
             msgbx.setText("注册成功，请登录！");
+            msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
             msgbx.exec();
             return true;
         }
@@ -102,6 +103,7 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
         //提示账号和用户名都存在
         QMessageBox msgbx;
         msgbx.setText("账号和用户名已存在，请重新注册");
+        msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
         msgbx.exec();
         return false;
     }
@@ -110,6 +112,7 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
         //提示账号已经存在
         QMessageBox msgbx;
         msgbx.setText("账号已存在，请重新注册");
+        msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
         msgbx.exec();
         return false;
     }
@@ -118,6 +121,7 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
         //提示用户名已经存在
         QMessageBox msgbx;
         msgbx.setText("用户名已存在，请重新注册");
+        msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
         msgbx.exec();
         return false;
     }
@@ -199,6 +203,7 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
             //提示修改密码成功
             QMessageBox msgbx;
             msgbx.setText("修改密码成功，请重新登录！");
+            msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
             msgbx.exec();
             return true;
         }
@@ -207,6 +212,7 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
             //提示两次新密码不一样
             QMessageBox msgbx;
             msgbx.setText("两次密码不一致！");
+            msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
             msgbx.exec();
             return false;
         }
@@ -216,6 +222,7 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
         //提示账号不存在或这密码错误，这里将两者混淆是因为防止其他人居心叵测以测试他人的密码
         QMessageBox msgbx;
         msgbx.setText("账号不存在或密码错误");
+        msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
         msgbx.exec();
         return false;
     }
