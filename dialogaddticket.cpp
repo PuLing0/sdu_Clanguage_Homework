@@ -4,7 +4,8 @@
 #include"qtmaterialflatbutton.h"
 #include"qtmaterialraisedbutton.h"
 #include<QColor>
-
+#include<QDateTime>
+#include<QTime>
 dialogaddticket::dialogaddticket(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialogaddticket)
@@ -19,6 +20,8 @@ dialogaddticket::dialogaddticket(QWidget *parent) :
 
     connect(ui->canclebtn,&QPushButton::clicked,this,&dialogaddticket::close);
     connect(ui->addbtn,&QPushButton::clicked,this,&dialogaddticket::saveclicked);
+    ui->BtdateTimeEdit->setTime(QTime::currentTime());
+    ui->EtdateTimeEdit->setTime(QTime::currentTime());
 }
 
 dialogaddticket::~dialogaddticket()
@@ -50,13 +53,15 @@ QString dialogaddticket::getea()
 
 QString dialogaddticket::getbt()
 {
-    QString s=ui->BtlineEdit->text();
+    QDateTime time=ui->BtdateTimeEdit->dateTime();
+    QString s=time.toString("yyyy-MM-dd hh:mm");
     return s;
 }
 
 QString dialogaddticket::getet()
 {
-    QString s=ui->EtlineEdit->text();
+    QDateTime time=ui->EtdateTimeEdit->dateTime();
+    QString s=time.toString("yyyy-MM-dd hh:mm");
     return s;
 }
 

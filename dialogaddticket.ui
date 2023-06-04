@@ -51,9 +51,6 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QtMaterialAutoComplete" name="EtlineEdit"/>
-     </item>
      <item row="5" column="0">
       <widget class="QLabel" name="etlable">
        <property name="text">
@@ -67,9 +64,6 @@
         <string>车票数</string>
        </property>
       </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QtMaterialAutoComplete" name="BtlineEdit"/>
      </item>
      <item row="6" column="1">
       <widget class="QtMaterialAutoComplete" name="TicketlineEdit"/>
@@ -160,6 +154,20 @@
      </item>
      <item row="3" column="1">
       <widget class="QtMaterialAutoComplete" name="EalineEdit"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QDateTimeEdit" name="BtdateTimeEdit">
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QDateTimeEdit" name="EtdateTimeEdit">
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
