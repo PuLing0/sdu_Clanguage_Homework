@@ -82,7 +82,6 @@ Widget::Widget(QWidget *parent) :
 
     //设置管理员用户头像图片
     ui->Image->setPixmap(QPixmap(":/Image/manager.png"));
-    ui->labelName->setPixmap(QPixmap("://Image/name.png"));
 
     //设置打开页面时显示列车表和列车查询选项
     ui->stackedWidget1->setCurrentIndex(0);

@@ -52,7 +52,8 @@
    <property name="styleSheet">
     <string notr="true">QWidget#widgetHead
 {
-border-image: url(:/Image/title.png);
+background-image: url(:/Image/title2.jpg);
+
 }</string>
    </property>
    <widget class="QPushButton" name="Exit">
@@ -97,19 +98,6 @@ background-color:rgba(0,0,0,0);
     </property>
     <property name="text">
      <string>头像</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelName">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>0</y>
-      <width>1021</width>
-      <height>100</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="TimeLabel">
