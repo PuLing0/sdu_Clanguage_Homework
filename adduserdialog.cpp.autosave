@@ -25,17 +25,17 @@ adduserdialog::~adduserdialog()
     delete ui;
 }
 
-//当注册按钮
+//当注册按钮被按下时触发，用于获取注册账户的信息
 void adduserdialog::btnclicked()
 {
     
-    this->name=ui->L_Name->text();
-    this->account=ui->L_Account->text();
-    this->password=ui->L_pswd->text();
-    this->gender=this->Gender_Choose();
-    this->Over_Power=false;
-    flap=1;
-    this->hide();
+    this->name=ui->L_Name->text();//获取用户名
+    this->account=ui->L_Account->text();//获取账号
+    this->password=ui->L_pswd->text();//获取密码
+    this->gender=this->Gender_Choose();//获取性别
+    this->Over_Power=false;//获取权限，默认为用户权限
+    flap=1;//记录注册按钮被按下了
+    this->hide();//关闭对话框
 }
 
 //用于性别选择，其中男性返回1，女性返回0，默认是男性
