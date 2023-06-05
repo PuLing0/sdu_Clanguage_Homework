@@ -15,7 +15,7 @@ public:
     explicit changeticketdialog(QWidget *parent = 0);
     ~changeticketdialog();
     
-    QString getiniid();//获取想要修改的列车号
+    QString getiniid();//获取想要修改的车次的列车号
     QString getiniba();//获取想要修改的列车的现在的始发站
     QString getiniea();//获取想要修改的列车的现在的终点站
     QString getinibt();//获取想要修改的列车的现在的开车时间

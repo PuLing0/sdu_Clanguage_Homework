@@ -460,120 +460,222 @@ void Widget::RightClickDelete(QAction *act)
     QMessageBox::Yes | QMessageBox::No, NULL);
 
     //如确认删除
+    if(message.exec() == QMessageBox::Yes)
+    {
 
-        if(message.exec() == QMessageBox::Yes)
+        if(act->text() == QString::fromLocal8Bit("delete"))   //看选中了删除这个菜单
         {
-
-            if(act->text() == QString::fromLocal8Bit("delete"))   //看选中了删除这个菜单
+            QString id=ui->ticketWidget->model()->index(iDeletcRow,0).data().toString();//获取选中的车次的列车号
+            QString ba=ui->ticketWidget->model()->index(iDeletcRow,1).data().toString();//获取选中的车次的始发站
+            QString ea=ui->ticketWidget->model()->index(iDeletcRow,2).data().toString();//获取选中的车次的终点站
+            QString bt=ui->ticketWidget->model()->index(iDeletcRow,3).data().toString();//获取选中的车次的发车时间
+            QString et=ui->ticketWidget->model()->index(iDeletcRow,4).data().toString();//获取选中的车次的到站时间
+            //在列表中查找该车票
+            for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
             {
-                QString id=ui->ticketWidget->model()->index(iDeletcRow,0).data().toString();
-                QString ba=ui->ticketWidget->model()->index(iDeletcRow,1).data().toString();
-                QString ea=ui->ticketWidget->model()->index(iDeletcRow,2).data().toString();
-                QString bt=ui->ticketWidget->model()->index(iDeletcRow,3).data().toString();
-                QString et=ui->ticketWidget->model()->index(iDeletcRow,4).data().toString();
-                for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
+                //找到后删除
+                if(it->id==id&&it->beginpoint==ba&&it->endpoint==ea&&it->begintime==bt&&it->endtime==et)
                 {
-                    if(it->id==id&&it->beginpoint==ba&&it->endpoint==ea&&it->begintime==bt&&it->endtime==et)
-                    {
-                        ticketlist.erase(it);
-                        break;
-                    }
+                    ticketlist.erase(it);
+                    break;
                 }
-                ui->ticketWidget->removeRow(iDeletcRow);  //删除掉了表格信息
             }
-
+            ui->ticketWidget->removeRow(iDeletcRow);  //删除表格中信息
         }
+    }
 }
 
-//查询车票
+//查询车票按钮功能的实现
 void Widget::on_searchticketbtn_clicked()
 {
-    //清空当前列表数据
+    //清空查找列车表格数据
     for(int row = ui->searchticketWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->searchticketWidget->removeRow(row);
     }
+    //将表格转换到查找列车表格
     ui->stackedWidget2->setCurrentIndex(1);
 
-
     //判断查询方式
-
+    //判断是否为按出发站和始发站查询
     if(ui->addressButton->isChecked())
     {
-        QString ba;
-        QString ea;
-        ba=ui->baEdit->text();
-        ea=ui->eaEdit->text();
+        QString ba,ea;//创建存储始发站和终点站的字符串
+        ba=ui->baEdit->text();//获取查询到始发站
+        ea=ui->eaEdit->text();//获取查询的终点站
 
+        //在列表中查询是否有符合条件的车次信息
         for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
         {
+            //找到后就显示该车次的信息
             if(it->beginpoint==ba&&it->endpoint==ea)
             {
-                int rowcont=ui->searchticketWidget->rowCount();
-                ui->searchticketWidget->insertRow(rowcont);
-                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));
-                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));
-                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));
-                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));
-                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));
+                int rowcont=ui->searchticketWidget->rowCount();//获取当前查找列车表格行数
+                ui->searchticketWidget->insertRow(rowcont);//添加新一行
+                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
+                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
+                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
+                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
+                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
+                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
+                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
             }
         }
-        //qDebug()<<"按地址查询"<<endl;
     }
+    //判断是否为按时间查询
     if(ui->timeButton->isChecked())
     {
-        QString strbt=ui->btEdit->dateTime().toString("yyyy-MM-dd");
-        QString stret=ui->etEdit->dateTime().toString("yyyy-MM-dd");
+        QString strbt=ui->btEdit->dateTime().toString("yyyy-MM-dd");//创建存储开车时间的字符串
+        QString stret=ui->etEdit->dateTime().toString("yyyy-MM-dd");//创建存储到站时间的字符串
+        //遍历列表查找是否有符合条件的车次
         for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
         {
-            QString rbt=it->begintime.mid(0,10);
-            QString ret=it->endtime.mid(0,10);
+            QString rbt=it->begintime.mid(0,10);//存储被查找车次的开车时间
+            QString ret=it->endtime.mid(0,10);//存储被查找车次的到站时间
+            //如果符合条件
             if(rbt==strbt&&ret==stret)
             {
-                int rowcont=ui->searchticketWidget->rowCount();
-                ui->searchticketWidget->insertRow(rowcont);
-                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));
-                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));
-                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));
-                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));
-                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));
+                int rowcont=ui->searchticketWidget->rowCount();//获取查找车次表格的行数
+                ui->searchticketWidget->insertRow(rowcont);//在表格中添加新一行
+                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
+                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
+                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
+                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
+                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
+                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
+                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
             }
          }
-        }
-        //qDebug()<<"按时间查询"<<endl;
+    }
 }
 
-//查询用户
+//查询用户按钮功能的实现
 void Widget::on_searchuserbtn_clicked()
 {
+    //清空查询用户表格
     for(int row = ui->searchuserwidget->rowCount() - 1;row >= 0; row--)
     {
         ui->searchuserwidget->removeRow(row);
     }
+    //将表格转换到查询用户表格
     ui->stackedWidget2->setCurrentIndex(3);
 
-    QString name=ui->nameEdit->text();
-        for(QList<user>::iterator it=userlist.begin();it!=userlist.end();it++)
+    QString name=ui->nameEdit->text();//获取查询的用户名
+    //遍历查找
+    for(QList<user>::iterator it=userlist.begin();it!=userlist.end();it++)
+    {
+        //如果找到符合条件的用户
+        if(name==it->name)
         {
-            if(name==it->name)
+            int rowcont=ui->searchuserwidget->rowCount();//获取表格的行数
+            ui->searchuserwidget->insertRow(rowcont);//添加新的一行
+            ui->searchuserwidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
+            ui->searchuserwidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+            //打开存储用户购票信息的文件
+            QFile userticket("..//Train//User_Ticket//"+it->name+".txt");
+            //判断是否成功打开
+            if (!userticket.open(QIODevice::ReadOnly))
             {
-                int rowcont=ui->searchuserwidget->rowCount();
-                ui->searchuserwidget->insertRow(rowcont);
-                ui->searchuserwidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
-                ui->searchuserwidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+                return;
+            }
+            QTextStream datauserticket(&userticket);//创建流对象
+            QString userticketinformation;//创建存储已购车票信息的字符串
+            //逐行读入
+            while (!datauserticket.atEnd())
+            {
+                QString line = datauserticket.readLine();
+                userticketinformation+="\n"+line;
+            }
+            //关闭文件
+            userticket.close();
+            //显示用户已购车票信息
+            ui->searchuserwidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
+        }
+    }
+}
+
+//修改列车信息按钮功能的实现
+void Widget::on_changeticketbtn_clicked()
+{
+    changeticketdialog* ct=new changeticketdialog;//创建一个新的对话框
+    ct->setModal(true);
+    ct->show();//显示对话框
+    ct->exec();//设置为模态
+    //判断修改按钮是否被按下
+    if(ct->flap==1)
+    {
+        QString iniid=ct->getiniid();//获取想要修改的车次的列车号
+        QString iniba=ct->getiniba();//获取想要修改的列车的现在的始发站
+        QString iniea=ct->getiniea();//获取想要修改的列车的现在的终点站
+        QString inibt=ct->getinibt();//获取想要修改的列车的现在的开车时间
+        QString iniet=ct->getiniet();//获取想要修改的列车的现在的到站时间
+        QString finba=ct->getfinba();//获取想要修改的列车的改后的始发站
+        QString finea=ct->getfinea();//获取想要修改的列车的改后的终点站
+        QString finbt=ct->getfinbt();//获取想要修改的列车的改后的开车时间
+        QString finet=ct->getfinet();//获取想要修改的列车的改后的到站时间
+        QString finnumber=ct->getfinnumber();//获取想要修改的列车的改后的车票数
+        QString finprice=ct->getfinprice();//获取想要修改的列车的改后的票价
+        //遍历查找要修改的车次
+        for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
+        {
+            //找到要修改的车票信息
+            if(it->id==iniid&&it->beginpoint==iniba&&it->endpoint==iniea&&it->begintime==inibt&&it->endtime==iniet)
+            {
+                int flap=0;//记录是否可以修改
+                //检查信息是否有冲突
+                for(QList<ticket>::iterator it1=ticketlist.begin();it1!=ticketlist.end();it1++)
+                {
+                    //判断车次信息是否有冲突
+                    if(it1->id==iniid&&it1->beginpoint==finba&&it1->endpoint==finea&&it1->begintime==finbt&&it1->endpoint==finet&&QString::number(it1->amount)==finnumber&&QString::number(it1->price)==finprice)
+                    {
+                            QMessageBox::warning(this,"Warning","信息冲突，无法修改！！！");//有冲突则警告，不予修改
+                            flap=1;
+                            break;
+                    }
+                }
+                //如果不能修改
+                if(flap)
+                {
+                    break;
+                }
+                //可以修改
+                else
+                {
+                    it->beginpoint=finba;//更改始发站
+                    it->endpoint=finea;//更改终点站
+                    it->begintime=finbt;//更改发车时间
+                    it->endtime=finet;//更改到站时间
+                    it->amount=finnumber.toDouble();//更改车票数
+                    it->price=finprice.toDouble();//更改车票价格
+
+                    QMessageBox::information(this,"提示","修改成功");//提示
+                    setticketdata(ticketlist);//显示更改后的信息
+                }
+            }
+            else
+            {
+                QMessageBox::warning(this,"Warning","查询不到想要修改的列车，无法修改！！！");//查询不到想要修改的列车则报警，不予修改
+                break;
             }
         }
+    }
 }
-//保存修改
+
+//时钟功能的视线
+void Widget::timerUpdate(){
+    /*时钟实现*/
+    QDateTime t = QDateTime::currentDateTime(); //获取当前时间
+    QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");//设置时间显示格式
+    ui->TimeLabel->setText(s); //屏显
+}
+
+//保存修改按钮功能的实现
 void Widget::on_saveBtn_clicked()
 {
 
-    //打开文件
+    //打开存储车票信息的文件
     QFile fticket("..//Train//ticket.txt");
+    //判断是否以读的方式成功打开
     if (!fticket.open(QIODevice::WriteOnly))
     {
          return;
@@ -589,21 +691,24 @@ void Widget::on_saveBtn_clicked()
     //关闭文件
     fticket.close();
 
-    //打开文件
+    //打开存储用户信息的文件
     QFile fuser("..//Train//User_Data.dat");
+    //判断是否以写的方式打开文件
     if (!fuser.open(QIODevice::WriteOnly))
     {
               return;
     }
 
-    //通过流对象读取文件信息并压入到信息列表中
+    //通过流对象写入文件信息
     QTextStream datauser(&fuser);
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
          datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
+         //创建对应账户的存储已购车票信息的文件
          QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
-         if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
+         if (!file_name.open(QIODevice::Append | QIODevice::Text))
                 return ;
+         //关闭文件
          file_name.close();
     }
 
@@ -612,77 +717,6 @@ void Widget::on_saveBtn_clicked()
     fuser.close();
 
 }
-
-//修改列车信息
-void Widget::on_changeticketbtn_clicked()
-{
-    changeticketdialog* ct=new changeticketdialog;
-    ct->setModal(true);
-    ct->show();
-    ct->exec();
-    if(ct->flap==1)
-    {
-        QString iniid=ct->getiniid();
-        QString iniba=ct->getiniba();
-        QString iniea=ct->getiniea();
-        QString inibt=ct->getinibt();
-        QString iniet=ct->getiniet();
-        QString finba=ct->getfinba();
-        QString finea=ct->getfinea();
-        QString finbt=ct->getfinbt();
-        QString finet=ct->getfinet();
-        QString finnumber=ct->getfinnumber();
-        QString finprice=ct->getfinprice();
-        for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
-        {
-            //找到要修改的车票信息
-            if(it->id==iniid&&it->beginpoint==iniba&&it->endpoint==iniea&&it->begintime==inibt&&it->endtime==iniet)
-            {
-                int flap=0;
-                //检查信息是否有冲突
-                for(QList<ticket>::iterator it1=ticketlist.begin();it1!=ticketlist.end();it1++)
-                {
-                    if(it1->id==iniid&&it1->beginpoint==finba&&it1->endpoint==finea&&it1->begintime==finbt&&it1->endpoint==finet&&QString::number(it1->amount)==finnumber&&QString::number(it1->price)==finprice)
-                    {
-                            QMessageBox::warning(this,"Warning","信息冲突，无法修改！！！");
-                            flap=1;
-                            break;
-                    }
-                }
-
-                if(flap)
-                {
-                    break;
-                }
-                else
-                {
-                    it->beginpoint=finba;
-                    it->endpoint=finea;
-                    it->begintime=finbt;
-                    it->endtime=finet;
-                    it->amount=finnumber.toDouble();
-                    it->price=finprice.toDouble();
-                    QMessageBox::information(this,"提示","修改成功");
-                    setticketdata(ticketlist);
-                }
-            }
-            else
-            {
-                QMessageBox::warning(this,"Warning","查询不到想要修改的列车，无法修改！！！");
-                break;
-            }
-
-        }
-    }
-
-}
-void Widget::timerUpdate(){
-    /*时钟实现*/
-    QDateTime t = QDateTime::currentDateTime(); //获取当前时间
-    QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");
-    ui->TimeLabel->setText(s); //屏显
-}
-
 
 Widget::~Widget()
 {
