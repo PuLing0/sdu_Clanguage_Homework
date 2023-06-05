@@ -594,67 +594,21 @@ void Widget::on_searchuserbtn_clicked()
     }
 }
 
-//保存修改按钮功能的实现
-void Widget::on_saveBtn_clicked()
-{
-
-    //打开存储车票信息的文件
-    QFile fticket("..//Train//ticket.txt");
-    //判断是否以读的方式成功打开
-    if (!fticket.open(QIODevice::WriteOnly))
-    {
-         return;
-    }
-
-    //通过流对象写入文件信息
-    QTextStream dataticket(&fticket);
-    for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
-    {
-         dataticket<<it->id<<" "<<it->beginpoint<<" "<<it->endpoint<<" "<<it->begintime<<" "<<it->endtime<<" "<<it->amount<<" "<<it->price<<endl;
-    }
-
-    //关闭文件
-    fticket.close();
-
-    //打开存储用户信息的文件
-    QFile fuser("..//Train//User_Data.dat");
-    //判断是否以
-    if (!fuser.open(QIODevice::WriteOnly))
-    {
-              return;
-    }
-
-    //通过流对象读取文件信息并压入到信息列表中
-    QTextStream datauser(&fuser);
-    for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
-    {
-         datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
-         QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
-         if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
-                return ;
-         file_name.close();
-    }
-
-
-    //关闭文件
-    fuser.close();
-
-}
-
-//修改列车信息
+//修改列车信息按钮功能的实现
 void Widget::on_changeticketbtn_clicked()
 {
-    changeticketdialog* ct=new changeticketdialog;
+    changeticketdialog* ct=new changeticketdialog;//创建一个新的对话框
     ct->setModal(true);
-    ct->show();
-    ct->exec();
+    ct->show();//显示对话框
+    ct->exec();//设置为模态
+    //判断修改按钮是否被按下
     if(ct->flap==1)
     {
-        QString iniid=ct->getiniid();
-        QString iniba=ct->getiniba();
-        QString iniea=ct->getiniea();
-        QString inibt=ct->getinibt();
-        QString iniet=ct->getiniet();
+        QString iniid=ct->getiniid();//获取想要修改的车次的列车号
+        QString iniba=ct->getiniba();//获取想要修改的列车的现在的始发站
+        QString iniea=ct->getiniea();//获取想要修改的列车的现在的终点站
+        QString inibt=ct->getinibt();//获取想要修改的列车的现在的开车时间
+        QString iniet=ct->getiniet();//获取想要修改的列车的现在的到站时间
         QString finba=ct->getfinba();
         QString finea=ct->getfinea();
         QString finbt=ct->getfinbt();
@@ -704,12 +658,65 @@ void Widget::on_changeticketbtn_clicked()
     }
 
 }
+
+//时钟功能的视线
 void Widget::timerUpdate(){
     /*时钟实现*/
     QDateTime t = QDateTime::currentDateTime(); //获取当前时间
-    QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");
+    QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");//设置时间显示格式
     ui->TimeLabel->setText(s); //屏显
 }
+
+//保存修改按钮功能的实现
+void Widget::on_saveBtn_clicked()
+{
+
+    //打开存储车票信息的文件
+    QFile fticket("..//Train//ticket.txt");
+    //判断是否以读的方式成功打开
+    if (!fticket.open(QIODevice::WriteOnly))
+    {
+         return;
+    }
+
+    //通过流对象写入文件信息
+    QTextStream dataticket(&fticket);
+    for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
+    {
+         dataticket<<it->id<<" "<<it->beginpoint<<" "<<it->endpoint<<" "<<it->begintime<<" "<<it->endtime<<" "<<it->amount<<" "<<it->price<<endl;
+    }
+
+    //关闭文件
+    fticket.close();
+
+    //打开存储用户信息的文件
+    QFile fuser("..//Train//User_Data.dat");
+    //判断是否以写的方式打开文件
+    if (!fuser.open(QIODevice::WriteOnly))
+    {
+              return;
+    }
+
+    //通过流对象写入文件信息
+    QTextStream datauser(&fuser);
+    for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
+    {
+         datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
+         //创建对应账户的存储已购车票信息的文件
+         QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
+         if (!file_name.open(QIODevice::Append | QIODevice::Text))
+                return ;
+         //关闭文件
+         file_name.close();
+    }
+
+
+    //关闭文件
+    fuser.close();
+
+}
+
+
 
 
 Widget::~Widget()
