@@ -537,46 +537,70 @@ void Widget::on_searchticketbtn_clicked()
             {
                 int rowcont=ui->searchticketWidget->rowCount();//获取查找车次表格的行数
                 ui->searchticketWidget->insertRow(rowcont);//在表格中添加新一行
-                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));
-                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));
-                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));
-                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));
-                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));
+                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
+                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
+                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
+                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
+                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
+                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
+                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
             }
          }
-        }
-        //qDebug()<<"按时间查询"<<endl;
+    }
 }
 
-//查询用户
+//查询用户按钮功能的实现
 void Widget::on_searchuserbtn_clicked()
 {
+    //清空查询用户表格
     for(int row = ui->searchuserwidget->rowCount() - 1;row >= 0; row--)
     {
         ui->searchuserwidget->removeRow(row);
     }
+    //将表格转换到查询用户表格
     ui->stackedWidget2->setCurrentIndex(3);
 
-    QString name=ui->nameEdit->text();
-        for(QList<user>::iterator it=userlist.begin();it!=userlist.end();it++)
+    QString name=ui->nameEdit->text();//获取查询的用户名
+    //遍历查找
+    for(QList<user>::iterator it=userlist.begin();it!=userlist.end();it++)
+    {
+        //如果找到符合条件的用户
+        if(name==it->name)
         {
-            if(name==it->name)
+            int rowcont=ui->searchuserwidget->rowCount();//获取表格的行数
+            ui->searchuserwidget->insertRow(rowcont);//添加新的一行
+            ui->searchuserwidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
+            ui->searchuserwidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+            //打开存储用户购票信息的文件
+            QFile userticket("..//Train//User_Ticket//"+it->name+".txt");
+            //判断是否成功打开
+            if (!userticket.open(QIODevice::ReadOnly))
             {
-                int rowcont=ui->searchuserwidget->rowCount();
-                ui->searchuserwidget->insertRow(rowcont);
-                ui->searchuserwidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
-                ui->searchuserwidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+                return;
             }
+            QTextStream datauserticket(&userticket);//创建流对象
+            QString userticketinformation;//创建存储已购车票信息的字符串
+            //逐行读入
+            while (!datauserticket.atEnd())
+            {
+                QString line = datauserticket.readLine();
+                userticketinformation+="\n"+line;
+            }
+            //关闭文件
+            userticket.close();
+            //显示用户已购车票信息
+            ui->searchuserwidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
         }
+    }
 }
-//保存修改
+
+//保存修改按钮功能的实现
 void Widget::on_saveBtn_clicked()
 {
 
-    //打开文件
+    //打开存储车票信息的文件
     QFile fticket("..//Train//ticket.txt");
+    //判断是否以读的方式成功打开
     if (!fticket.open(QIODevice::WriteOnly))
     {
          return;
@@ -592,8 +616,9 @@ void Widget::on_saveBtn_clicked()
     //关闭文件
     fticket.close();
 
-    //打开文件
+    //打开存储用户信息的文件
     QFile fuser("..//Train//User_Data.dat");
+    //判断是否以
     if (!fuser.open(QIODevice::WriteOnly))
     {
               return;
