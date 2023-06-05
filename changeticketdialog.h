@@ -27,7 +27,7 @@ public:
     QString getfinnumber();//获取想要修改的列车的改后的票数
     QString getfinprice();//获取想要修改的列车的改后的车价
     
-    void on_changebtn_clicked();//修改按钮按下时触发
+    void changebtnclicked();//修改按钮按下时触发
     int flap;//记录是否为修改按钮按下
 
 private:

@@ -13,13 +13,14 @@ changeticketdialog::changeticketdialog(QWidget *parent) :
     ui->canclebtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->changebtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     connect(ui->canclebtn,&QPushButton::clicked,this,&changeticketdialog::close);//当取消按钮按下始，该对话框关闭
+    connect(ui->changebtn,&QtMaterialRaisedButton::clicked,this,&changeticketdialog::changebtnclicked);//按下保存按钮时，激活changebtnclicked函数
 }
 
 //修改按钮按下时触发
-void changeticketdialog::on_changebtn_clicked()
+void changeticketdialog::changebtnclicked()
 {
-    this->hide();//关闭窗口
     flap=1;//记录修改按钮被按下
+    this->close();//关闭窗口
 }
 
 //获取想要修改的车次的列车号

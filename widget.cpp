@@ -650,6 +650,7 @@ void Widget::on_changeticketbtn_clicked()
 
                     QMessageBox::information(this,"提示","修改成功");//提示
                     setticketdata(ticketlist);//显示更改后的信息
+                    break;
                 }
             }
             else
