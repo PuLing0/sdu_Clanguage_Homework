@@ -521,21 +521,22 @@ void Widget::on_searchticketbtn_clicked()
                 ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
             }
         }
-        //qDebug()<<"按地址查询"<<endl;
     }
     //判断是否为按时间查询
     if(ui->timeButton->isChecked())
     {
-        QString strbt=ui->btEdit->dateTime().toString("yyyy-MM-dd");
-        QString stret=ui->etEdit->dateTime().toString("yyyy-MM-dd");
+        QString strbt=ui->btEdit->dateTime().toString("yyyy-MM-dd");//创建存储开车时间的字符串
+        QString stret=ui->etEdit->dateTime().toString("yyyy-MM-dd");//创建存储到站时间的字符串
+        //遍历列表查找是否有符合条件的车次
         for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
         {
-            QString rbt=it->begintime.mid(0,10);
-            QString ret=it->endtime.mid(0,10);
+            QString rbt=it->begintime.mid(0,10);//存储被查找车次的开车时间
+            QString ret=it->endtime.mid(0,10);//存储被查找车次的到站时间
+            //如果符合条件
             if(rbt==strbt&&ret==stret)
             {
-                int rowcont=ui->searchticketWidget->rowCount();
-                ui->searchticketWidget->insertRow(rowcont);
+                int rowcont=ui->searchticketWidget->rowCount();//获取查找车次表格的行数
+                ui->searchticketWidget->insertRow(rowcont);//在表格中添加新一行
                 ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));
                 ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));
                 ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));
