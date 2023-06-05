@@ -34,24 +34,28 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
 
-    //加载数据
+    //加载数据，将车票信息和用户信息读入各自list中
     loadingdata();
 
-    //配置按钮
     ui->setupUi(this);
-    ui->addticketButton->setBackgroundColor(QColor(0,188,212));
-    ui->adduserButton->setBackgroundColor(QColor(0,188,212));
-    ui->changeticketbtn->setBackgroundColor(QColor(0,188,212));
-    ui->saveBtn->setBackgroundColor(QColor(0,188,212));
-    ui->ticketList->setBackgroundColor(QColor(0,188,212));
-    ui->userList->setBackgroundColor(QColor(0,188,212));
-    ui->searchticketbtn->setBackgroundColor(QColor(0,188,212));
-    ui->searchuserbtn->setBackgroundColor(QColor(0,188,212));
 
-    //配置表格
-    ui->ticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//单元格不可被编辑
+    //配置按钮
+    ui->addticketButton->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->adduserButton->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->changeticketbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->saveBtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->ticketList->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->userList->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->searchticketbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    ui->searchuserbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
 
-    //设置自适应列宽
+    //配置表格编辑模式
+    ui->ticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//设置车票信息单元格不可被编辑
+    ui->searchticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//设置查找车票单元格不可被编辑
+    ui->userWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//设置用户信息单元格不可被编辑
+    ui->searchuserwidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//设置查找用户信息单元格不可被编辑
+
+    //设置表格自适应列宽
     ui->ticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->ticketWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
     ui->searchticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
@@ -61,108 +65,104 @@ Widget::Widget(QWidget *parent) :
     ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
 
-    //设置选择模式
-    ui->ticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
-    ui->ticketWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置选择模式，选择单行
-    ui->searchticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
-    ui->searchticketWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置选择模式，选择单行
-    ui->userWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
-    ui->userWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置选择模式，选择单行
-    ui->searchuserwidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置选择行为，以行为单位
-    ui->searchuserwidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置选择模式，选择单行
+    //设置表格选择模式
+    ui->ticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置车票信息单元格选择行为，以行为单位
+    ui->ticketWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置车票信息单元格选择模式，选择单行
+    ui->searchticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置查找车票单元格选择行为，以行为单位
+    ui->searchticketWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置查找车票单元格选择模式，选择单行
+    ui->userWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置用户信息单元格选择行为，以行为单位
+    ui->userWidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置用户信息单元格选择模式，选择单行
+    ui->searchuserwidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置查找用户信息单元格选择行为，以行为单位
+    ui->searchuserwidget->setSelectionMode ( QAbstractItemView::SingleSelection); //设置查找用户信息单元格选择模式，选择单行
 
     //配置日历
-    ui->btEdit->setCalendarPopup(true);
-    ui->etEdit->setCalendarPopup(true);
-    ui->btEdit->setDisplayFormat("yyyy-MM-dd");
-    ui->btEdit->setDateTime(QDateTime::currentDateTime());
-    ui->etEdit->setDisplayFormat("yyyy-MM-dd");
-    ui->etEdit->setDateTime(QDateTime::currentDateTime());
+    ui->btEdit->setCalendarPopup(true);//设置能够显示日历
+    ui->etEdit->setCalendarPopup(true);//设置能够显示日历
+    ui->btEdit->setDisplayFormat("yyyy-MM-dd");//设置日历的显示格式
+    ui->btEdit->setDateTime(QDateTime::currentDateTime());//设置日历时间为当前日期
+    ui->etEdit->setDisplayFormat("yyyy-MM-dd");//设置日历的显示格式
+    ui->etEdit->setDateTime(QDateTime::currentDateTime());//设置日历时间为当前日期
 
 
     //设置管理员用户头像图片
     ui->Image->setPixmap(QPixmap(":/Image/manager.png"));
+    //设置窗口图标
+    this->setWindowIcon(QIcon(":/Image/manager.png"));
 
     //设置打开页面时显示列车表和列车查询选项
-    ui->stackedWidget1->setCurrentIndex(0);
-    ui->stackedWidget2->setCurrentIndex(0);
+    ui->stackedWidget1->setCurrentIndex(0);//将初始界面设置为列车信息的查询模式
+    ui->addressButton->setChecked(true);    //设置车票默认查询方式
+    ui->stackedWidget2->setCurrentIndex(0);//将初识界面设置为列车信息表格
 
-    //载入数据
+    //将车票信息数据显示在对应表格中
     setticketdata(ticketlist);
 
     //时钟初始化
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Widget::timerUpdate);
-    timer->start(1000);
-
-
-
-
-
-
-
+    timer->start(1000);//设置时间间隔
 
     //连接信号
-    connect(ui->Exit,&QPushButton::clicked,this,&QWidget::close);//设置退出按钮的功能
-
+    connect(ui->Exit,&QPushButton::clicked,this,&QWidget::close);//设置退出按钮的功能，按下关闭管理员界面
 
     //设置添加用户按钮功能
     ui->ticketWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    RightClick = new QMenu(ui->ticketWidget);                        //右键点击菜单
-    deleteAction = new QAction(QString::fromLocal8Bit("delete"),this);     //删除事件
-    RightClick->addAction(deleteAction);                                //将action添加到菜单内
+    RightClick = new QMenu(ui->ticketWidget);                        //添加右键点击菜单
+    deleteAction = new QAction(QString::fromLocal8Bit("delete"),this);     //添加删除事件
+    RightClick->addAction(deleteAction);                                //将删除事件添加到菜单内
 
-
+    //连接列车信息删除功能的信号
     connect(ui->ticketWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
     connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
-//    connect(ui->userWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
-//    connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
 
-
-    //设置车票默认查询方式
-    ui->addressButton->setChecked(true);
 
 }
 
 //将车票，用户数据读入列表中
 void Widget::loadingdata()
 {
-    //打开文件
+    //打开存储车票信息的文件
     QFile fticket("..//Train//ticket.txt");
+    //判断是否成功打开
     if (!fticket.open(QIODevice::ReadOnly))
     {
               return;
     }
-    //通过流对象读取文件信息并压入到信息列表中
+    //连接流
     QTextStream dataticket(&fticket);
+    //通过流对象读取文件信息并压入到信息列表中
     while(!dataticket.atEnd())
     {
-        ticket newt;
-        dataticket>>newt.id;
-        QString bgT, edT, bgD, edD;
-        dataticket>>newt.beginpoint;
-        dataticket>>newt.endpoint;
-        dataticket>>bgD;
-        dataticket>>bgT;
-        dataticket>>edD;
-        dataticket>>edT;
-        newt.begintime=bgD+" "+bgT;
-        newt.endtime=edD+" "+edT;
-        dataticket>>newt.amount;
-        dataticket>>newt.price;
-        QDateTime bt=QDateTime::fromString(newt.begintime,"yyyy-MM-dd hh:mm");
-        QDateTime curtime=QDateTime::currentDateTime();
-        int days=bt.daysTo(curtime);
+        ticket newt;//创建一个新的车票对象
+        QString bgT, edT, bgD, edD;//创建字符串用于存储发车时间和到站时间
+        dataticket>>newt.id;//读入列车号
+        dataticket>>newt.beginpoint;//读入始发站
+        dataticket>>newt.endpoint;//读入终点站
+        dataticket>>bgD;//读入发车日期
+        dataticket>>bgT;//读入发车具体时间
+        dataticket>>edD;//读入到站时间
+        dataticket>>edT;//读入到站具体时间
+        newt.begintime=bgD+" "+bgT;//拼接字符串为完整的发车时间
+        newt.endtime=edD+" "+edT;//拼接字符串为完整的到站时间
+        dataticket>>newt.amount;//读入车票数量
+        dataticket>>newt.price;//读入车票的价格
+        QDateTime bt=QDateTime::fromString(newt.begintime,"yyyy-MM-dd hh:mm");//将车票的发车时间转换为QDateTime便于比较
+        QDateTime curtime=QDateTime::currentDateTime();//创建当前时间的QDateTime对象
+        int days=bt.daysTo(curtime);//计算发车日期和当前日期相差的天数
+
+        //若车票发车日期比当前的日期早，则不存入列车信息列表。反之，则存入
         if(days<=0)
         ticketlist.push_back(newt);
     }
+
+    //判断列车信息列表是否为空（如果不检查，当列表为空时，程序会崩溃）
     if(ticketlist.isEmpty())
         ;
     else
-        ticketlist.pop_back();
-
+        ticketlist.pop_back();//如果list不为空，弹出最后一个数据（该数据是无用的数据）
     //关闭文件
     fticket.close();
+
     //打开文件
     QFile fuser("..\\Train\\User_Data.dat");
     if (!fuser.open(QIODevice::ReadOnly))
@@ -174,24 +174,28 @@ void Widget::loadingdata()
     while(!datauser.atEnd())
     {
         // 逐行输入数据
-        QString nm, ps, ac, op_s, gd_s;
-        datauser>> nm >> ac >> ps >> gd_s >> op_s;
+        QString nm, ps, ac, op_s, gd_s;//创建字符串分别存储用户名，密码，账号，性别，权限
+        datauser>> nm >> ac >> ps >> gd_s >> op_s;//读入用户名，密码，账号，性别，权限
 
+        //将性别和权限转换为布尔型数据
         QVariant op_v(op_s);
         QVariant gd_v(gd_s);
         bool op = op_v.toBool();
         bool gd = gd_v.toBool();
+
         // 将数据赋值给用户
-        user u;
-        u.setAccount(ac);
-        u.setGender(gd);
-        u.setName(nm);
-        u.setPassword(ps);
-        u.setOP(op);
+        user u;//创建一个新的用户对象
+        u.setAccount(ac);//设置账号
+        u.setGender(gd);//设置性别
+        u.setName(nm);//设置用户名
+        u.setPassword(ps);//设置密码
+        u.setOP(op);//设置权限
 
         // 将用户添加到链表中
         userlist.push_back(u);
     }
+
+    //弹出最后一个无用数据
     userlist.pop_back();
     //关闭文件
     fuser.close();
@@ -202,7 +206,7 @@ void Widget::loadingdata()
 void Widget::setticketdata(const QList<ticket>&ticketlist)
 {
 
-    //清空当前列表
+    //清空车票信息列表
     for(int row = ui->ticketWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->ticketWidget->removeRow(row);
@@ -211,22 +215,23 @@ void Widget::setticketdata(const QList<ticket>&ticketlist)
     //将车票信息显示到表格中
     for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
     {
-        int rowcont=ui->ticketWidget->rowCount();
-        ui->ticketWidget->insertRow(rowcont);
-        ui->ticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));
-        ui->ticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));
-        ui->ticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));
-        ui->ticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));
-        ui->ticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));
-        ui->ticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));
-        ui->ticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));
+        int rowcont=ui->ticketWidget->rowCount();//记录当前的行数
+        ui->ticketWidget->insertRow(rowcont);//插入新的一行
+        ui->ticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
+        ui->ticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
+        ui->ticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
+        ui->ticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示发车时间
+        ui->ticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
+        ui->ticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
+        ui->ticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
     }
 
 }
+
 //显示用户信息
 void Widget::setuserdata(const QList<user>&)
 {
-    //清空当前列表
+    //清空用户信息列表
     for(int row = ui->userWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->userWidget->removeRow(row);
@@ -235,40 +240,47 @@ void Widget::setuserdata(const QList<user>&)
     //将用户信息显示到表格中
     for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
     {
+        //判断是否为用户，如果是则显示；否则，则不显示
         if(it->Over_Power==false)
         {
-            int rowcont=ui->userWidget->rowCount();
-            ui->userWidget->insertRow(rowcont);
-            ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));
-            ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));
+            int rowcont=ui->userWidget->rowCount();//记录当前行数
+            ui->userWidget->insertRow(rowcont);//插入新的一行
+            ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));//显示用户名
+            ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));//显示账号
+
+            //打开存储用户购票信息的文件
             QFile userticket("..//Train//User_Ticket//"+it->name+".txt");
-                if (!userticket.open(QIODevice::ReadOnly))
-                {
-                          return;
-                }
-                QTextStream datauserticket(&userticket);
-                QString userticketinformation;
-                while (!datauserticket.atEnd())
-                {
-                   QString line = datauserticket.readLine();
-                   userticketinformation+="\n"+line;
-                }
-                userticket.close();
-                ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
+            //判断是否成功打开
+            if (!userticket.open(QIODevice::ReadOnly))
+            {
+                return;
+            }
+            QTextStream datauserticket(&userticket);//创建流对象
+            QString userticketinformation;//创建存储已购车票信息的字符串
+            //逐行读入
+            while (!datauserticket.atEnd())
+            {
+                QString line = datauserticket.readLine();
+                userticketinformation+="\n"+line;
+            }
+            //关闭文件
+            userticket.close();
+            //显示用户已购车票信息
+            ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
         }
     }
 
 }
 
-//列车信息列表
+//列车信息列表按钮功能的实现
 void Widget::on_ticketList_clicked()
 {
     //设置单元格不可被编辑
     ui->ticketWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    //回到车票信息界面
+    //回到车票信息界面，查询车票信息界面
     ui->stackedWidget2->setCurrentIndex(0);
     ui->stackedWidget1->setCurrentIndex(0);
-    //清空当前列表
+    //清空列车信息当前表格
     for(int row = ui->ticketWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->ticketWidget->removeRow(row);
@@ -283,9 +295,11 @@ void Widget::on_userList_clicked()
 {
     //设置单元格不可被编辑
     ui->userWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     //回到车票信息界面
     ui->stackedWidget2->setCurrentIndex(2);
     ui->stackedWidget1->setCurrentIndex(1);
+
     //清空当前列表
     for(int row = ui->userWidget->rowCount() - 1;row >= 0; row--)
     {
@@ -295,128 +309,133 @@ void Widget::on_userList_clicked()
     setuserdata(userlist);
 }
 
-//添加新的用户
+//添加用户按钮
 void Widget::on_adduserButton_clicked()
 {
-    adduserdialog* au=new adduserdialog;
+
+    adduserdialog* au=new adduserdialog;//创建一个新的添加用户对话框
     au->setModal(true);
-    au->show();
-    au->exec();
-//    QPushButton* btn= qobject_cast<QPushButton*>(sender());
-//    if(au->isaddclicked())
-//    {
-//    QString name = au->getname();
-//    QString account = au->getaccount();
-//    bool gender = au->getgender();
-//    QString password = au->getpassword();
-    QString name = au->name;
-        QString account = au->account;
-        bool gender = au->gender;
-        md5 m;
-        QString password = QString::fromStdString(m.getMD5(au->password.toStdString()));
+    au->show();//显示对话框
+    au->exec();//设置为模态对话框
 
-   if( au->flap==1)
-   {
-       delete au;
-       if(name.isEmpty()||account.isEmpty()||password.isEmpty())
-       {
-           QMessageBox::warning(this,"Warning","信息不全，无法添加！！！");
-       }
-       else
-       {
-           QList<user>::iterator it=userlist.begin();
-           for(;it!=userlist.end();it++)
-           {
-               if(it->account==account||it->name==name)
-               {
+    QString name = au->name;//获取添加用户的用户名
+    QString account = au->account;//获取添加用户的账号
+    bool gender = au->gender;//获取添加用户的性别
+    md5 m;//创建一个md5对象
+    QString password = QString::fromStdString(m.getMD5(au->password.toStdString()));//对密码进行加密
 
-                   QMessageBox::warning(this,"Warning","信息冲突，无法添加！！！");
-                   break;
-               }
-           }
-           if(it==userlist.end())
-           {
-               ui->userWidget->insertRow(ui->userWidget->rowCount());
-               ui->userWidget->scrollToBottom();
-               ui->userWidget->setItem(ui->userWidget->rowCount()-1,0,new QTableWidgetItem(name));
-               ui->userWidget->setItem(ui->userWidget->rowCount()-1,1,new QTableWidgetItem(account));
-               user newu;
-               newu.account=account;
-               newu.name=name;
-               newu.password=password;
-               newu.gender=gender;
-               newu.Over_Power=0;
-               userlist.push_back(newu);
-
-           }
-       }
-   }
-   else
-       delete au;
-
-
-}
-
-//添加一行新的列车信息
-void Widget::on_addticketButton_clicked()
-{
-    dialogaddticket* da=new dialogaddticket;
-    da->setModal(true);
-    da->show();
-    da->exec();
-    if(da->flap==1)
+    //如果按下了添加按钮
+    if( au->flap==1)
     {
-        QString id=da->getid();
-        QString ba=da->getba();
-        QString ea=da->getea();
-        QString bt=da->getbt();
-        QString et=da->getet();
-        QString t=da->getticket();
-        QString pr=da->getprice();
-        delete da;
-        if(id.isEmpty()||ba.isEmpty()||ea.isEmpty()||bt.isEmpty()||et.isEmpty()||t.isEmpty())
+        //释放空间
+        delete au;
+        //判断信息是否完整
+        if(name.isEmpty()||account.isEmpty()||password.isEmpty())
         {
-            QMessageBox::warning(this,"Warning","信息不全，无法添加！！！");
+            QMessageBox::warning(this,"Warning","信息不全，无法添加！！！");//信息不完整则警告，不予添加
         }
         else
         {
-            QList<ticket>::iterator it=ticketlist.begin();
-            for(;it!=ticketlist.end();it++)
+            //判断用户的信息是否存在冲突
+            QList<user>::iterator it=userlist.begin();
+            for(;it!=userlist.end();it++)
             {
-                if(it->id==id&&it->beginpoint==ba&&it->endpoint==ea&&it->begintime==bt)
+                //如果用户名和账号已存在则报告
+                if(it->account==account||it->name==name)
                 {
-
-                    QMessageBox::warning(this,"Warning","信息冲突，无法添加！！！");
+                    QMessageBox::warning(this,"Warning","信息冲突，无法添加！！！");//信息冲突警告，不予添加
                     break;
                 }
             }
-            if(it==ticketlist.end())
+            //如果信息完全，没有冲突信息，则添加该用户
+            if(it==userlist.end())
             {
-                ui->ticketWidget->insertRow(ui->ticketWidget->rowCount());
-                ui->ticketWidget->scrollToBottom();
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,0,new QTableWidgetItem(id));
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,1,new QTableWidgetItem(ba));
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,2,new QTableWidgetItem(ea));
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,3,new QTableWidgetItem(bt));
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,4,new QTableWidgetItem(et));
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,5,new QTableWidgetItem(t));
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,6,new QTableWidgetItem(pr));
-                ticket newt;
-                newt.id=id;
-                newt.beginpoint=ba;
-                newt.endpoint=ea;
-                newt.begintime=bt;
-                newt.endtime=et;
-                newt.amount=t.toInt();
-                newt.price=pr.toDouble();
-                ticketlist.push_back(newt);
+                ui->userWidget->insertRow(ui->userWidget->rowCount());//在用户信息表格添加一行
+                ui->userWidget->scrollToBottom();//将用户信息表格置于最底端
+                ui->userWidget->setItem(ui->userWidget->rowCount()-1,0,new QTableWidgetItem(name));//显示新用户的用户名
+                ui->userWidget->setItem(ui->userWidget->rowCount()-1,1,new QTableWidgetItem(account));//显示新用户的账号
+                user newu;//创建一个用户对象
+                newu.account=account;//设置账号
+                newu.name=name;//设置用户名
+                newu.password=password;//设置密码
+                newu.gender=gender;//设置性别
+                newu.Over_Power=0;//设置权限
+                userlist.push_back(newu);//压入用户列表中
             }
         }
-//    }
-//    else
-//        delete da;
+     }
+     else
+        delete au;//释放空间
+
+
+}
+
+//添加列车信息按钮功能的实现
+void Widget::on_addticketButton_clicked()
+{
+
+    dialogaddticket* da=new dialogaddticket;//创建一个新的添加列车对话框
+    da->setModal(true);
+    da->show();//显示对话框
+    da->exec();//设置为模态
+    //判断添加按钮是否被按下
+    if(da->flap==1)
+    {
+
+        QString id=da->getid();//获取新车次的列车号
+        QString ba=da->getba();//获取新车次的始发站
+        QString ea=da->getea();//获取新车次的终点站
+        QString bt=da->getbt();//获取新车次的发车时间
+        QString et=da->getet();//获取新车次的到站时间
+        QString t=da->getticket();//获取新车次的车票数
+        QString pr=da->getprice();//获取新车次的票价
+        delete da;//释放
+        //判断是否有信息不全
+        if(id.isEmpty()||ba.isEmpty()||ea.isEmpty()||bt.isEmpty()||et.isEmpty()||t.isEmpty())
+        {
+            QMessageBox::warning(this,"Warning","信息不全，无法添加！！！");//如果信息不全则警告，不予添加
+        }
+        else
+        {
+            //如果信息完全则尝试添加
+
+            //判断有信息冲突
+            QList<ticket>::iterator it=ticketlist.begin();
+            for(;it!=ticketlist.end();it++)
+            {
+                if(it->id==id&&it->beginpoint==ba&&it->endpoint==ea&&it->begintime==bt)//这里仅判断是否有同一列车相同始发站和终点站同时开车的情况
+                {
+
+                    QMessageBox::warning(this,"Warning","信息冲突，无法添加！！！");//如果信息有冲突，则警告，不予添加
+                    break;
+                }
+            }
+            //如果信息完全无冲突，则添加该车次
+            if(it==ticketlist.end())
+            {
+                ui->ticketWidget->insertRow(ui->ticketWidget->rowCount());//获取列车当前表格的行数
+                ui->ticketWidget->scrollToBottom();//将表格置于底端
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,0,new QTableWidgetItem(id));//显示列车号
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,1,new QTableWidgetItem(ba));//显示始发站
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,2,new QTableWidgetItem(ea));//显示终点站
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,3,new QTableWidgetItem(bt));//显示开车时间
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,4,new QTableWidgetItem(et));//显示到站时间
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,5,new QTableWidgetItem(t));//显示车票数
+                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,6,new QTableWidgetItem(pr));//显示票价
+                ticket newt;//创建新的车票对象
+                newt.id=id;//设置列车号
+                newt.beginpoint=ba;//设置始发站
+                newt.endpoint=ea;//设置终点站
+                newt.begintime=bt;//设置开车时间
+                newt.endtime=et;//设置到站时间
+                newt.amount=t.toInt();//设置车票数
+                newt.price=pr.toDouble();//设置票价
+                ticketlist.push_back(newt);//加入车次列表中
+            }
+        }
     }
 }
+
 //在列车信息列表右键单击时触发
 void Widget::RightClickSlot(QPoint pos)
 {
