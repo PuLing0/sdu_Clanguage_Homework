@@ -17,24 +17,24 @@ class Widget;
 class Widget : public QWidget
 {
     Q_OBJECT
-friend class adduserdialog;
-friend class changeticketdialog;
+
 public:
     explicit Widget(QWidget *parent = 0);
+    ~Widget();
+
     //将信息读入列表中
     void loadingdata();
     //将列车信息显示在表格中
     void setticketdata(const QList<ticket>&);
     //将用户信息显示在表格中
     void setuserdata(const QList<user>&);
-    ~Widget();
+
 public slots:
-    //添加用户信息
+
+    //添加用户信息按钮
     void on_adduserButton_clicked();
-    //添加车次信息
+    //添加车次信息按钮
     void on_addticketButton_clicked();
-    //保存修改
-    void on_saveBtn_clicked();
     //列车信息菜单点击，获取当前位置
     void RightClickSlot(QPoint pos);
     //列车信息得知菜单当前的位置并删除
@@ -45,22 +45,24 @@ public slots:
     void on_searchuserbtn_clicked();
     //点击车票信息列表按钮
     void on_ticketList_clicked();
-    //点击用户信息列表
+    //点击用户信息列表按钮
     void on_userList_clicked();
+    //保存修改按钮
+    void on_saveBtn_clicked();
     //点击修改列车信息是触发
     void on_changeticketbtn_clicked();
+    //计时器
     void timerUpdate();
 
 private:
     Ui::Widget *ui;
     QList<ticket> ticketlist;//车票信息列表
     QList<user> userlist;//用户信息列表
-    //删除信息时用到的事件
+
+    //删除列车信息时用到的事件
     QMenu *RightClick;        //右键点击
     QAction *deleteAction;    //删除事件
-    int iDeletcRow;
-
-    //
+    int iDeletcRow;//记录选中的表格行数
 
 };
 
