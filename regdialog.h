@@ -22,10 +22,11 @@ private slots:
 
     void on_Btn_Reg_clicked();//注册用户
 
+//用于鼠标拖动无边框窗口移动
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;// 鼠标按下事件处理函数
+    void mouseMoveEvent(QMouseEvent *event) override; // 鼠标移动事件处理函数
+    void mouseReleaseEvent(QMouseEvent *event) override;// 鼠标释放事件处理函数
 
 private:
     Ui::RegDialog *ui;
