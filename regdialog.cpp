@@ -75,6 +75,7 @@ void RegDialog::on_Btn_Reg_clicked()
     ui->L_pswd->clear();
 }
 
+//鼠标按下事件处理函数
 void RegDialog::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) // 左键按下
@@ -85,12 +86,14 @@ void RegDialog::mousePressEvent(QMouseEvent *event)
     return QWidget::mousePressEvent(event);
 }
 
+//鼠标移动事件处理函数
 void RegDialog::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_bMove) move(event->globalPos() - reltvPos);
     return QWidget::mouseMoveEvent(event);
 }
 
+//鼠标释放事件处理函数
 void RegDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     m_bMove = false; // 松开后要置为false

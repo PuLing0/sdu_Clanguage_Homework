@@ -33,7 +33,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QtMaterialAutoComplete" name="L_Name"/>
+       <widget class="QtMaterialAutoComplete" name="L_Name">
+        <property name="placeholderText">
+         <string>UserName</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -47,7 +51,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QtMaterialAutoComplete" name="L_Account"/>
+       <widget class="QtMaterialAutoComplete" name="L_Account">
+        <property name="placeholderText">
+         <string>Account</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -61,7 +69,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QtMaterialAutoComplete" name="L_pswd"/>
+       <widget class="QtMaterialAutoComplete" name="L_pswd">
+        <property name="placeholderText">
+         <string>Password</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -156,7 +168,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>30</y>
+     <y>-10</y>
      <width>581</width>
      <height>261</height>
     </rect>

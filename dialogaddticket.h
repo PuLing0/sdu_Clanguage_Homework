@@ -22,10 +22,10 @@ public:
     QString getet();//获取想要添加的列车的到站时间
     QString getticket();//获取想要添加的列车的车票数
     QString getprice();//获取想要添加的列车的票价
-
+    
     int flap;//判断保存按钮是否被按下
 public slots:
-
+    
     void saveclicked();//保存按钮按下式触发
 
 signals:
