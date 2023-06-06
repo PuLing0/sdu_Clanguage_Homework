@@ -23,11 +23,16 @@ public:
     ~Widget();
 
     //将信息读入列表中
-    void loadingdata();
+    void loadingticketdata();
+    void loadinguserdata();
     //将列车信息显示在表格中
     void setticketdata(const QList<ticket>&);
     //将用户信息显示在表格中
     void setuserdata(const QList<user>&);
+    //保存车票修改按钮
+    void saveticket();
+    //保存用户修改按钮
+    void saveuser();
 
 public slots:
 
@@ -47,8 +52,7 @@ public slots:
     void on_ticketList_clicked();
     //点击用户信息列表按钮
     void on_userList_clicked();
-    //保存修改按钮
-    void on_saveBtn_clicked();
+
     //点击修改列车信息是触发
     void on_changeticketbtn_clicked();
     //计时器

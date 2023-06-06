@@ -205,19 +205,6 @@ background-color: rgb(170, 255, 255);
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QtMaterialRaisedButton" name="saveBtn">
-      <property name="styleSheet">
-       <string notr="true">QPushButton
-{
-background-color: rgb(170, 255, 255);
-}</string>
-      </property>
-      <property name="text">
-       <string>保存修改</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="widgetChart" native="true">

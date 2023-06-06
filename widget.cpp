@@ -35,15 +35,15 @@ Widget::Widget(QWidget *parent) :
 {
 
     //加载数据，将车票信息和用户信息读入各自list中
-    loadingdata();
-
+    loadingticketdata();
+    loadinguserdata();
     ui->setupUi(this);
 
     //配置按钮
     ui->addticketButton->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->adduserButton->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->changeticketbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
-    ui->saveBtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
+    //ui->saveBtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->ticketList->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->userList->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->searchticketbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
@@ -119,7 +119,7 @@ Widget::Widget(QWidget *parent) :
 }
 
 //将车票，用户数据读入列表中
-void Widget::loadingdata()
+void Widget::loadingticketdata()
 {
     //打开存储车票信息的文件
     QFile fticket("..//Train//ticket.txt");
@@ -162,8 +162,11 @@ void Widget::loadingdata()
         ticketlist.pop_back();//如果list不为空，弹出最后一个数据（该数据是无用的数据）
     //关闭文件
     fticket.close();
+}
 
-    //打开文件
+void Widget::loadinguserdata()
+{
+    //打开用户文件
     QFile fuser("..\\Train\\User_Data.dat");
     if (!fuser.open(QIODevice::ReadOnly))
     {
@@ -190,12 +193,43 @@ void Widget::loadingdata()
         u.setName(nm);//设置用户名
         u.setPassword(ps);//设置密码
         u.setOP(op);//设置权限
+        /*读取用户已购票据*/
+        if(!nm.isEmpty())
+        {
+            QFile fp("..//Train//User_Ticket//" + nm + ".txt");
+            if(!fp.open(QIODevice::ReadOnly))
+            {
+                ;
+            }
+            else
+            {
+                QList<ticket> temp; //临时链表
+                QTextStream in(&fp);
+                while (!in.atEnd())//循环读取票据
+                {
+                    ticket newt;
+                    double price;
+                    in>>newt.id;
+                    in>>newt.beginpoint;
+                    in>>newt.endpoint;
+                    in>>newt.beginDay;
+                    in>>newt.begintime;
+                    in>>newt.endDay;
+                    in>>newt.endtime;
+                    in>>price;
+                    if(newt.endtime != "") //若该票不为空票
+                        temp.append(newt); //尾插到temp链表
+                }
+                u.setTickets(temp); //设置当前用户已购票据为temp
+                fp.close();
+            }
+        }
 
         // 将用户添加到链表中
         userlist.push_back(u);
     }
 
-    //弹出最后一个无用数据
+    //弹出最后一个无用用户数据
     userlist.pop_back();
     //关闭文件
     fuser.close();
@@ -238,7 +272,7 @@ void Widget::setuserdata(const QList<user>&)
     }
 
     //将用户信息显示到表格中
-    for(QList<user>::const_iterator it=userlist.begin();it!=userlist.end();it++)
+    for(QList<user>::iterator it=userlist.begin();it!=userlist.end();it++)
     {
         //判断是否为用户，如果是则显示；否则，则不显示
         if(it->Over_Power==false)
@@ -247,26 +281,13 @@ void Widget::setuserdata(const QList<user>&)
             ui->userWidget->insertRow(rowcont);//插入新的一行
             ui->userWidget->setItem(rowcont,0,new QTableWidgetItem(it->name));//显示用户名
             ui->userWidget->setItem(rowcont,1,new QTableWidgetItem(it->account));//显示账号
-
-            //打开存储用户购票信息的文件
-            QFile userticket("..//Train//User_Ticket//"+it->name+".txt");
-            //判断是否成功打开
-            if (!userticket.open(QIODevice::ReadOnly))
-            {
-                return;
-            }
-            QTextStream datauserticket(&userticket);//创建流对象
-            QString userticketinformation;//创建存储已购车票信息的字符串
-            //逐行读入
-            while (!datauserticket.atEnd())
-            {
-                QString line = datauserticket.readLine();
-                userticketinformation+="\n"+line;
-            }
-            //关闭文件
-            userticket.close();
             //显示用户已购车票信息
-            ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(userticketinformation));
+            QString buyticket;
+            for(QList<ticket>::const_iterator it1=it->tickets.begin();it1!=it->tickets.end();it1++)
+            {
+                buyticket=buyticket+it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->beginDay+' '+it1->begintime+' '+it1->endDay+' '+it1->endtime+'\n';
+            }
+            ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(buyticket));
         }
     }
 
@@ -366,7 +387,7 @@ void Widget::on_adduserButton_clicked()
      }
      else
         delete au;//释放空间
-
+    saveuser();
 
 }
 
@@ -434,6 +455,7 @@ void Widget::on_addticketButton_clicked()
             }
         }
     }
+    saveticket();
 }
 
 //在列车信息列表右键单击时触发
@@ -483,6 +505,7 @@ void Widget::RightClickDelete(QAction *act)
             ui->ticketWidget->removeRow(iDeletcRow);  //删除表格中信息
         }
     }
+    saveticket();
 }
 
 //查询车票按钮功能的实现
@@ -663,15 +686,16 @@ void Widget::on_changeticketbtn_clicked()
 }
 
 //时钟功能的视线
-void Widget::timerUpdate(){
+void Widget::timerUpdate()
+{
     /*时钟实现*/
     QDateTime t = QDateTime::currentDateTime(); //获取当前时间
     QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");//设置时间显示格式
     ui->TimeLabel->setText(s); //屏显
 }
 
-//保存修改按钮功能的实现
-void Widget::on_saveBtn_clicked()
+//保存车票修改功能实现
+void Widget::saveticket()
 {
 
     //打开存储车票信息的文件
@@ -691,7 +715,10 @@ void Widget::on_saveBtn_clicked()
 
     //关闭文件
     fticket.close();
-
+}
+//保存用户修改功能实现
+void Widget::saveuser()
+{
     //打开存储用户信息的文件
     QFile fuser("..//Train//User_Data.dat");
     //判断是否以写的方式打开文件
