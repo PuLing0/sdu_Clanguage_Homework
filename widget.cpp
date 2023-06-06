@@ -223,7 +223,7 @@ void Widget::loadinguserdata()
 
                     //若车票发车日期比当前的日期早，则不存入列车信息列表。反之，则存入
                     if(days<=0)
-                    ticketlist.push_back(newt);
+                    temp.push_back(newt);
                 }
                 //判断链表是否为空
                 if(temp.isEmpty())
