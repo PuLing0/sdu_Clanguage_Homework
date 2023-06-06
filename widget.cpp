@@ -163,7 +163,7 @@ void Widget::loadingticketdata()
     //关闭文件
     fticket.close();
 }
-
+//将用户信息读入列表
 void Widget::loadinguserdata()
 {
     //打开用户文件
@@ -208,15 +208,17 @@ void Widget::loadinguserdata()
                 while (!in.atEnd())//循环读取票据
                 {
                     ticket newt;
-                    double price;
-                    in>>newt.id;
-                    in>>newt.beginpoint;
-                    in>>newt.endpoint;
-                    in>>newt.beginDay;
-                    in>>newt.begintime;
-                    in>>newt.endDay;
-                    in>>newt.endtime;
-                    in>>price;
+                    QString bgT, edT, bgD, edD;//创建字符串用于存储发车时间和到站时间
+                    in>>newt.id;//读入列车号
+                    in>>newt.beginpoint;//读入始发站
+                    in>>newt.endpoint;//读入终点站
+                    in>>bgD;//读入发车日期
+                    in>>bgT;//读入发车具体时间
+                    in>>edD;//读入到站时间
+                    in>>edT;//读入到站具体时间
+                    newt.begintime=bgD+" "+bgT;//拼接字符串为完整的发车时间
+                    newt.endtime=edD+" "+edT;//拼接字符串为完整的到站时间
+                    in>>newt.price;
                     if(newt.endtime != "") //若该票不为空票
                         temp.append(newt); //尾插到temp链表
                 }
@@ -285,13 +287,14 @@ void Widget::setuserdata(const QList<user>&)
             QString buyticket;
             for(QList<ticket>::const_iterator it1=it->tickets.begin();it1!=it->tickets.end();it1++)
             {
-                buyticket=buyticket+it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->beginDay+' '+it1->begintime+' '+it1->endDay+' '+it1->endtime+'\n';
+                buyticket=buyticket+it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->begintime+' '+it1->endtime+'\n';
             }
             ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(buyticket));
         }
     }
 
 }
+
 
 //列车信息列表按钮功能的实现
 void Widget::on_ticketList_clicked()
@@ -502,10 +505,24 @@ void Widget::RightClickDelete(QAction *act)
                     break;
                 }
             }
+            //删除用户已经购买车票的信息
+            for(QList<user>::iterator it=userlist.begin();it!=userlist.end();it++)
+            {
+                for(QList<ticket>::iterator it1=it->tickets.begin();it1!=it->tickets.end();it1++)
+                {
+                    //找到后删除
+                    if(it1->id==id&&it1->beginpoint==ba&&it1->endpoint==ea&&it1->begintime==bt&&it1->endtime==et)
+                    {
+                        it->tickets.erase(it1);
+                        break;
+                    }
+                }
+            }
             ui->ticketWidget->removeRow(iDeletcRow);  //删除表格中信息
         }
     }
     saveticket();
+    saveuser();
 }
 
 //查询车票按钮功能的实现
@@ -670,9 +687,26 @@ void Widget::on_changeticketbtn_clicked()
                     it->endtime=finet;//更改到站时间
                     it->amount=finnumber.toDouble();//更改车票数
                     it->price=finprice.toDouble();//更改车票价格
-
+                    //删除用户已经购买车票的信息
+                    for(QList<user>::iterator it1=userlist.begin();it1!=userlist.end();it1++)
+                    {
+                        for(QList<ticket>::iterator it2=it1->tickets.begin();it2!=it1->tickets.end();it2++)
+                        {
+                            //找到后修改
+                            if(it2->id==iniid&&it2->beginpoint==iniba&&it2->endpoint==iniea&&it2->begintime==inibt&&it2->endtime==iniet)
+                            {
+                                it2->beginpoint=finba;//更改始发站
+                                it2->endpoint=finea;//更改终点站
+                                it2->begintime=finbt;//更改发车时间
+                                it2->endtime=finet;//更改到站时间
+                                it2->price=finprice.toDouble();//更改车票价格
+                                break;
+                            }
+                        }
+                    }
                     QMessageBox::information(this,"提示","修改成功");//提示
                     setticketdata(ticketlist);//显示更改后的信息
+                    setuserdata(userlist);
                     break;
                 }
             }
@@ -710,7 +744,7 @@ void Widget::saveticket()
     QTextStream dataticket(&fticket);
     for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
     {
-         dataticket<<it->id<<" "<<it->beginpoint<<" "<<it->endpoint<<" "<<it->begintime<<" "<<it->endtime<<" "<<it->amount<<" "<<it->price<<endl;
+         dataticket<<it->id<<" "<<it->beginpoint<<" "<<it->endpoint<<" "<<it->begintime<<" "<<it->endtime<<" "<<it->amount<<" "<<QString::number(it->price)<<endl;
     }
 
     //关闭文件
@@ -734,8 +768,16 @@ void Widget::saveuser()
          datauser<<it->name<<' '<<it->account<<' '<<it->password<<" "<<it->gender<<" "<<it->Over_Power<<endl;
          //创建对应账户的存储已购车票信息的文件
          QFile file_name("..\\Train\\User_Ticket\\" + it->name + ".txt");
-         if (!file_name.open(QIODevice::Append | QIODevice::Text))
+         QTextStream out(&file_name);
+         if (!file_name.open(QIODevice::WriteOnly | QIODevice::Text))
                 return ;
+         else
+         {
+             for(QList<ticket>::const_iterator it1=it->tickets.begin();it1!=it->tickets.end();it1++)
+             {
+                 out<<it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->begintime+' '+it1->endtime+' '+it1->price<<endl;
+             }
+         }
          //关闭文件
          file_name.close();
     }
