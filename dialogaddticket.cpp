@@ -17,8 +17,8 @@ dialogaddticket::dialogaddticket(QWidget *parent) :
     ui->canclebtn->setBackgroundColor(QColor(0,188,212));//设置按钮颜色
     connect(ui->canclebtn,&QPushButton::clicked,this,&dialogaddticket::close);//按下取消按钮关闭对话框
     connect(ui->addbtn,&QPushButton::clicked,this,&dialogaddticket::saveclicked);//按下添加按钮触发Saveclicked
-    ui->BtdateTimeEdit->setTime(QTime::currentTime());//设置时间选择空间显示当前时间
-    ui->EtdateTimeEdit->setTime(QTime::currentTime());//设置时间选择空间显示当前时间
+    ui->BtdateTimeEdit->setDateTime(QDateTime::currentDateTime());//设置时间选择空间显示当前时间
+    ui->EtdateTimeEdit->setDateTime(QDateTime::currentDateTime());//设置时间选择空间显示当前时间
 }
 
 
