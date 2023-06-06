@@ -43,7 +43,6 @@ Widget::Widget(QWidget *parent) :
     ui->addticketButton->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->adduserButton->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->changeticketbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
-    //ui->saveBtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->ticketList->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->userList->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
     ui->searchticketbtn->setBackgroundColor(QColor(0,188,212));//设置按钮的背景颜色
@@ -118,7 +117,7 @@ Widget::Widget(QWidget *parent) :
 
 }
 
-//将车票，用户数据读入列表中
+//将车票，用户数据读入链表中
 void Widget::loadingticketdata()
 {
     //打开存储车票信息的文件
@@ -128,9 +127,8 @@ void Widget::loadingticketdata()
     {
               return;
     }
-    //连接流
     QTextStream dataticket(&fticket);
-    //通过流对象读取文件信息并压入到信息列表中
+    //通过流对象读取文件信息并压入到信息链表中
     while(!dataticket.atEnd())
     {
         ticket newt;//创建一个新的车票对象
@@ -150,12 +148,12 @@ void Widget::loadingticketdata()
         QDateTime curtime=QDateTime::currentDateTime();//创建当前时间的QDateTime对象
         int days=bt.daysTo(curtime);//计算发车日期和当前日期相差的天数
 
-        //若车票发车日期比当前的日期早，则不存入列车信息列表。反之，则存入
+        //若车票发车日期比当前的日期早，则不存入列车信息链表。反之，则存入
         if(days<=0)
         ticketlist.push_back(newt);
     }
 
-    //判断列车信息列表是否为空（如果不检查，当列表为空时，程序会崩溃）
+    //判断列车信息链表是否为空（如果不检查，当链表为空时，程序会崩溃）
     if(ticketlist.isEmpty())
         ;
     else
@@ -163,7 +161,7 @@ void Widget::loadingticketdata()
     //关闭文件
     fticket.close();
 }
-//将用户信息读入列表
+//将用户信息读入链表
 void Widget::loadinguserdata()
 {
     //打开用户文件
@@ -172,7 +170,7 @@ void Widget::loadinguserdata()
     {
               return;
     }
-    //通过流对象读取文件信息并压入到信息列表中
+    //通过流对象读取文件信息并压入到信息链表中
     QTextStream datauser(&fuser);
     while(!datauser.atEnd())
     {
@@ -196,18 +194,18 @@ void Widget::loadinguserdata()
         /*读取用户已购票据*/
         if(!nm.isEmpty())
         {
-            QFile fp("..//Train//User_Ticket//" + nm + ".txt");
+            QFile fp("..//Train//User_Ticket//" + nm + ".txt");//打开存储用户购票信息的文件
             if(!fp.open(QIODevice::ReadOnly))
             {
                 ;
             }
             else
             {
-                QList<ticket> temp; //临时链表
+                QList<ticket> temp; //创建临时链表
                 QTextStream in(&fp);
                 while (!in.atEnd())//循环读取票据
                 {
-                    ticket newt;
+                    ticket newt;//新车票
                     QString bgT, edT, bgD, edD;//创建字符串用于存储发车时间和到站时间
                     in>>newt.id;//读入列车号
                     in>>newt.beginpoint;//读入始发站
@@ -218,7 +216,7 @@ void Widget::loadinguserdata()
                     in>>edT;//读入到站具体时间
                     newt.begintime=bgD+" "+bgT;//拼接字符串为完整的发车时间
                     newt.endtime=edD+" "+edT;//拼接字符串为完整的到站时间
-                    in>>newt.price;
+                    in>>newt.price;//读入价格
                     QDateTime bt=QDateTime::fromString(newt.begintime,"yyyy-MM-dd hh:mm");//将车票的发车时间转换为QDateTime便于比较
                     QDateTime curtime=QDateTime::currentDateTime();//创建当前时间的QDateTime对象
                     int days=bt.daysTo(curtime);//计算发车日期和当前日期相差的天数
@@ -227,6 +225,7 @@ void Widget::loadinguserdata()
                     if(days<=0)
                     ticketlist.push_back(newt);
                 }
+                //判断链表是否为空
                 if(temp.isEmpty())
                     ;
                 else
@@ -251,7 +250,7 @@ void Widget::loadinguserdata()
 void Widget::setticketdata(const QList<ticket>&ticketlist)
 {
 
-    //清空车票信息列表
+    //清空车票信息链表
     for(int row = ui->ticketWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->ticketWidget->removeRow(row);
@@ -276,7 +275,7 @@ void Widget::setticketdata(const QList<ticket>&ticketlist)
 //显示用户信息
 void Widget::setuserdata(const QList<user>&)
 {
-    //清空用户信息列表
+    //清空用户信息链表
     for(int row = ui->userWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->userWidget->removeRow(row);
@@ -333,7 +332,7 @@ void Widget::on_userList_clicked()
     ui->stackedWidget2->setCurrentIndex(2);
     ui->stackedWidget1->setCurrentIndex(1);
 
-    //清空当前列表
+    //清空当前表格
     for(int row = ui->userWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->userWidget->removeRow(row);
@@ -393,7 +392,7 @@ void Widget::on_adduserButton_clicked()
                 newu.password=password;//设置密码
                 newu.gender=gender;//设置性别
                 newu.Over_Power=0;//设置权限
-                userlist.push_back(newu);//压入用户列表中
+                userlist.push_back(newu);//压入用户链表中
             }
         }
      }

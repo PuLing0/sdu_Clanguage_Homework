@@ -60,8 +60,8 @@ public slots:
 
 private:
     Ui::Widget *ui;
-    QList<ticket> ticketlist;//车票信息列表
-    QList<user> userlist;//用户信息列表
+    QList<ticket> ticketlist;//车票信息链表
+    QList<user> userlist;//用户信息链表
 
     //删除列车信息时用到的事件
     QMenu *RightClick;        //右键点击
