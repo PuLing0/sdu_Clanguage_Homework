@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "ticket.h"
 #include"user.h"
+#include<QCloseEvent>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget_User; }
 QT_END_NAMESPACE
@@ -29,6 +30,9 @@ private slots:
     bool save(); //保存
     void get(bool m, ticket a); //窗口间传递changingTicket
     void timerUpdate(); //时钟
+    void updateTicketData(); //更新票据文件
+protected:
+    void closeEvent(QCloseEvent *event);
 private:
     Ui::Widget_User *ui;
     QList<ticket> tickets; //所有票据

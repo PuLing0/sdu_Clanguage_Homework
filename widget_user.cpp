@@ -26,6 +26,8 @@ Widget_User::Widget_User(QWidget *parent)
     ui->label_6->hide();
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+    if(!tickets.size()) //若票据链表为空
+        read(); //读取票据文件
 
     //ui设置
     ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
@@ -54,8 +56,6 @@ void Widget_User::setUser(user t){
 void Widget_User::on_pushButton_clicked()
 {
     /*查询按键*/
-    if(!tickets.size()) //若票据链表为空
-        read(); //读取票据文件
     ui->tableWidget->setRowCount(0); //清空表格
     check(); //查询票据
 }
@@ -87,6 +87,11 @@ bool Widget_User::read(){
         fp.close();
         return true;
     }
+}
+
+void Widget_User::closeEvent(QCloseEvent *event){
+    updateTicketData();
+    save();
 }
 
 bool Widget_User::readUsertickets(){
@@ -228,24 +233,48 @@ void Widget_User::on_pushButton_4_clicked()
 {
     /*退出登录按钮*/
     save();
+    updateTicketData();
     close();
 }
 
 bool Widget_User::save(){
     /*保存用户购买票据*/
     QFile file("..//Train//User_Ticket//" + currentUser.getid() + ".txt");
-    if(file.open(QIODevice::ReadWrite|QIODevice::Text)){ //读写打开文本文件，若不存在则新建
+    if(file.open(QIODevice::ReadWrite|QIODevice::Text|QIODevice::Truncate)){ //读写打开文本文件，若不存在则新建
         QTextStream out(&file);
         QList<ticket> t(currentUser.getTickets());
-        for(auto i = t.begin(); i != t.end(); i++){ //写入票据
-            out << i->id << " " << " " << i->beginpoint << " " << i->endpoint << " "
-                << i->beginDay << " " << i->begintime << " "
-                << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2) << endl;
+        if(t.empty()){
+            file.close();
+            file.remove();
         }
+        else {
+            for(auto i = t.begin(); i != t.end(); i++){ //写入票据
+                out << i->id << " " << " " << i->beginpoint << " " << i->endpoint << " "
+                    << i->beginDay << " " << i->begintime << " "
+                    << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2) << endl;
+            }
+        }
+        file.close();
         return true;
     }
     else{
         return false;
+    }
+}
+void Widget_User::updateTicketData(){
+    /*更新票据记录文件*/
+    QFile fp("..//Train//ticket.txt"); //票据文件路径
+    if(fp.open(QIODevice::ReadWrite|QIODevice::Text|QIODevice::Truncate))
+    {
+        QTextStream out(&fp);
+        for(auto i : tickets){
+            if(i.price) //若不是空票据
+            out << i.id << " " << i.beginpoint << " " << i.endpoint << " "
+                << i.beginDay << " " << i.begintime << " "
+                << i.endDay << " " << i.endtime << " "
+                << i.amount << " " << QString::number(i.price, 'f', 2) << endl;
+        }
+        fp.close();
     }
 }
 
