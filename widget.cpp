@@ -565,7 +565,7 @@ void Widget::on_searchticketbtn_clicked()
                 ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
                 ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
                 ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
             }
         }
     }
@@ -590,7 +590,7 @@ void Widget::on_searchticketbtn_clicked()
                 ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
                 ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
                 ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
             }
          }
     }
