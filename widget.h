@@ -52,7 +52,8 @@ public slots:
     void on_ticketList_clicked();
     //点击用户信息列表按钮
     void on_userList_clicked();
-
+    //点击退出按钮
+    void on_Exit_clicked();
     //点击修改列车信息是触发
     void on_changeticketbtn_clicked();
     //计时器

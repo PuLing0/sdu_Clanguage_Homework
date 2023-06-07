@@ -101,7 +101,6 @@ Widget::Widget(QWidget *parent) :
     connect(timer, &QTimer::timeout, this, &Widget::timerUpdate);
     timer->start(1000);//设置时间间隔
 
-    //连接信号
     connect(ui->Exit,&QPushButton::clicked,this,&QWidget::close);//设置退出按钮的功能，按下关闭管理员界面
 
     //设置添加用户按钮功能
@@ -788,6 +787,12 @@ void Widget::saveuser()
     //关闭文件
     fuser.close();
 
+}
+void Widget::on_Exit_clicked()
+{
+    saveticket();
+    saveuser();
+    this->close();
 }
 
 Widget::~Widget()
