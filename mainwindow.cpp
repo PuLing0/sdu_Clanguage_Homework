@@ -63,10 +63,6 @@ framelessWidget::framelessWidget(QWidget *parent)
             stat = 0;
         }
     });
-
-
-
-
 }
 
 framelessWidget::~framelessWidget()
@@ -88,14 +84,6 @@ void framelessWidget::Init()
     ui->mainWidget->setObjectName("mainWidget");
     mainStyle = "QWidget#mainWidget{background-color:rgb(251, 251, 251)"  + QString::asprintf(";border-radius:%dpx", cornerRadius) + "}";
     ui->mainWidget->setStyleSheet(mainStyle);
-
-//        // 创建一个QPoint对象，指定鼠标点击的位置
-//        QPoint clickPos(1, 10);
-//        QCursor::setPos(mapToGlobal(clickPos));
-
-//        // 模拟鼠标点击
-//        QMouseEvent mousePressEvent(QEvent::MouseButtonPress, clickPos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-//        QApplication::sendEvent(QApplication::focusWidget(), &mousePressEvent);
 }
 
 // 鼠标按下事件(记录拉伸窗口或移动窗口时的起始坐标（左上角）)
@@ -267,4 +255,4 @@ void framelessWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(event->y()<60)
         controlWindowScale();
-};
+}
