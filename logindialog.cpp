@@ -1,8 +1,6 @@
 #include "logindialog.h"
 #include "qdebug.h"
 #include "user_crl.h"
-#include "opdialog.h"
-#include "psgdialog.h"
 #include <QMessageBox>
 #include "md5.h"
 #include "widget.h"
