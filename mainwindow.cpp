@@ -101,7 +101,8 @@ void framelessWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if(event->buttons() == Qt::NoButton) // 如果鼠标按钮没有被按下
         mousePressed = false; // 将鼠标按下状态标记为false
-    if(!mousePressed){ // 如果鼠标没有按下（鼠标移动事件）
+    if(!mousePressed)
+    { // 如果鼠标没有按下（鼠标移动事件）
         mouseState = 0; // 鼠标状态初始化为0
         // 检测鼠标位置是否靠近主部件的边界，并根据情况更新鼠标状态
         if(!maximized && abs(event->pos().x() - ui->mainWidget->pos().x()) < 5)
@@ -124,9 +125,14 @@ void framelessWidget::mouseMoveEvent(QMouseEvent *event)
         else
             unsetCursor(); // 恢复默认光标形状
     }
-    else{ // 如果鼠标已按下并移动
-        if(mouseState == 0){ // 如果鼠标状态为0（未调整大小）
-            if(maximized){ // 如果窗口已最大化
+    else
+    { // 如果鼠标已按下并移动
+        if(mouseState == 0)
+        {
+            // 如果鼠标状态为0（未调整大小）
+            if(maximized)
+            {
+                // 如果窗口已最大化
                 qreal wRatio = (double)event->pos().x() / (double)ui->mainWidget->width(); // 计算当前鼠标位置相对于主部件宽度的比例
                 controlWindowScale(); // 恢复窗口的正常大小
                 this->move(QPoint(event->globalPos().x() - ui->mainWidget->width() * wRatio, -30)); // 移动窗口到鼠标位置，并考虑标题栏的高度
@@ -135,20 +141,30 @@ void framelessWidget::mouseMoveEvent(QMouseEvent *event)
             else
                 this->move(event->globalPos() - lastPos); // 移动窗口到鼠标位置
         }
-        else{ // 如果鼠标状态不为0（调整大小）
+        else
+        {
+            // 如果鼠标状态不为0（调整大小）
             QPoint d = event->globalPos() - frameGeometry().topLeft() - lastPos; // 计算鼠标移动的偏移量
-            if(mouseState & AT_LEFT){ // 如果鼠标状态包含左侧
+            if(mouseState & AT_LEFT)
+            {
+                // 如果鼠标状态包含左侧
                 this->move(this->frameGeometry().x() + d.x(), this->frameGeometry().y()); // 调整窗口的水平位置
                 this->resize(this->width() - d.x(), this->height()); // 调整窗口的宽度
             }
-            if(mouseState & AT_RIGHT){ // 如果鼠标状态包含右侧
+            if(mouseState & AT_RIGHT)
+            {
+                // 如果鼠标状态包含右侧
                 this->resize(this->width() + d.x(), this->height()); // 调整窗口的宽度
             }
-            if(mouseState & AT_TOP){ // 如果鼠标状态包含顶部
+            if(mouseState & AT_TOP)
+            {
+                // 如果鼠标状态包含顶部
                 this->move(this->frameGeometry().x(), this->frameGeometry().y() + d.y()); // 调整窗口的垂直位置
                 this->resize(this->width(), this->height() - d.y()); // 调整窗口的高度
             }
-            if(mouseState & AT_BOTTOM){ // 如果鼠标状态包含底部
+            if(mouseState & AT_BOTTOM)
+            {
+                // 如果鼠标状态包含底部
                 this->resize(this->width(), this->height() + d.y()); // 调整窗口的高度
             }
         }
@@ -174,7 +190,8 @@ void framelessWidget::resizeEvent(QResizeEvent *event)
 void framelessWidget::controlWindowScale()
 {
 #ifdef Q_OS_WIN
-    if (!maximized) { // 如果窗口没有最大化
+    if (!maximized)
+    { // 如果窗口没有最大化
         lastGeometry = this->frameGeometry(); // 保存当前窗口的位置和大小
         // windowShadow->setEnabled(false); // 禁用窗口阴影效果（注释掉的代码）
         ui->verticalLayout->setContentsMargins(0, 0, 0, 0); // 设置主垂直布局的边距为0
@@ -188,7 +205,8 @@ void framelessWidget::controlWindowScale()
         QRegion mask(path.toFillPolygon().toPolygon()); // 将绘图路径转换为多边形并创建区域对象
         ui->mainWidget->setMask(mask); // 应用区域遮罩到主部件
     }
-    else { // 如果窗口已经最大化
+    else
+    { // 如果窗口已经最大化
         ui->verticalLayout->setContentsMargins(30, 30, 30, 30); // 恢复主垂直布局的默认边距
         this->showNormal(); // 恢复窗口的正常大小
         QString mainStyle = "QWidget#mainWidget{background-color:rgb(251,251,251)" + QString::asprintf(";border-radius:%dpx", cornerRadius) + "}"; // 根据指定的圆角半径创建主部件的样式表
