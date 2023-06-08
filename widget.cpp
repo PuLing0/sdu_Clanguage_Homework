@@ -120,7 +120,7 @@ Widget::Widget(QWidget *parent) :
 void Widget::loadingticketdata()
 {
     //打开存储车票信息的文件
-    QFile fticket("..//Train//ticket.txt");
+    QFile fticket("..//Train//hchsk.txt");
     //判断是否成功打开
     if (!fticket.open(QIODevice::ReadOnly))
     {
@@ -833,7 +833,7 @@ void Widget::saveticket()
 {
 
     //打开存储车票信息的文件
-    QFile fticket("..//Train//ticket.txt");
+    QFile fticket("..//Train//hchsk.txt");
     //判断是否以读的方式成功打开
     if (!fticket.open(QIODevice::WriteOnly))
     {
