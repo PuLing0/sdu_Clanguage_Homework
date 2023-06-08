@@ -25,9 +25,7 @@ SOURCES += \
     mainwindow.cpp \
     md5.cpp \
     messagebox1.cpp \
-    opdialog.cpp \
     prompt1.cpp \
-    psgdialog.cpp \
     regdialog.cpp \
     ticket.cpp \
     user.cpp \
@@ -46,9 +44,7 @@ HEADERS += \
     mainwindow.h \
     md5.h \
     messagebox1.h \
-    opdialog.h \
     prompt1.h \
-    psgdialog.h \
     regdialog.h \
     ticket.h \
     user.h \
@@ -65,9 +61,7 @@ FORMS += \
     form.ui \
     mainwindow.ui \
     messagebox1.ui \
-    opdialog.ui \
     prompt1.ui \
-    psgdialog.ui \
     regdialog.ui \
     widget.ui \
     widget_user.ui
