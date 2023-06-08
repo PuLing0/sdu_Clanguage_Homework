@@ -251,7 +251,7 @@ color: rgb(255, 0, 0);</string>
 background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>hn</string>
+    <string>北京</string>
    </property>
    <property name="placeholderText">
     <string/>
@@ -271,7 +271,7 @@ background-color: rgb(255, 255, 255);</string>
 background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>hb</string>
+    <string>上海</string>
    </property>
    <property name="placeholderText">
     <string/>

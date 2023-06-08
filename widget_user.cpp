@@ -46,7 +46,8 @@ Widget_User::~Widget_User()
     delete ui;
 }
 
-void Widget_User::setUser(user t){
+void Widget_User::setUser(user t)
+{
     /*设置当前用户*/
     currentUser = t;
     readUsertickets(); //读取用户已购票据
@@ -60,17 +61,20 @@ void Widget_User::on_pushButton_clicked()
     check(); //查询票据
 }
 
-bool Widget_User::read(){
+bool Widget_User::read()
+{
     /*读取票据文件*/
     QFile fp("..//Train//ticket.txt"); //票据文件路径
-    if(!fp.open(QIODevice::ReadOnly)){
+    if(!fp.open(QIODevice::ReadOnly))
+    {
         ui->label_7->setText("载入文件失败");
         return false;
     }
-    else {
+    else
+    {
         QTextStream in(&fp);
-        QString bgT, edT, bgD, edD;
-        while (!in.atEnd()){ //循环读取票据
+        while (!in.atEnd())
+        { //循环读取票据
             ticket t;
             in>>t.id;
             in>>t.beginpoint;
@@ -94,17 +98,19 @@ void Widget_User::closeEvent(QCloseEvent *event){
     save();
 }
 
-bool Widget_User::readUsertickets(){
+bool Widget_User::readUsertickets()
+{
     /*读取用户已购票据*/
     QFile fp("..//Train//User_Ticket//" + currentUser.getid() + ".txt");
-    if(!fp.open(QIODevice::ReadOnly)){
+    if(!fp.open(QIODevice::ReadOnly))
+    {
         return false;
     }
     else {
         QList<ticket> temp; //临时链表
         QTextStream in(&fp);
-        QString bgT, edT, bgD, edD;
-        while (!in.atEnd()){ //循环读取票据
+        while (!in.atEnd())
+        { //循环读取票据
             ticket t;
             in>>t.id;
             in>>t.beginpoint;
@@ -125,21 +131,26 @@ bool Widget_User::readUsertickets(){
 }
 
 
-void Widget_User::check(){
+void Widget_User::check()
+{
     /*查询票据实现*/
     //获取查询信息
     QString b = ui->lineEdit->text();
     QString c = ui->lineEdit_2->text();
     QString d = ui->dateEdit->date().toString("yyyy-MM-dd");
 
-    if(b == "" || c == ""){ //若有信息为空
+    if(b == "" || c == "")
+    { //若有信息为空
         ui->label_5->setText("查询失败：信息不完整"); //报错
     }        
-    else{
+    else
+    {
         int i = 0;
         int row = 0, column = 0;
-        while(i < tickets.size() - 1){ //循环打印票据到表格
-            if(d == tickets[i].beginDay && b == tickets[i].beginpoint && c == tickets[i].endpoint){
+        while(i < tickets.size() - 1)
+        { //循环打印票据到表格
+            if(d == tickets[i].beginDay && b == tickets[i].beginpoint && c == tickets[i].endpoint)
+            {
                 ui->tableWidget->insertRow(0); //插入新行
                 column = 0;
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(tickets[i].id));
@@ -160,10 +171,12 @@ void Widget_User::check(){
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem(t1));
                 ui->tableWidget->setItem(row, column++, new QTableWidgetItem
                                          (QString::fromStdString(std::to_string(tickets[i].amount))));
-                if(!mode){
+                if(!mode)
+                {
                     ui->tableWidget->setItem(row, column, new QTableWidgetItem("购买"));
                 }
-                else{ //若为改签状态
+                else
+                { //若为改签状态
                     ui->tableWidget->setItem(row, column, new QTableWidgetItem("改签")); //打印改签
                 }
                 ui->tableWidget->setItem(row, ++column, new QTableWidgetItem(QString::number(tickets[i].price, 'f', 2))); //保留两位小数显示票价
@@ -177,28 +190,38 @@ void Widget_User::check(){
 void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
 {
     /*购买、改签实现*/
-    if(column == 7){ //若双击单元格在第8列
-        if(!mode){ //且不为改签状态
-            for (int i = 0; i < tickets.size(); i++) {
-                if(tickets[i].id == ui->tableWidget->item(row, 0)->text() && tickets[i].amount){ //匹配票据
+    if(column == 7)
+    { //若双击单元格在第8列
+        if(!mode)
+        { //且不为改签状态
+            for (int i = 0; i < tickets.size(); i++)
+            {
+                if(tickets[i].id == ui->tableWidget->item(row, 0)->text() && tickets[i].amount)
+                { //匹配票据
                     prompt1* t = new prompt1;
                     t->show(); //弹出提示框
-                    if(currentUser.buy(tickets[i])){
+                    if(currentUser.buy(tickets[i]))
+                    {
                         t->setText("购票成功");
                         tickets[i].amount--; //所购票据数量减少1
                     }
-                    else{
+                    else
+                    {
                         t->setText("已购买过该票");
                     }
                 }
             }
         }
-        else {
-            for (int i = 0; i < tickets.size(); i++) {
-                if(tickets[i].id == ui->tableWidget->item(row, 0)->text() && tickets[i].amount){
+        else
+        {
+            for (int i = 0; i < tickets.size(); i++)
+            {
+                if(tickets[i].id == ui->tableWidget->item(row, 0)->text() && tickets[i].amount)
+                {
                     prompt1 *t = new prompt1();
                     t->show();
-                    if(currentUser.change(changingTicket, tickets[i])){ //若不为同一张票
+                    if(currentUser.change(changingTicket, tickets[i]))
+                    { //若不为同一张票
                         t->setText("改签成功");
                         tickets[i].amount--;
                         tickets[tickets.indexOf(changingTicket)].amount++; //已改签票据数量加1
@@ -206,7 +229,8 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
                         ui->label_6->clear();
                         ui->label_6->hide();
                     }
-                    else{
+                    else
+                    {
                         t->setText("改了个寂寞");
                     }
                 }
@@ -221,10 +245,12 @@ void Widget_User::on_pushButton_3_clicked()
     dialog1 *t = new dialog1;
     t->setUser(currentUser); //传递当前用户到子窗口
     connect(t, SIGNAL(send(bool, ticket)), this, SLOT(get(bool, ticket))); //窗口间传ticket
-    if(!mode){
+    if(!mode)
+    {
         t->show();
     }
-    else{
+    else
+    {
         t->hide();
     }
 }
@@ -237,18 +263,22 @@ void Widget_User::on_pushButton_4_clicked()
     close();
 }
 
-bool Widget_User::save(){
+bool Widget_User::save()
+{
     /*保存用户购买票据*/
     QFile file("..//Train//User_Ticket//" + currentUser.getid() + ".txt");
-    if(file.open(QIODevice::ReadWrite|QIODevice::Text|QIODevice::Truncate)){ //读写打开文本文件，若不存在则新建
+    if(file.open(QIODevice::ReadWrite|QIODevice::Text|QIODevice::Truncate))
+    { //读写打开文本文件，若不存在则新建
         QTextStream out(&file);
         QList<ticket> t(currentUser.getTickets());
         if(t.empty()){
             file.close();
             file.remove();
         }
-        else {
-            for(auto i = t.begin(); i != t.end(); i++){ //写入票据
+        else
+        {
+            for(auto i = t.begin(); i != t.end(); i++)
+            { //写入票据
                 out << i->id << " " << " " << i->beginpoint << " " << i->endpoint << " "
                     << i->beginDay << " " << i->begintime << " "
                     << i->endDay << " " << i->endtime << " " << QString::number(i->price, 'f', 2) << endl;
@@ -261,13 +291,15 @@ bool Widget_User::save(){
         return false;
     }
 }
-void Widget_User::updateTicketData(){
+void Widget_User::updateTicketData()
+{
     /*更新票据记录文件*/
     QFile fp("..//Train//ticket.txt"); //票据文件路径
     if(fp.open(QIODevice::ReadWrite|QIODevice::Text|QIODevice::Truncate))
     {
         QTextStream out(&fp);
-        for(auto i : tickets){
+        for(auto i : tickets)
+        {
             if(i.price) //若不是空票据
             out << i.id << " " << i.beginpoint << " " << i.endpoint << " "
                 << i.beginDay << " " << i.begintime << " "
@@ -278,36 +310,43 @@ void Widget_User::updateTicketData(){
     }
 }
 
-void Widget_User::get(bool m, ticket a){
+void Widget_User::get(bool m, ticket a)
+{
     /*窗口间传ticket实现*/
     mode = m;
-    if(mode){ //若为改签状态
+    if(mode)
+    { //若为改签状态
         changingTicket = a; //设置当前正在操作的票据
         ui->label_6->setText(a.id+" 正在改签中...");
         ui->label_6->show();
     }
-    else { //若不为改签状态
+    else
+    { //若不为改签状态
        changingTicket = a;
        refund(changingTicket); //退票
     }
 }
 
-bool Widget_User::refund(ticket a){
+bool Widget_User::refund(ticket a)
+{
     /*退票实现*/
-    if(currentUser.refund(a)){ //若退票成功
+    if(currentUser.refund(a))
+    { //若退票成功
         tickets[tickets.indexOf(a)].amount++; //所退票据数量增加1
         prompt1 *t = new prompt1 ();
         t->setText("退票成功");
         t->show(); //显示提示框
     }
-    else{ //若退票失败
+    else
+    { //若退票失败
         prompt1 *t = new prompt1 ();
         t->setText("退票失败");
         t->show();
     }
 }
 
-void Widget_User::timerUpdate(){
+void Widget_User::timerUpdate()
+{
     /*时钟实现*/
     QDateTime t = QDateTime::currentDateTime(); //获取当前时间
     QString s = t.toString("yyyy-MM-dd hh:mm:ss dddd");
