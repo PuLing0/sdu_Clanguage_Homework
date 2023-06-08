@@ -54,6 +54,7 @@ user_Crl::user_Crl()
 //添加一个新用户，用于注册功能
 bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 {
+    //将用户信息写入u
     md5 m;
     QString _psd = QString::fromStdString(m.getMD5(psd.toStdString()));
     user u;
@@ -65,14 +66,15 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 
     if (checkUser_Reg(ac ,  nm))
     {
+        //若u不存在则将u push进入链表
         userList.push_back(u);
 
-                //用于检查链表是否成功生成
-                QList<user>::Iterator iter1;
-                for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++)
-                {
-                    qDebug() << iter1->name << " " << iter1->account << " " << iter1->password << endl;
-                }
+    //该代码用于检查链表是否生成成功
+//                QList<user>::Iterator iter1;
+//                for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++)
+//                {
+//                    qDebug() << iter1->name << " " << iter1->account << " " << iter1->password << endl;
+//                }
 
         //打开文件
         QFile file("..\\Train\\User_Data.dat");
@@ -292,7 +294,8 @@ bool user_Crl::checkUser_OP(QString ac)
     QMessageBox msgbx;
     msgbx.setText("该用户不存在，请重试");
     msgbx.exec();
-    return false;
+
+    return false;//默认返回false
 }
 
 //验证用户是否存在以及密码是否正确，用于登录功能和修改密码的检验功能，正确返回1，错误返回0

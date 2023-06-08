@@ -1,7 +1,9 @@
 #include "md5.h"
 #include<iostream>
 #include<string>
+
 using namespace std;
+
 #define shift(x, n) (((x) << (n)) | ((x) >> (32-(n))))//右移的时候，高位一定要补零，而不是补充符号位
 #define F(x, y, z) (((x) & (y)) | ((~x) & (z)))
 #define G(x, y, z) (((x) & (z)) | ((y) & (~z)))
@@ -11,6 +13,7 @@ using namespace std;
 #define B 0xefcdab89
 #define C 0x98badcfe
 #define D 0x10325476
+
 //strBaye的长度
 unsigned int strlength;
 //A,B,C,D的临时变量
@@ -42,26 +45,34 @@ const char str16[]="0123456789abcdef";
 
 /*MD5主循环函数，用于处理每个512位的分组。
 根据索引 i 的不同值，选择不同的运算方式，并更新临时变量。*/
-void md5::mainLoop(unsigned int M[]) {
+void md5::mainLoop(unsigned int M[])
+{
     unsigned int f, g;
     unsigned int a = atemp;
     unsigned int b = btemp;
     unsigned int c = ctemp;
     unsigned int d = dtemp;
-    for (unsigned int i = 0; i < 64; i++) {
-        if (i < 16) {
+
+    for (unsigned int i = 0; i < 64; i++)
+    {
+        if (i < 16)
+        {
             f = F(b, c, d);
             g = i;
-        } else if (i < 32) {
+        } else if (i < 32)
+        {
             f = G(b, c, d);
             g = (5 * i + 1) % 16;
-        } else if (i < 48) {
+        } else if (i < 48)
+        {
             f = H(b, c, d);
             g = (3 * i + 5) % 16;
-        } else {
+        } else
+        {
             f = I(b, c, d);
             g = (7 * i) % 16;
         }
+
         unsigned int tmp = d;
         d = c;
         c = b;
@@ -75,13 +86,15 @@ void md5::mainLoop(unsigned int M[]) {
 }
 
 //填充函数，将输入的字符串填充为64字节的整数倍，并添加长度信息。
-unsigned int* md5::add(string str) {
+unsigned int* md5::add(string str)
+{
     unsigned int num = ((str.length() + 8) / 64) + 1; // 以512位,64个字节为一组
     unsigned int* strByte = new unsigned int[num * 16]; // 64/4=16,所以有16个整数
     strlength = num * 16;
     for (unsigned int i = 0; i < num * 16; i++)
         strByte[i] = 0;
-    for (unsigned int i = 0; i < str.length(); i++) {
+    for (unsigned int i = 0; i < str.length(); i++)
+    {
         strByte[i >> 2] |= (str[i]) << ((i % 4) * 8); // 一个整数存储四个字节，小端序
     }
     strByte[str.length() >> 2] |= 0x80 << (((str.length() % 4)) * 8); // 尾部添加1
@@ -91,14 +104,17 @@ unsigned int* md5::add(string str) {
 }
 
 //将整数转换为16进制字符串表示。
-string md5::changeHex(int a) {
+string md5::changeHex(int a)
+{
     int b;
     string str1;
     string str = "";
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         str1 = "";
         b = ((a >> i * 8) % (1 << 8)) & 0xff; // 逆序处理每个字节
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < 2; j++)
+        {
             str1.insert(0, 1, str16[b % 16]);
             b = b / 16;
         }
@@ -109,13 +125,15 @@ string md5::changeHex(int a) {
 
 /*计算给定字符串的MD5哈希值。初始化临时变量并调用 add 函数对输入字符串进行填充，
 然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。*/
-string md5::getMD5(string source) {
+string md5::getMD5(string source)
+{
     atemp = A; // 初始化
     btemp = B;
     ctemp = C;
     dtemp = D;
     unsigned int* strByte = add(source);
-    for (unsigned int i = 0; i < strlength / 16; i++) {
+    for (unsigned int i = 0; i < strlength / 16; i++)
+    {
         unsigned int num[16];
         for (unsigned int j = 0; j < 16; j++)
             num[j] = strByte[i * 16 + j];
@@ -125,4 +143,7 @@ string md5::getMD5(string source) {
 }
 
 //构造函数，用于初始化类的成员变量
-md5::md5() {}
+md5::md5()
+{
+
+}

@@ -9,6 +9,7 @@ framelessWidget::framelessWidget(QWidget *parent)
     , ui(new Ui::framelessWidget)
 {
     ui->setupUi(this);
+
     ui->mainWidget->setMouseTracking(true); // 允许鼠标跟踪
     ui->mainDisplayWidget->setMouseTracking(true);
     setMouseTracking(true);
@@ -17,7 +18,6 @@ framelessWidget::framelessWidget(QWidget *parent)
     connect(t, &QTimer::timeout, this, [=](){Init();});
     t->setSingleShot(true);
     t->start(10);
-
 
 
     connect(ui->Button_min, &QPushButton::clicked, this,[=]()   // 点击最小化按钮
@@ -64,6 +64,9 @@ framelessWidget::framelessWidget(QWidget *parent)
         }
     });
 
+
+
+
 }
 
 framelessWidget::~framelessWidget()
@@ -85,6 +88,14 @@ void framelessWidget::Init()
     ui->mainWidget->setObjectName("mainWidget");
     mainStyle = "QWidget#mainWidget{background-color:rgb(251, 251, 251)"  + QString::asprintf(";border-radius:%dpx", cornerRadius) + "}";
     ui->mainWidget->setStyleSheet(mainStyle);
+
+//        // 创建一个QPoint对象，指定鼠标点击的位置
+//        QPoint clickPos(1, 10);
+//        QCursor::setPos(mapToGlobal(clickPos));
+
+//        // 模拟鼠标点击
+//        QMouseEvent mousePressEvent(QEvent::MouseButtonPress, clickPos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+//        QApplication::sendEvent(QApplication::focusWidget(), &mousePressEvent);
 }
 
 // 鼠标按下事件(记录拉伸窗口或移动窗口时的起始坐标（左上角）)
@@ -160,27 +171,21 @@ void framelessWidget::mouseMoveEvent(QMouseEvent *event)
 // 窗口变化事件
 void framelessWidget::resizeEvent(QResizeEvent *event)
 {
-    //Resize border
+    //边界变换大小
     if(border)
         border->resize(ui->mainWidget->size() + QSize(2, 2));
 
-    //Resize mask
+    //遮罩变换
     QPainterPath path;
     path.addRect(ui->mainWidget->rect());
     QRegion mask(path.toFillPolygon().toPolygon());
     ui->mainWidget->setMask(mask);
-
-    //Resize all pages
-//    for(int i = 0; i < pageList.size(); i++){
-//        pageList[i]->resize(ui->mainWidget->width() * 0.4 < pageList[i]->preferWidth ? pageList[i]->preferWidth - 1 : ui->mainWidget->width() * 0.4 - 1, ui->mainWidget->height());
-//        pageList[i]->resize(pageList[i]->width() + 1, pageList[i]->height());
-//    }
 }
 
 //点击最大化按钮事件
 void framelessWidget::controlWindowScale()
 {
-#ifdef Q_OS_WINDOWS
+#ifdef Q_OS_WIN
     if (!maximized) { // 如果窗口没有最大化
         lastGeometry = this->frameGeometry(); // 保存当前窗口的位置和大小
         // windowShadow->setEnabled(false); // 禁用窗口阴影效果（注释掉的代码）
