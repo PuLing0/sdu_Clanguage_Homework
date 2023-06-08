@@ -140,83 +140,95 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
     //先检查账号和旧密码是否对应
     if (checkUser_Password(ac , oldpd))
     {
-        //检查两次新密码是否输入一致
-        if (newpd == renewpd)
+        if (oldpd == newpd)
         {
-            QString _newpd = QString::fromStdString(m.getMD5(newpd.toStdString()));            //若两次新密码输入一致，将链表中的用户信息修改，同时将文件中的用户信息修改
-            //链表用户信息修改
-            int num_line = 0;
-            user u;
-            QList<user>::Iterator iter1;
-            for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++ , num_line ++)
-            {
-                if (iter1->account == ac)
-                {
-                    u.setAccount(iter1->account);
-                    u.setGender(iter1->gender);
-                    u.setName(iter1->name);
-                    u.setOP(iter1->Over_Power);
-                    u.setPassword(_newpd);//将用户密码设置为新密码
-                    userList.removeAt(num_line);
-                    userList.push_back(u);
-                    break;
-                }
-            }
-
-            //文件用户信息修改
-            QString newline = u.name + " " + u.account + " " + u.password + " " + (u.gender ? "1" : "0") + " " + (u.Over_Power ? "1" : "0");
-            QFile file("..\\Train\\User_Data.dat");
-            if (file.open(QIODevice::ReadWrite))
-            {
-                QTextStream in(&file);
-                QStringList fileContent;
-                int currentLineIndex = 0;
-                //将文件中除需改动的地方复制，需改动的地方替换
-                while (!in.atEnd())
-                {
-                    QString line = in.readLine();
-
-                    if (currentLineIndex == num_line)
-                    {
-                        // 修改数据
-                        line = newline;
-                    }
-
-                    fileContent.append(line);
-                    currentLineIndex++;
-                }
-                file.close();
-
-                // 打开文件并写入修改后的内容
-                if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-                {
-                    QTextStream out(&file);
-                    for (const QString& line : fileContent)
-                    {
-                        // 写入修改后的内容
-                        out << line << "\n";
-                    }
-
-                    // 关闭文件
-                    file.close();
-                }
-            }
-
             //提示修改密码成功
             QMessageBox msgbx;
-            msgbx.setText("修改密码成功，请重新登录！");
-            msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
-            msgbx.exec();
-            return true;
-        }
-        else
-        {
-            //提示两次新密码不一样
-            QMessageBox msgbx;
-            msgbx.setText("两次密码不一致！");
+            msgbx.setText("旧密码和新密码一致!");
             msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
             msgbx.exec();
             return false;
+        }
+        else
+        {
+            //检查两次新密码是否输入一致
+            if (newpd == renewpd)
+            {
+                QString _newpd = QString::fromStdString(m.getMD5(newpd.toStdString()));            //若两次新密码输入一致，将链表中的用户信息修改，同时将文件中的用户信息修改
+                //链表用户信息修改
+                int num_line = 0;
+                user u;
+                QList<user>::Iterator iter1;
+                for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++ , num_line ++)
+                {
+                    if (iter1->account == ac)
+                    {
+                        u.setAccount(iter1->account);
+                        u.setGender(iter1->gender);
+                        u.setName(iter1->name);
+                        u.setOP(iter1->Over_Power);
+                        u.setPassword(_newpd);//将用户密码设置为新密码
+                        userList.removeAt(num_line);
+                        userList.push_back(u);
+                        break;
+                    }
+                }
+
+                //文件用户信息修改
+                QString newline = u.name + " " + u.account + " " + u.password + " " + (u.gender ? "1" : "0") + " " + (u.Over_Power ? "1" : "0");
+                QFile file("..\\Train\\User_Data.dat");
+                if (file.open(QIODevice::ReadWrite))
+                {
+                    QTextStream in(&file);
+                    QStringList fileContent;
+                    int currentLineIndex = 0;
+                    //将文件中除需改动的地方复制，需改动的地方替换
+                    while (!in.atEnd())
+                    {
+                        QString line = in.readLine();
+
+                        if (currentLineIndex == num_line)
+                        {
+                            // 修改数据
+                            line = newline;
+                        }
+
+                        fileContent.append(line);
+                        currentLineIndex++;
+                    }
+                    file.close();
+
+                    // 打开文件并写入修改后的内容
+                    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+                    {
+                        QTextStream out(&file);
+                        for (const QString& line : fileContent)
+                        {
+                            // 写入修改后的内容
+                            out << line << "\n";
+                        }
+
+                        // 关闭文件
+                        file.close();
+                    }
+                }
+
+                //提示修改密码成功
+                QMessageBox msgbx;
+                msgbx.setText("修改密码成功，请重新登录！");
+                msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
+                msgbx.exec();
+                return true;
+            }
+            else
+            {
+                //提示两次新密码不一样
+                QMessageBox msgbx;
+                msgbx.setText("两次密码不一致！");
+                msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
+                msgbx.exec();
+                return false;
+            }
         }
     }
     else
