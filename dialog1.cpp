@@ -47,7 +47,7 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
                 bool mode = 1; //设置改签状态
                 t = tickets[i];
                 emit send(mode, tickets[i]); //发送至主窗口
-                this->hide(); //当前窗口隐藏
+                this->close(); //当前窗口隐藏
             }
         }
     }
@@ -62,6 +62,7 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
                 t = tickets[i];
                 emit send(mode, tickets[i]); //发送至主窗口
                 tickets.removeOne(t); //从已购买票据中移除
+                on_pushButton_clicked(); //更新列表
             }
         }
     }

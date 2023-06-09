@@ -31,6 +31,7 @@ private slots:
     void get(bool m, ticket a); //窗口间传递changingTicket
     void timerUpdate(); //时钟
     void updateTicketData(); //更新票据文件
+    void tableUpdate();
 protected:
     void closeEvent(QCloseEvent *event);
 private:

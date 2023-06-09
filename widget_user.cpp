@@ -28,6 +28,8 @@ Widget_User::Widget_User(QWidget *parent)
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
     if(!tickets.size()) //若票据链表为空
         read(); //读取票据文件
+    tableUpdate();
+    ui->label_5->clear();
 
     //ui设置
     ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
@@ -64,7 +66,7 @@ void Widget_User::on_pushButton_clicked()
 bool Widget_User::read()
 {
     /*读取票据文件*/
-    QFile fp("..//Train//ticket.txt"); //票据文件路径
+    QFile fp("..//Train//hchsk.txt"); //票据文件路径
     if(!fp.open(QIODevice::ReadOnly))
     {
         ui->label_7->setText("载入文件失败");
@@ -187,6 +189,14 @@ void Widget_User::check()
     }
 }
 
+void Widget_User::tableUpdate()
+{
+    /*刷新列表*/
+    ui->tableWidget->setRowCount(0); //清空表格
+    check(); //查询票据
+    ui->label_7->setText("列表已更新");
+}
+
 void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
 {
     /*购买、改签实现*/
@@ -204,6 +214,7 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
                     {
                         t->setText("购票成功");
                         tickets[i].amount--; //所购票据数量减少1
+                        tableUpdate(); //更新列表
                     }
                     else
                     {
@@ -228,6 +239,7 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
                         mode = 0; //转换状态
                         ui->label_6->clear();
                         ui->label_6->hide();
+                        tableUpdate(); //刷新列表
                     }
                     else
                     {
@@ -294,7 +306,7 @@ bool Widget_User::save()
 void Widget_User::updateTicketData()
 {
     /*更新票据记录文件*/
-    QFile fp("..//Train//ticket.txt"); //票据文件路径
+    QFile fp("..//Train//hchsk.txt"); //票据文件路径
     if(fp.open(QIODevice::ReadWrite|QIODevice::Text|QIODevice::Truncate))
     {
         QTextStream out(&fp);
@@ -336,6 +348,7 @@ bool Widget_User::refund(ticket a)
         prompt1 *t = new prompt1 ();
         t->setText("退票成功");
         t->show(); //显示提示框
+        tableUpdate(); //刷新列表
     }
     else
     { //若退票失败
