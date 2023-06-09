@@ -374,18 +374,20 @@ void Widget::on_changeticketbtn_clicked():
     void Widget::saveuser()
     void Widget::setticketdata(const QList<ticket>&ticketlist)
     void Widget::setuserdata(const QList<user>&)
-    QString changeticketdialog::getiniid();//获取想要修改的车次的列车号
-    QString changeticketdialog::getiniba();//获取想要修改的列车的现在的始发站
-    QString changeticketdialog::getiniea();//获取想要修改的列车的现在的终点站
-    QString changeticketdialog::getinibt();//获取想要修改的列车的现在的开车时间
-    QString changeticketdialog::getiniet();//获取想要修改的列车的现在的到站时间
-    QString changeticketdialog::getfinba();//获取想要修改的列车的改后的始发站
-    QString changeticketdialog::getfinea();//获取想要修改的列车的改后的终点站
-    QString changeticketdialog::getfinbt();//获取想要修改的列车的改后的开车时间
-    QString changeticketdialog::getfinet();//获取想要修改的列车的改后的到站时间
-    QString changeticketdialog::getfinnumber();//获取想要修改的列车的改后的票数
-    QString changeticketdialog::getfinprice();//获取想要修改的列车的改后的车价
-    
+    QString changeticketdialog::getiniid()
+    QString changeticketdialog::getiniba()
+    QString changeticketdialog::getiniea()
+    QString changeticketdialog::getinibt()
+    QString changeticketdialog::getiniet()
+    QString changeticketdialog::getfinba()
+    QString changeticketdialog::getfinea()
+    QString changeticketdialog::getfinbt()
+    QString changeticketdialog::getfinet()
+    QString changeticketdialog::getfinnumber()
+    QString changeticketdialog::getfinprice()
+void Widget::on_Exit_clicked():
+    void Widget::saveticket()
+    void Widget::saveuser()
 ```
 ### 关键算法
 
