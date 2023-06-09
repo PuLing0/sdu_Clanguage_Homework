@@ -26,7 +26,8 @@ dialog1::~dialog1()
     delete ui;
 }
 
-void dialog1::setUser(user t){
+void dialog1::setUser(user t)
+{
     /*设置当前用户*/
     currentUser = t;
     tickets = t.getTickets(); //获取用户已购票据
@@ -36,25 +37,32 @@ void dialog1::setUser(user t){
 void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
 {
     /*改签退票信号*/
-    if(column == 6){ //若双击改签单元格
+    if(column == 6)
+    { //若双击改签单元格
         ticket t;
-        for (int i = 0; i < tickets.size(); i++) {
-            if(tickets[i].id == ui->tableWidget_2->item(row, 0)->text()){ //匹配票据
+        for (int i = 0; i < tickets.size(); i++)
+        {
+            if(tickets[i].id == ui->tableWidget_2->item(row, 0)->text())
+            { //匹配票据
                 bool mode = 1; //设置改签状态
                 t = tickets[i];
                 emit send(mode, tickets[i]); //发送至主窗口
-                this->hide(); //当前窗口隐藏
+                this->close(); //当前窗口隐藏
             }
         }
     }
-    else if(column == 7){ //若双击退票单元格
+    else if(column == 7)
+    { //若双击退票单元格
         ticket t;
-        for (int i = 0; i < tickets.size(); i++) {
-            if(tickets[i].id == ui->tableWidget_2->item(row, 0)->text()){ //匹配票据
+        for (int i = 0; i < tickets.size(); i++)
+        {
+            if(tickets[i].id == ui->tableWidget_2->item(row, 0)->text())
+            { //匹配票据
                 bool mode = 0;
                 t = tickets[i];
                 emit send(mode, tickets[i]); //发送至主窗口
                 tickets.removeOne(t); //从已购买票据中移除
+                on_pushButton_clicked(); //更新列表
             }
         }
     }
@@ -67,7 +75,8 @@ void dialog1::on_pushButton_clicked()
     ui->tableWidget_2->show();
     ui->tableWidget_2->setRowCount(0); //清空表格
     int i = 0, row = 0, column = 0;
-    while(i < tickets.size()){ //循环打印票据
+    while(i < tickets.size())
+    { //循环打印票据
             ui->tableWidget_2->insertRow(0);
             column = 0;
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].id));

@@ -21,9 +21,7 @@ signals:
 
 private slots:
     void on_tableWidget_2_cellDoubleClicked(int row, int column); //双击改签/退票单元格事件
-
     void on_pushButton_clicked(); //已购票据查询按钮
-
     void on_pushButton_2_clicked(); //退出按钮
 
 private:

@@ -18,7 +18,8 @@ public:
     int amount;//车票数
     double price;//车票价格
 
-    bool operator ==(const ticket l){
+    bool operator ==(const ticket l)
+    {
         /*判断两票相同与否*/
         if(id == l.id) return true;
         return false;
