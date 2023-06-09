@@ -140,19 +140,20 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
     //先检查账号和旧密码是否对应
     if (checkUser_Password(ac , oldpd))
     {
-        if (oldpd == newpd)
+        //检查两次新密码是否输入一致
+        if (newpd == renewpd)
         {
-            //提示修改密码成功
-            QMessageBox msgbx;
-            msgbx.setText("旧密码和新密码一致!");
-            msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
-            msgbx.exec();
-            return false;
-        }
-        else
-        {
-            //检查两次新密码是否输入一致
-            if (newpd == renewpd)
+            //如果新旧密码一致
+            if (oldpd == newpd)
+            {
+                //提示新旧密码一致
+                QMessageBox msgbx;
+                msgbx.setText("旧密码和新密码一致!");
+                msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
+                msgbx.exec();
+                return false;
+            }
+            else //新旧密码不一致
             {
                 QString _newpd = QString::fromStdString(m.getMD5(newpd.toStdString()));            //若两次新密码输入一致，将链表中的用户信息修改，同时将文件中的用户信息修改
                 //链表用户信息修改
@@ -220,15 +221,15 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
                 msgbx.exec();
                 return true;
             }
-            else
-            {
-                //提示两次新密码不一样
-                QMessageBox msgbx;
-                msgbx.setText("两次密码不一致！");
-                msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
-                msgbx.exec();
-                return false;
-            }
+        }
+        else
+        {
+            //提示两次新密码不一样
+            QMessageBox msgbx;
+            msgbx.setText("两次密码不一致！");
+            msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
+            msgbx.exec();
+            return false;
         }
     }
     else
