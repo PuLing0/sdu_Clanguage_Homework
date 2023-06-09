@@ -312,7 +312,81 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column):
     void dialog1::send(bool mode, ticket a)
     void dialog1::on_pushButton_clicked()
 ```
-
+```
+adduserdialog.cpp
+adduserdialog::adduserdialog(QWidget *parent):
+    void adduserdialog::btnclicked()
+void adduserdialog::btnclicked():
+    bool adduserdialog::Gender_Choose()
+```
+```
+changeticketdialog.cpp
+changeticketdialog::changeticketdialog(QWidget *parent):
+    void changeticketdialog::changebtnclicked()
+```
+```
+dialogaddticket.cpp
+dialogaddticket::dialogaddticket(QWidget *parent):
+    void dialogaddticket::saveclicked()
+```
+```
+Widget::Widget(QWidget *parent):
+    void Widget::loadingticketdata()
+    void Widget::loadinguserdata()
+    void Widget::on_ticketList_clicked()
+    void Widget::on_userList_clicked()
+    void Widget::on_adduserButton_clicked()
+    void Widget::on_addticketButton_clicked()
+    void Widget::RightClickSlot(QPoint pos)
+    void Widget::RightClickDelete(QAction *act)
+    void Widget::on_searchticketbtn_clicked()
+    void Widget::on_searchuserbtn_clicked()
+    void Widget::on_changeticketbtn_clicked()
+    void Widget::timerUpdate()
+void Widget::loadinguserdata():
+    void user::setAccount(QString ac)
+    void user::setPassword(QString ps)
+    void user::setGender(bool gd)
+    void user::setName(QString nm)
+    void user::setOP(bool op)
+    void user::setTickets(QList<ticket> t)
+void Widget::on_ticketList_clicked():
+    void Widget::setticketdata(const QList<ticket>&ticketlist)
+void Widget::on_userList_clicked():
+    void Widget::setuserdata(const QList<user>&)
+void Widget::on_adduserButton_clicked():
+    string md5::getMD5(string source)
+    void Widget::saveuser()
+void Widget::on_addticketButton_clicked():
+    QString dialogaddticket::getid()
+    QString dialogaddticket::getba()
+    QString dialogaddticket::getea()
+    QString dialogaddticket::getbt()
+    QString dialogaddticket::getet()
+    QString dialogaddticket::getticket()
+    QString dialogaddticket::getprice()
+    void Widget::saveticket()
+void Widget::RightClickDelete(QAction *act):
+    void Widget::saveticket()
+    void Widget::saveuser()
+void Widget::on_changeticketbtn_clicked():
+    void Widget::saveticket()
+    void Widget::saveuser()
+    void Widget::setticketdata(const QList<ticket>&ticketlist)
+    void Widget::setuserdata(const QList<user>&)
+    QString changeticketdialog::getiniid();//获取想要修改的车次的列车号
+    QString changeticketdialog::getiniba();//获取想要修改的列车的现在的始发站
+    QString changeticketdialog::getiniea();//获取想要修改的列车的现在的终点站
+    QString changeticketdialog::getinibt();//获取想要修改的列车的现在的开车时间
+    QString changeticketdialog::getiniet();//获取想要修改的列车的现在的到站时间
+    QString changeticketdialog::getfinba();//获取想要修改的列车的改后的始发站
+    QString changeticketdialog::getfinea();//获取想要修改的列车的改后的终点站
+    QString changeticketdialog::getfinbt();//获取想要修改的列车的改后的开车时间
+    QString changeticketdialog::getfinet();//获取想要修改的列车的改后的到站时间
+    QString changeticketdialog::getfinnumber();//获取想要修改的列车的改后的票数
+    QString changeticketdialog::getfinprice();//获取想要修改的列车的改后的车价
+    
+```
 ### 关键算法
 
 ### 程序亮点
