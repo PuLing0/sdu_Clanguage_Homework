@@ -268,6 +268,229 @@ public slots:
 
 ```
 
+```
+chgdialog.h
+#ifndef CHGPDDIALOG_H
+#define CHGPDDIALOG_H
+
+#include <QWidget>
+
+namespace Ui {
+class chgpdDialog;
+}
+
+class chgpdDialog : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit chgpdDialog(QWidget *parent = nullptr);//构造函数
+    ~chgpdDialog();//析构函数
+
+    void paintEvent(QPaintEvent *event);//边框加一条黑边以便识别
+
+private slots:
+    void on_btn_back_clicked();// 返回到mainwindow
+
+    void on_btn_chg_clicked();// 确认修改密码
+
+protected:
+    //用于鼠标拖动窗口移动
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    Ui::chgpdDialog *ui;
+    QPoint reltvPos; // 相对坐标
+    bool m_bMove; // 是否移动
+};
+
+#endif // CHGPDDIALOG_H
+```
+
+```
+logindialog.h
+#ifndef LOGINDIALOG_H
+#define LOGINDIALOG_H
+
+#include <QString>
+
+
+class LoginDialog
+{
+public:
+    bool LoginUser(QString account , QString password);//用于进行登录的操作
+public:
+    LoginDialog();//默认构造函数
+};
+
+#endif // LOGINDIALOG_H
+
+```
+
+```
+md5.h
+#ifndef MD5_H
+#define MD5_H
+
+#include <string>
+using std::string;
+
+class md5
+{
+public:
+    //构造函数，用于初始化类的成员变量
+    md5();
+
+    /*MD5主循环函数，用于处理每个512位的分组。
+    根据索引 i 的不同值，选择不同的运算方式，并更新临时变量。*/
+    void mainLoop(unsigned int M[]);
+
+    unsigned int* add(string str);//填充函数，将输入的字符串填充为64字节的整数倍，并添加长度信息。
+
+    string changeHex(int a);//将整数转换为16进制字符串表示。
+
+    /*计算给定字符串的MD5哈希值。初始化临时变量并调用 add 函数对输入字符串进行填充，
+    然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。*/
+    string getMD5(string source);
+};
+
+#endif // MD5_H
+
+```
+
+```
+regdialog.h
+#ifndef REGDIALOG_H
+#define REGDIALOG_H
+
+#include <QWidget>
+
+namespace Ui {
+class RegDialog;
+}
+
+class RegDialog : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit RegDialog(QWidget *parent = nullptr);//默认构造函数
+    ~RegDialog();//默认析构函数
+    bool Gender_Choose();//用于性别选择，其中男性返回1，女性返回0，默认是男性
+    void paintEvent(QPaintEvent *event);//边框加一条黑边以便识别
+
+private slots:
+    void on_Btn_Back_clicked();//返回mainwindow
+
+    void on_Btn_Reg_clicked();//注册用户
+
+//用于鼠标拖动无边框窗口移动
+protected:
+    void mousePressEvent(QMouseEvent *event) override;// 鼠标按下事件处理函数
+    void mouseMoveEvent(QMouseEvent *event) override; // 鼠标移动事件处理函数
+    void mouseReleaseEvent(QMouseEvent *event) override;// 鼠标释放事件处理函数
+
+private:
+    Ui::RegDialog *ui;
+    QPoint reltvPos; // 相对坐标
+    bool m_bMove; // 是否移动
+};
+
+#endif // REGDIALOG_H
+
+```
+
+```
+user_crl.h
+#ifndef USER_CRL_H
+#define USER_CRL_H
+
+#include <user.h>
+#include <QList>
+#include <QString>
+
+class user_Crl
+{
+    QList<user> userList;//创建一个用户链表，用于存储每一个用户的信息
+public:
+    user_Crl();//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
+    bool AddUser(QString ac , QString psd , bool gd , QString nm , bool op);//添加一个新用户，用于注册功能
+    bool ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd);//修改用户信息，用于修改密码
+    bool LoginUser(QString ac , QString psd );//用于用户登录
+    bool checkUser_Password(QString account , QString password);//验证用户是否存在以及密码是否正确，用于登录功能和修改密码的检验功能
+    bool checkUser_Reg(QString ac , QString nm);//用于检查这个用户的名字和账号是不是已经存在,用于注册功能
+    bool checkUser_Name(QString name);//检查用户名是否已经存在
+    bool checkUser_Account(QString account);//检查账号是否已经存在
+    bool checkUser_OP(QString ac);//根据用户的账号返回该用户的权限
+};
+
+#endif // USER_CRL_H
+
+```
+
+```
+mainwindow.h
+#ifndef _MAINWINDOWH_H
+#define _MAINWINDOWH_H
+
+#include <QMainWindow>
+#include <QTimer>
+#include <QMouseEvent>
+#include <QGraphicsDropShadowEffect>
+#include <QDebug>
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class framelessWidget; }
+QT_END_NAMESPACE
+
+class framelessWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    framelessWidget(QWidget *parent = nullptr);
+    ~framelessWidget();
+
+private:
+    Ui::framelessWidget *ui;
+    int cornerRadius = 20;// 窗口圆角半径
+    QPoint lastPos; // 上次鼠标位置
+    QWidget *border = nullptr;// 窗口边框
+    QGraphicsDropShadowEffect *windowShadow; // 窗口阴影效果
+
+    bool mousePressed = false;// 鼠标按下标志位
+    //鼠标状态
+    enum {AT_LEFT = 1, AT_TOP = 2,  AT_RIGHT = 4, AT_BOTTOM = 8,
+          AT_TOP_LEFT = 3, AT_TOP_RIGHT = 6, AT_BOTTOM_LEFT = 9, AT_BOTTOM_RIGHT = 12};
+    int mouseState;// 当前鼠标状态
+    bool maximized = false;// 窗口最大化标志位
+
+    void Init();// 给centralwidget添加一个mainwidget，设置遮罩及遮挡锯齿边缘的board
+    void mousePressEvent(QMouseEvent *event);// 鼠标按下事件(记录拉伸窗口或移动窗口时的起始坐标（左上角）)
+    void mouseMoveEvent(QMouseEvent *event);// 鼠标移动事件处理函数
+    void mouseReleaseEvent(QMouseEvent *event);// 鼠标释放事件处理函数
+
+    void mouseDoubleClickEvent(QMouseEvent *event);// 鼠标双击事件处理函数
+
+    void resizeEvent(QResizeEvent *event);// 窗口大小改变事件处理函数
+
+    QRect lastGeometry;// 上次窗口位置信息
+    void controlWindowScale();// 控制窗口缩放函数
+
+private slots:
+    void on_btn_login_clicked();//登录按钮
+
+    void on_btn_reg_clicked();//注册按钮
+
+    void on_btn_chg_clicked();//修改密码按钮
+
+};
+#endif // _MAINWINDOWH_H
+
+```
+
 ### 调用关系
 <p id="4"></p>
 
@@ -389,6 +612,39 @@ void Widget::on_Exit_clicked():
     void Widget::saveticket()
     void Widget::saveuser()
 ```
+
+```
+chgpddialog.cpp
+void chgpdDialog::on_btn_back_clicked():// 返回到mainwindow
+    framelessWidget::framelessWidget();
+    void framelessWidget::setWindowFlags(Qt::WindowFlags type);
+    void framelessWidget::setAttribute(Qt::WidgetAttribute, bool on = true);
+void chgpdDialog::on_btn_chg_clicked():// 确认修改密码
+    user_Crl::user_Crl();
+    bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd); 
+```
+
+```
+mainwindow.cpp
+void on_btn_login_clicked()://登录按钮
+    LoginDialog::LoginDialog();
+    bool LoginDialog::LoginUser(QString account, QString password);
+void on_btn_reg_clicked()://注册按钮
+    explicit RegDialog::RegDialog(QWidget *parent = nullptr);
+void on_btn_chg_clicked()://修改密码按钮
+    explicit chgpdDialog::chgpdDialog(QWidget *parent = nullptr);
+```
+
+```
+regdialog.cpp
+void on_Btn_Back_clicked();//返回mainwindow
+    framelessWidget::framelessWidget();
+    void framelessWidget::setWindowFlags(Qt::WindowFlags type);
+void on_Btn_Reg_clicked();//注册用户
+    user_Crl::user_Crl();
+    bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op);
+```
+
 ### 关键算法
 
 ### 程序亮点
@@ -434,9 +690,11 @@ void Widget::on_Exit_clicked():
 - 暂未解决的问题
     - 在QTableView中操作数据问题
     - 更为完善的车票信息冲突判断
-    - ui界面中按钮的替代控件
+    - ui界面控件的简化
 3. 收获与想法
-
+> 收获：在完成本次大作业的过程中，我熟悉了Qt的基本框架和模块,进一步掌握了C++编程技巧，学会了如何使用Qt Creator进行开发，特别是学会了ui界面的搭建，提高了自己解决实际问题能力。<br>
+> 在撰写实验报告和README文档的过程中，我第一次接触了md文档的书写方法，更加具体的了解了一个较为正规的程序所应该具有的各项细节。学习了流程图，层次图，数据流图的绘制流程，帮助我更好地理解软件层次，从而更好地设计和实现软件。<br>
+> 想法：完成大作业的过程对于我来说应该是一个宝贵的财富。事实上完成大作业花费了我大量的时间和精力，同时也要克服许多困难和挑战。可以说经过了c语言和c++语言的学习，完成想要的功能并不困难。但是对于刚刚接触Qt的我来说，有太多的新知识需要去学习，去适应，去应用，经过了很长的磨合期，我才堪堪掌握Qt中各种功能的使用。但这不正是学习一项新知识该有的过程，我想这也是以后学习，工作时时常会遇到的情况，这给我打下了良好的思想基础。同时，在完成这次大作业的过程中，我也逐步的适应了团队开发的模式，学会在团队中交流，发表意见，提供想法，和队员协调各项事宜，共同完成程序的开发，测试。并且，我也学会了从不同角度审视一个软件。要考虑软件的美观性，实用性，尽可能的让软件适合更多的人使用，这给了我在程序设计方面很好的启发。总之，我十分感恩这次c语言程序设计大作业。
 
 ## 附录
 ### 可使用用户列表
