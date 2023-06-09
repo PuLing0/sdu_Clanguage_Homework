@@ -92,6 +92,7 @@ public:
 
 ### 流程图
 #### 登陆界面流程图
+[Image/登陆系统流程图.png]
 
 #### 用户界面流程图
 <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="sd" title="用户界面流程图">
