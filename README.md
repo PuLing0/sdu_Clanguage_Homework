@@ -89,6 +89,7 @@ public:
 #### 1层数据流图
 <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/1%E5%B1%82%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE-%E7%94%A8%E6%88%B7.png" alt="sd" title="1层数据流图-用户"><br>
 <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E7%AE%A1%E7%90%86%E5%91%981%E5%B1%82%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.jpg" alt="sd" title="1层数据流图-管理员">
+![Image text](https://raw.githubusercontent.com/PuLing0/sdu_Clanguage_Homework/master/Image/%E7%94%A8%E6%88%B7%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png)
 
 ### 流程图
 #### 登陆界面流程图
