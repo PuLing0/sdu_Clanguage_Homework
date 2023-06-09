@@ -113,7 +113,11 @@ Widget::Widget(QWidget *parent) :
     connect(ui->ticketWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
     connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
 
-
+    //排序
+    ui->ticketWidget->setSortingEnabled(true);
+    ui->ticketWidget->sortItems(3);
+    ui->searchticketWidget->setSortingEnabled(true);
+    ui->searchticketWidget->sortItems(3);
 }
 
 //将车票，用户数据读入链表中
