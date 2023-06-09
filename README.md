@@ -148,7 +148,17 @@ class user{
     QList<ticket> getTickets() const; //获取用户已购票据
     void setTickets(QList<ticket> t); //设置用户已购票据
 };
-
+class ticket
+{
+public:
+    ticket();//构造函数
+    bool operator ==(const ticket l)
+    {
+        /*判断两票相同与否*/
+        if(id == l.id) return true;
+        return false;
+    }
+};
 class dialog1
 {
     public:
@@ -164,6 +174,97 @@ private slots:
     void on_pushButton_clicked(); //已购票据查询按钮
     void on_pushButton_2_clicked(); //退出按钮
 }
+class adduserdialog
+{
+public:
+    ~adduserdialog();
+
+    bool Gender_Choose();//用于性别选择，其中男性返回1，女性返回0，默认是男性
+    bool gender;//用户性别，1是男性，2是女性
+    bool Over_Power;//用户权限，1是管理员，2是普通用户
+
+public slots:
+    void btnclicked();//记录注册按钮的点击
+};
+class changeticketdialog
+{
+public:
+    ~changeticketdialog();
+    
+    QString getiniid();//获取想要修改的车次的列车号
+    QString getiniba();//获取想要修改的列车的现在的始发站
+    QString getiniea();//获取想要修改的列车的现在的终点站
+    QString getinibt();//获取想要修改的列车的现在的开车时间
+    QString getiniet();//获取想要修改的列车的现在的到站时间
+    QString getfinba();//获取想要修改的列车的改后的始发站
+    QString getfinea();//获取想要修改的列车的改后的终点站
+    QString getfinbt();//获取想要修改的列车的改后的开车时间
+    QString getfinet();//获取想要修改的列车的改后的到站时间
+    QString getfinnumber();//获取想要修改的列车的改后的票数
+    QString getfinprice();//获取想要修改的列车的改后的车价
+    
+    void changebtnclicked();//修改按钮按下时触发
+    int flap;//记录是否为修改按钮按下
+};
+class dialogaddticket
+{
+public:
+    ~dialogaddticket();
+
+    QString getid();//获取想要添加的列车的列车号
+    QString getba();//获取想要添加的列车的始发站
+    QString getea();//获取想要添加的列车的终点站
+    QString getbt();//获取想要添加的列车的发车时间
+    QString getet();//获取想要添加的列车的到站时间
+    QString getticket();//获取想要添加的列车的车票数
+    QString getprice();//获取想要添加的列车的票价
+public slots:
+    
+    void saveclicked();//保存按钮按下式触发
+};
+class Widget
+{
+public:
+    ~Widget();
+
+    //将信息读入列表中
+    void loadingticketdata();
+    void loadinguserdata();
+    //将列车信息显示在表格中
+    void setticketdata(const QList<ticket>&);
+    //将用户信息显示在表格中
+    void setuserdata(const QList<user>&);
+    //保存车票修改按钮
+    void saveticket();
+    //保存用户修改按钮
+    void saveuser();
+
+public slots:
+
+    //添加用户信息按钮
+    void on_adduserButton_clicked();
+    //添加车次信息按钮
+    void on_addticketButton_clicked();
+    //列车信息菜单点击，获取当前位置
+    void RightClickSlot(QPoint pos);
+    //列车信息得知菜单当前的位置并删除
+    void RightClickDelete(QAction *act);
+    //点击查询车票按钮
+    void on_searchticketbtn_clicked();
+    //点击查询用户按钮
+    void on_searchuserbtn_clicked();
+    //点击车票信息列表按钮
+    void on_ticketList_clicked();
+    //点击用户信息列表按钮
+    void on_userList_clicked();
+    //点击退出按钮
+    void on_Exit_clicked();
+    //点击修改列车信息是触发
+    void on_changeticketbtn_clicked();
+    //计时器
+    void timerUpdate();
+};
+
 ```
 
 ### 调用关系
