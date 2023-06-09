@@ -613,13 +613,13 @@ void Widget::on_Exit_clicked():
     void Widget::saveuser()
 ```
 
-···
+```
 chgdialog.cpp
 void chgpdDialog::on_btn_back_clicked():// 返回到mainwindow
     framelessWidget::framelessWidget();
 void chgpdDialog::on_btn_chg_clicked():// 确认修改密码
     bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd); 
-···
+```
 
 ```
 mainwindow.cpp
