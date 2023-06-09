@@ -268,6 +268,168 @@ public slots:
 
 ```
 
+```
+chgdialog.h
+#ifndef CHGPDDIALOG_H
+#define CHGPDDIALOG_H
+
+#include <QWidget>
+
+namespace Ui {
+class chgpdDialog;
+}
+
+class chgpdDialog : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit chgpdDialog(QWidget *parent = nullptr);//构造函数
+    ~chgpdDialog();//析构函数
+
+    void paintEvent(QPaintEvent *event);//边框加一条黑边以便识别
+
+private slots:
+    void on_btn_back_clicked();// 返回到mainwindow
+
+    void on_btn_chg_clicked();// 确认修改密码
+
+protected:
+    //用于鼠标拖动窗口移动
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    Ui::chgpdDialog *ui;
+    QPoint reltvPos; // 相对坐标
+    bool m_bMove; // 是否移动
+};
+
+#endif // CHGPDDIALOG_H
+```
+
+```
+logindialog.h
+#ifndef LOGINDIALOG_H
+#define LOGINDIALOG_H
+
+#include <QString>
+
+
+class LoginDialog
+{
+public:
+    bool LoginUser(QString account , QString password);//用于进行登录的操作
+public:
+    LoginDialog();//默认构造函数
+};
+
+#endif // LOGINDIALOG_H
+
+```
+
+```
+md5.h
+#ifndef MD5_H
+#define MD5_H
+
+#include <string>
+using std::string;
+
+class md5
+{
+public:
+    //构造函数，用于初始化类的成员变量
+    md5();
+
+    /*MD5主循环函数，用于处理每个512位的分组。
+    根据索引 i 的不同值，选择不同的运算方式，并更新临时变量。*/
+    void mainLoop(unsigned int M[]);
+
+    unsigned int* add(string str);//填充函数，将输入的字符串填充为64字节的整数倍，并添加长度信息。
+
+    string changeHex(int a);//将整数转换为16进制字符串表示。
+
+    /*计算给定字符串的MD5哈希值。初始化临时变量并调用 add 函数对输入字符串进行填充，
+    然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。*/
+    string getMD5(string source);
+};
+
+#endif // MD5_H
+
+```
+
+```
+regdialog.h
+#ifndef REGDIALOG_H
+#define REGDIALOG_H
+
+#include <QWidget>
+
+namespace Ui {
+class RegDialog;
+}
+
+class RegDialog : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit RegDialog(QWidget *parent = nullptr);//默认构造函数
+    ~RegDialog();//默认析构函数
+    bool Gender_Choose();//用于性别选择，其中男性返回1，女性返回0，默认是男性
+    void paintEvent(QPaintEvent *event);//边框加一条黑边以便识别
+
+private slots:
+    void on_Btn_Back_clicked();//返回mainwindow
+
+    void on_Btn_Reg_clicked();//注册用户
+
+//用于鼠标拖动无边框窗口移动
+protected:
+    void mousePressEvent(QMouseEvent *event) override;// 鼠标按下事件处理函数
+    void mouseMoveEvent(QMouseEvent *event) override; // 鼠标移动事件处理函数
+    void mouseReleaseEvent(QMouseEvent *event) override;// 鼠标释放事件处理函数
+
+private:
+    Ui::RegDialog *ui;
+    QPoint reltvPos; // 相对坐标
+    bool m_bMove; // 是否移动
+};
+
+#endif // REGDIALOG_H
+
+```
+
+```
+user_crl.h
+#ifndef USER_CRL_H
+#define USER_CRL_H
+
+#include <user.h>
+#include <QList>
+#include <QString>
+
+class user_Crl
+{
+    QList<user> userList;//创建一个用户链表，用于存储每一个用户的信息
+public:
+    user_Crl();//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
+    bool AddUser(QString ac , QString psd , bool gd , QString nm , bool op);//添加一个新用户，用于注册功能
+    bool ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd);//修改用户信息，用于修改密码
+    bool LoginUser(QString ac , QString psd );//用于用户登录
+    bool checkUser_Password(QString account , QString password);//验证用户是否存在以及密码是否正确，用于登录功能和修改密码的检验功能
+    bool checkUser_Reg(QString ac , QString nm);//用于检查这个用户的名字和账号是不是已经存在,用于注册功能
+    bool checkUser_Name(QString name);//检查用户名是否已经存在
+    bool checkUser_Account(QString account);//检查账号是否已经存在
+    bool checkUser_OP(QString ac);//根据用户的账号返回该用户的权限
+};
+
+#endif // USER_CRL_H
+
+```
+
 ### 调用关系
 <p id="4"></p>
 
