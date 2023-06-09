@@ -12,8 +12,8 @@ class chgpdDialog : public QWidget
     Q_OBJECT
 
 public:
-    explicit chgpdDialog(QWidget *parent = nullptr);
-    ~chgpdDialog();
+    explicit chgpdDialog(QWidget *parent = nullptr);//构造函数
+    ~chgpdDialog();//析构函数
 
     void paintEvent(QPaintEvent *event);//边框加一条黑边以便识别
 
