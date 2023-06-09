@@ -614,28 +614,34 @@ void Widget::on_Exit_clicked():
 ```
 
 ```
-chgdialog.cpp
+chgpddialog.cpp
 void chgpdDialog::on_btn_back_clicked():// 返回到mainwindow
     framelessWidget::framelessWidget();
+    void framelessWidget::setWindowFlags(Qt::WindowFlags type);
+    void framelessWidget::setAttribute(Qt::WidgetAttribute, bool on = true);
 void chgpdDialog::on_btn_chg_clicked():// 确认修改密码
+    user_Crl::user_Crl();
     bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd); 
 ```
 
 ```
 mainwindow.cpp
-void on_btn_login_clicked();//登录按钮
+void on_btn_login_clicked()://登录按钮
+    LoginDialog::LoginDialog();
     bool LoginDialog::LoginUser(QString account, QString password);
-void on_btn_reg_clicked();//注册按钮
-    void RegDialog::paintEvent(QPaintEvent *event);
-void on_btn_chg_clicked();//修改密码按钮
-    chgpdDialog::chgpdDialog(QWidget *parent);
+void on_btn_reg_clicked()://注册按钮
+    explicit RegDialog::RegDialog(QWidget *parent = nullptr);
+void on_btn_chg_clicked()://修改密码按钮
+    explicit chgpdDialog::chgpdDialog(QWidget *parent = nullptr);
 ```
 
 ```
 regdialog.cpp
 void on_Btn_Back_clicked();//返回mainwindow
     framelessWidget::framelessWidget();
+    void framelessWidget::setWindowFlags(Qt::WindowFlags type);
 void on_Btn_Reg_clicked();//注册用户
+    user_Crl::user_Crl();
     bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op);
 ```
 
