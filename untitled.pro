@@ -93,5 +93,4 @@ DISTFILES += \
     User_Ticket/shabi.txt \
     User_Ticket/sm.txt \
     hchsk.txt \
-    ticket.txt \
-    user.txt
+    ticket.txt

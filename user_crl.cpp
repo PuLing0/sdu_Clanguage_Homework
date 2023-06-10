@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <string>
 #include "md5.h"
+#include <QTextCodec>
 
 using std::string;
 
@@ -14,13 +15,14 @@ using std::string;
 user_Crl::user_Crl()
 {
     QFile file("..\\Train\\User_Data.dat");
-    if (!file.open(QIODevice::ReadWrite))
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         // 文件打开失败处理
         return;
     }
-
     QTextStream in(&file);
+    QTextCodec* codec = QTextCodec::codecForName("GBK");
+    in.setCodec(codec);
 
     while (!in.atEnd())
     {
@@ -78,8 +80,12 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 
         //打开文件
         QFile file("..\\Train\\User_Data.dat");
-        if (file.open(QIODevice::Append | QIODevice::Text)) {
+        if (file.open(QIODevice::Append | QIODevice::Text))
+        {
             QTextStream out(&file);
+            //将编码改为gbk方便输入中文
+            QTextCodec* codec = QTextCodec::codecForName("GBK");
+            out.setCodec(codec);
             //将用户信息输入到文件中
             QString str = nm + " " + ac + " " + _psd + " " + (gd ? "1" : "0") + " " + (op ? "1" : "0");
             out << str << endl;
@@ -178,6 +184,9 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
                 //文件用户信息修改
                 QString newline = u.name + " " + u.account + " " + u.password + " " + (u.gender ? "1" : "0") + " " + (u.Over_Power ? "1" : "0");
                 QFile file("..\\Train\\User_Data.dat");
+                QTextCodec* codec = QTextCodec::codecForName("UTF-8");
+                QTextStream in(&file);
+                in.setCodec(codec);
                 if (file.open(QIODevice::ReadWrite))
                 {
                     QTextStream in(&file);
@@ -319,6 +328,7 @@ bool user_Crl::checkUser_Password(QString account, QString password)
     md5 m;
     QString _password = QString::fromStdString(m.getMD5(password.toStdString()));
     QList<user>::Iterator iter1;
+
     for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++)
     {
         if (iter1->account == account && iter1->password == _password)

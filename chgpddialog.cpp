@@ -57,6 +57,7 @@ void chgpdDialog::on_btn_chg_clicked()
     uc->ChgUser(account , oldpsd , newpsd , renewpsd);
 }
 
+// 鼠标按下事件处理函数
 void chgpdDialog::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) // 左键按下
@@ -67,12 +68,14 @@ void chgpdDialog::mousePressEvent(QMouseEvent *event)
     return QWidget::mousePressEvent(event);
 }
 
+// 鼠标移动事件处理函数
 void chgpdDialog::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_bMove) move(event->globalPos() - reltvPos);
     return QWidget::mouseMoveEvent(event);
 }
 
+// 鼠标释放事件处理函数
 void chgpdDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     m_bMove = false; // 松开后要置为false
