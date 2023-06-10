@@ -55,14 +55,22 @@ Widget::Widget(QWidget *parent) :
     ui->searchuserwidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//设置查找用户信息单元格不可被编辑
 
     //设置表格自适应列宽
-    ui->ticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->ticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //自适应宽度
     ui->ticketWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
-    ui->searchticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->searchticketWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //自适应宽度
     ui->searchticketWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
-    ui->userWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->userWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //自适应宽度
     ui->userWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
-    ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
+    ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //自适应宽度
     ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
+
+    //设置自适应行高
+    //ui->ticketWidget->resizeRowsToContents();
+    //ui->searchticketWidget->resizeRowsToContents();
+    ui->userWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//自动设置行高
+    ui->searchuserwidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//自动设置行高
+    //ui->userWidget->resizeRowToContents(2);
+    //ui->searchuserwidget->resizeRowToContents(2);
 
     //设置表格选择模式
     ui->ticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置车票信息单元格选择行为，以行为单位
@@ -298,7 +306,7 @@ void Widget::setuserdata(const QList<user>&)
             QString buyticket;
             for(QList<ticket>::const_iterator it1=it->tickets.begin();it1!=it->tickets.end();it1++)
             {
-                buyticket=buyticket+it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->begintime+' '+it1->endtime+'\n';
+                buyticket+=it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->begintime+' '+it1->endtime+"\n "[it1==it->tickets.end()-1];//
             }
             ui->userWidget->setItem(rowcont,2,new QTableWidgetItem(buyticket));
         }
@@ -879,7 +887,10 @@ void Widget::saveuser()
          {
              for(QList<ticket>::const_iterator it1=it->tickets.begin();it1!=it->tickets.end();it1++)
              {
-                 out<<it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->begintime+' '+it1->endtime+' '+it1->price<<endl;
+                 out << it1->id << " " << " " << it1->beginpoint << " " << it1->endpoint << " "
+                     << it1->begintime << " "
+                     << it1->endtime << " " << QString::number(it1->price, 'f', 2) << endl;
+                 //out<<it1->id+' '+it1->beginpoint+' '+it1->endpoint+' '+it1->begintime+' '+it1->endtime+' '+it1->price;
              }
          }
          //关闭文件
