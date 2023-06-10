@@ -660,7 +660,14 @@ user_crl.cpp
 LoginDialog.cpp
 - bool LoginDialog::LoginUser(QString account, QString password);//用于进行登录的操作
 ```
+#### 管理员系统
+#### 用户系统
+
 ### 程序亮点
+
+```
+string md5::getMD5(string source)；//使用md5加密算法对密码进行加密
+```
 
 ## 总结
 
