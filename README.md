@@ -648,17 +648,18 @@ void on_Btn_Reg_clicked();//注册用户
 ```
 
 ### 关键算法
-```
-user_crl.cpp
-- user_Crl::user_Crl()；//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
-- bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op);//添加一个新用户，用于注册功能
-- bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd);//修改用户信息，用于修改密码
-```
+#### 登陆系统
+    ```
+    user_crl.cpp
+    - user_Crl::user_Crl()；//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
+    - bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op);//添加一个新用户，用于注册功能
+    - bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd);//修改用户信息，用于修改密码
+    ```
 
-```
-LoginDialog.cpp
-- bool LoginDialog::LoginUser(QString account, QString password);//用于进行登录的操作
-```
+    ```
+    LoginDialog.cpp
+    - bool LoginDialog::LoginUser(QString account, QString password);//用于进行登录的操作
+    ```
 
 ### 程序亮点
 
