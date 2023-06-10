@@ -81,7 +81,6 @@ RESOURCES += \
 
 DISTFILES += \
     Image/manager.png \
-    Tomas.jpg \
     User_Data.dat \
     User_Ticket/321.txt \
     User_Ticket/54321.txt \

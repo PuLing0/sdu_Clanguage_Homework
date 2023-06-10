@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="imag.qrc">
+    <normaloff>:/head.png</normaloff>:/head.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255)；</string>
   </property>
@@ -218,6 +222,8 @@
    <header location="global">qtmaterialraisedbutton.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="imag.qrc"/>
+ </resources>
  <connections/>
 </ui>

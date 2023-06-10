@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="imag.qrc">
+    <normaloff>:/head.png</normaloff>:/head.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
@@ -350,6 +354,7 @@ background-color: rgb(255, 255, 255);}</string>
  </customwidgets>
  <resources>
   <include location="pic/resource.qrc"/>
+  <include location="imag.qrc"/>
  </resources>
  <connections/>
 </ui>
