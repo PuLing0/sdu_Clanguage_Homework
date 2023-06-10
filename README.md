@@ -649,6 +649,7 @@ void on_Btn_Reg_clicked();//注册用户
 
 ### 关键算法
 #### 登陆系统
+
     ```
     user_crl.cpp
     - user_Crl::user_Crl()；//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
