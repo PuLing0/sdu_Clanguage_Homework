@@ -724,5 +724,15 @@ void on_Btn_Reg_clicked();//注册用户
 
 ## 附录
 ### 可使用用户列表
+|用户名|账号|密码|性别|权限|
+|-----|----|----|---|----|
+|admin|admin|admin|1|1|
+|admin0|admin0|admin0|1|1|
+|admin1|admin1|admin1|1|1|
+|admin2|admin2|admin2|1|1|
+|sijuzheng|sijuzheng|sijuzheng|1|0|
+|yuanenhan|yuanenhan|yuanenhan|1|0|
+|chenshuocheng|chenshuocheng|chenshuocheng|1|0|
+
 ### 可查询票据记录
 ### 运行示例
