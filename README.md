@@ -726,13 +726,13 @@ void on_Btn_Reg_clicked();//注册用户
 ### 可使用用户列表
 |用户名|账号|密码|性别|权限|
 |-----|----|----|---|----|
-|admin|admin|admin|1|1|
-|admin0|admin0|admin0|1|1|
-|admin1|admin1|admin1|1|1|
-|admin2|admin2|admin2|1|1|
-|sijuzheng|sijuzheng|sijuzheng|1|0|
-|yuanenhan|yuanenhan|yuanenhan|1|0|
-|chenshuocheng|chenshuocheng|chenshuocheng|1|0|
+|admin|admin|admin|男|管理员|
+|admin0|admin0|admin0|男|管理员|
+|admin1|admin1|admin1|男|管理员|
+|admin2|admin2|admin2|男|管理员|
+|sijuzheng|sijuzheng|sijuzheng|男|普通用户|
+|yuanenhan|yuanenhan|yuanenhan|男|普通用户|
+|chenshuocheng|chenshuocheng|chenshuocheng|男|普通用户|
 
 ### 可查询票据记录
 ### 运行示例
