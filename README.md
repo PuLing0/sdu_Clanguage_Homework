@@ -572,6 +572,7 @@ dialogaddticket::dialogaddticket(QWidget *parent):
     void dialogaddticket::saveclicked()
 ```
 ```
+widget.cpp
 Widget::Widget(QWidget *parent):
     void Widget::loadingticketdata()
     void Widget::loadinguserdata()
