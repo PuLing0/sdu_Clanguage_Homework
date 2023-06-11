@@ -151,6 +151,7 @@ class user{
     QList<ticket> getTickets() const; //获取用户已购票据
     void setTickets(QList<ticket> t); //设置用户已购票据
 };
+ticket.h
 class ticket
 {
 public:
@@ -179,6 +180,7 @@ private slots:
 }
 ```
 ```
+adduserdialog.h
 class adduserdialog
 {
 public:
@@ -191,6 +193,9 @@ public:
 public slots:
     void btnclicked();//记录注册按钮的点击
 };
+```
+```
+changeticketdialog.h
 class changeticketdialog
 {
 public:
@@ -213,6 +218,7 @@ public:
 };
 ```
 ```
+dialogaddticket.h
 class dialogaddticket
 {
 public:
@@ -231,6 +237,7 @@ public slots:
 };
 ```
 ```
+Widget.h
 class Widget
 {
 public:
