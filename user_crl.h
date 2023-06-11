@@ -18,6 +18,7 @@ public:
     bool checkUser_Name(QString name);//检查用户名是否已经存在
     bool checkUser_Account(QString account);//检查账号是否已经存在
     bool checkUser_OP(QString ac);//根据用户的账号返回该用户的权限
+    void userlist_sort(int l , int r);//对用户列表进行排序
 };
 
 #endif // USER_CRL_H

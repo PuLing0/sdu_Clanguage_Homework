@@ -51,11 +51,28 @@ user_Crl::user_Crl()
     }
 
     file.close();
+
+    userlist_sort(0 , userList.size() - 1);
+
+//    for (auto u = userList.begin(); u != userList.end(); u ++)
+//    {
+//        qDebug() << u->name << endl;
+//    }
 }
 
 //添加一个新用户，用于注册功能
 bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 {
+    //当账号，密码，姓名有一项为空时
+    if(ac == "" || psd == "" || nm == "")
+    {
+        QMessageBox msgbx;
+        msgbx.setText("禁止输入为空！");
+        msgbx.setWindowFlags(msgbx.windowFlags() | Qt::WindowStaysOnTopHint);
+        msgbx.exec();
+        return false;
+    }
+
     //将用户信息写入u
     md5 m;
     QString _psd = QString::fromStdString(m.getMD5(psd.toStdString()));
@@ -70,7 +87,7 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
     {
         //若u不存在则将u push进入链表
         userList.push_back(u);
-
+        userlist_sort(0 , userList.size() - 1);
     //该代码用于检查链表是否生成成功
 //                QList<user>::Iterator iter1;
 //                for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++)
@@ -80,15 +97,24 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 
         //打开文件
         QFile file("..\\Train\\User_Data.dat");
-        if (file.open(QIODevice::Append | QIODevice::Text))
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
             QTextStream out(&file);
             //将编码改为gbk方便输入中文
             QTextCodec* codec = QTextCodec::codecForName("GBK");
             out.setCodec(codec);
             //将用户信息输入到文件中
-            QString str = nm + " " + ac + " " + _psd + " " + (gd ? "1" : "0") + " " + (op ? "1" : "0");
-            out << str << endl;
+            for (auto iter = userList.begin(); iter != userList.end(); iter ++)
+            {
+                QString str = iter->name + " " + iter->account + " " + iter->password + " " + (iter->gender ? "1" : "0") + " " + (iter->Over_Power ? "1" : "0");
+                out << str << endl;
+            }
+                for (auto u = userList.begin(); u != userList.end(); u ++)
+                {
+                qDebug() << u->name << u->Over_Power << endl;
+                }
+//            QString str = nm + " " + ac + " " + _psd + " " + (gd ? "1" : "0") + " " + (op ? "1" : "0");
+//            out << str << endl;
             file.close();
 
             //在User_Ticket文件加中生成一个以user.name命名的txt文件，用于存储车票信息
@@ -184,7 +210,7 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
                 //文件用户信息修改
                 QString newline = u.name + " " + u.account + " " + u.password + " " + (u.gender ? "1" : "0") + " " + (u.Over_Power ? "1" : "0");
                 QFile file("..\\Train\\User_Data.dat");
-                QTextCodec* codec = QTextCodec::codecForName("UTF-8");
+                QTextCodec* codec = QTextCodec::codecForName("GBK");
                 QTextStream in(&file);
                 in.setCodec(codec);
                 if (file.open(QIODevice::ReadWrite))
@@ -272,16 +298,16 @@ bool user_Crl::LoginUser(QString ac, QString psd)
 //检查用户名是否已经存在，若存在返回true
 bool user_Crl::checkUser_Name(QString name)
 {
-    QList<user>::Iterator iter1;
-    for (iter1 = userList.begin(); iter1 != userList.end(); iter1 ++)
+    int l = 0 , r = userList.size() - 1;
+    while (l < r)
     {
-        if (iter1->name == name)
-        {
-            return true;
-        }
+        int mid = l + r >> 1;
+        if (userList[mid].name >= name) r = mid;
+        else
+            l = mid + 1;
     }
 
-    return false;
+    return (userList[l].name == name);
 }
 
 //检查账号是否已经存在，若存在返回true
@@ -318,6 +344,26 @@ bool user_Crl::checkUser_OP(QString ac)
     msgbx.exec();
 
     return false;//默认返回false
+}
+
+//快排，用于用户链表排序
+void user_Crl::userlist_sort(int l , int r)
+{
+    if (l >= r) return;
+
+    int i = l - 1, j = r + 1;
+    user u = userList[i + j >> 1];
+
+    while (i < j)
+    {
+        do i ++; while(userList[i].name < u.name);
+        do j --; while(userList[j].name > u.name);
+        if (i < j)
+            qSwap(userList[i] , userList[j]);
+    }
+
+    userlist_sort(l , j);
+    userlist_sort(j + 1 , r);
 }
 
 //验证用户是否存在以及密码是否正确，用于登录功能和修改密码的检验功能，正确返回1，错误返回0

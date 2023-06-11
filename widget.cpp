@@ -29,6 +29,8 @@
 #include<QColor>
 #include<QDateTime>
 #include<QTimer>
+#include <QDebug>
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -341,6 +343,11 @@ void Widget::on_ticketList_clicked()
     for(int row = ui->ticketWidget->rowCount() - 1;row >= 0; row--)
     {
         ui->ticketWidget->removeRow(row);
+    }
+
+    for (auto i = ticketlist.begin(); i != ticketlist.end(); i ++)
+    {
+        qDebug() << i->id <<' ' << i->beginpoint << ' ' << i->endpoint << ' ' << i->begintime << ' ' << i->endtime << ' ' << i->amount << ' ' << i->price << endl;
     }
 
     //显示全部信息
