@@ -1063,6 +1063,7 @@ void on_Btn_Reg_clicked();//注册用户
 |d1345|德州|莫斯科|2023-07-11|22:14|2023-07-11|22:14|2|233.00|
 
 ### 运行示例
+[演示视频](https://www.bilibili.com/video/BV1JN411k7jd/)
 1. 首先运行程序进入登录界面
    <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.png"><br>
 2. 点击注册用户并输入注册用户信息
