@@ -37,7 +37,7 @@ void dialog1::setUser(user t)
 void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
 {
     /*改签退票信号*/
-    if(column == 6)
+    if(column == 8)
     { //若双击改签单元格
         ticket t;
         for (int i = 0; i < tickets.size(); i++)
@@ -51,7 +51,7 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
             }
         }
     }
-    else if(column == 7)
+    else if(column == 9)
     { //若双击退票单元格
         ticket t;
         for (int i = 0; i < tickets.size(); i++)
