@@ -91,5 +91,4 @@ DISTFILES += \
     User_Ticket/ppp.txt \
     User_Ticket/shabi.txt \
     User_Ticket/sm.txt \
-    hchsk.txt \
-    ticket.txt
+    hchsk.txt
