@@ -119,11 +119,6 @@ Widget::Widget(QWidget *parent) :
     connect(ui->ticketWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(RightClickSlot(QPoint)));
     connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
 
-    //排序
-    ui->ticketWidget->setSortingEnabled(true);
-    ui->ticketWidget->sortItems(3);
-    ui->searchticketWidget->setSortingEnabled(true);
-    ui->searchticketWidget->sortItems(3);
 }
 
 //将车票，用户数据读入链表中
@@ -169,6 +164,8 @@ void Widget::loadingticketdata()
         ticketlist.pop_back();//如果list不为空，弹出最后一个数据（该数据是无用的数据）
     //关闭文件
     fticket.close();
+    //根据发车时间排序
+    qSort(ticketlist.begin(), ticketlist.end(),[](const ticket &infoA,const ticket &infoB){return infoA.begintime < infoB.endtime;});
 }
 //将用户信息读入链表
 void Widget::loadinguserdata()
@@ -487,6 +484,9 @@ void Widget::on_addticketButton_clicked()
                 newt.amount=t.toInt();//设置车票数
                 newt.price=pr.toDouble();//设置票价
                 ticketlist.push_back(newt);//加入车次列表中
+                //根据发车时间排序
+                qSort(ticketlist.begin(), ticketlist.end(),[](const ticket &infoA,const ticket &infoB){return infoA.begintime < infoB.endtime;});
+
                 setticketdata(ticketlist);
             }
         }
@@ -779,6 +779,10 @@ void Widget::on_changeticketbtn_clicked()
                         }
                     }
                     QMessageBox::information(this,"提示","修改成功");//提示
+
+                    //根据发车时间排序
+                    qSort(ticketlist.begin(), ticketlist.end(),[](const ticket &infoA,const ticket &infoB){return infoA.begintime < infoB.endtime;});
+
                     setticketdata(ticketlist);//显示更改后车票的信息
                     setuserdata(userlist);//显示更改后的用户
 

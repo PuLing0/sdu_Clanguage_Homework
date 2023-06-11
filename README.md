@@ -177,6 +177,8 @@ private slots:
     void on_pushButton_clicked(); //已购票据查询按钮
     void on_pushButton_2_clicked(); //退出按钮
 }
+```
+```
 class adduserdialog
 {
 public:
@@ -209,6 +211,8 @@ public:
     void changebtnclicked();//修改按钮按下时触发
     int flap;//记录是否为修改按钮按下
 };
+```
+```
 class dialogaddticket
 {
 public:
@@ -225,6 +229,8 @@ public slots:
     
     void saveclicked();//保存按钮按下式触发
 };
+```
+```
 class Widget
 {
 public:
@@ -233,6 +239,10 @@ public:
     //将信息读入列表中
     void loadingticketdata();
     void loadinguserdata();
+    //在列车表格显示一个车票数据
+    void setticketWidgetsingleticket(const ticket& );
+    //在列车查询表格显示一个车票数据
+    void setsearchticketWidgetsingleticket(const ticket& );
     //将列车信息显示在表格中
     void setticketdata(const QList<ticket>&);
     //将用户信息显示在表格中
@@ -579,6 +589,10 @@ void Widget::on_ticketList_clicked():
     void Widget::setticketdata(const QList<ticket>&ticketlist)
 void Widget::on_userList_clicked():
     void Widget::setuserdata(const QList<user>&)
+void Widget::setticketdata(const QList<ticket>&ticketlist)
+    void Widget::setticketWidgetsingleticket(const ticket& it)
+void Widget::on_searchticketbtn_clicked()
+    void Widget::setsearchticketWidgetsingleticket(const ticket& it)
 void Widget::on_adduserButton_clicked():
     string md5::getMD5(string source)
     void Widget::saveuser()
