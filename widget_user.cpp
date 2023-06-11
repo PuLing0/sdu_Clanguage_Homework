@@ -241,6 +241,7 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
                         mode = 0; //转换状态
                         ui->label_6->clear();
                         ui->label_6->hide();
+                        ui->pushButton_3->setEnabled(true);
                         tableUpdate(); //刷新列表
                     }
                     else
@@ -335,6 +336,7 @@ void Widget_User::get(bool m, ticket a)
         changingTicket = a; //设置当前正在操作的票据
         ui->label_6->setText(a.id+" 正在改签中...");
         ui->label_6->show();
+        ui->pushButton_3->setEnabled(false);
     }
     else
     { //若不为改签状态
