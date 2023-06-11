@@ -19,7 +19,7 @@ changeticketdialog::changeticketdialog(QWidget *parent) :
 //修改按钮按下时触发
 void changeticketdialog::changebtnclicked()
 {
-    flap=1;//记录修改按钮被按下
+    this->flap=1;//记录修改按钮被按下
     this->close();//关闭窗口
 }
 

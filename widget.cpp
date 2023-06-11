@@ -747,12 +747,14 @@ void Widget::on_changeticketbtn_clicked()
         QString finet=ct->getfinet();//获取想要修改的列车的改后的到站时间
         QString finnumber=ct->getfinnumber();//获取想要修改的列车的改后的车票数
         QString finprice=ct->getfinprice();//获取想要修改的列车的改后的票价
+        int temp=0;
         //遍历查找要修改的车次
         for(QList<ticket>::iterator it=ticketlist.begin();it!=ticketlist.end();it++)
         {
             //找到要修改的车票信息
             if(it->id==iniid&&it->beginpoint==iniba&&it->endpoint==iniea&&it->begintime==inibt&&it->endtime==iniet)
             {
+                temp=1;
                 int flap=0;//记录是否可以修改
                 //检查信息是否有冲突
                 for(QList<ticket>::iterator it1=ticketlist.begin();it1!=ticketlist.end();it1++)
@@ -810,11 +812,10 @@ void Widget::on_changeticketbtn_clicked()
                     break;
                 }
             }
-            else
-            {
-                QMessageBox::warning(this,"Warning","查询不到想要修改的列车，无法修改！！！");//查询不到想要修改的列车则报警，不予修改
-                break;
-            }
+        }
+        if(temp==0)
+        {
+            QMessageBox::warning(this,"Warning","查询不到想要修改的列车，无法修改！！！");//查询不到想要修改的列车则报警，不予修改
         }
     }
 }
