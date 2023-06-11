@@ -663,17 +663,11 @@ void on_Btn_Reg_clicked();//注册用户
 
 ### 关键算法
 #### 登陆系统
-```
-user_crl.cpp
-- user_Crl::user_Crl()；//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
-- bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op);//添加一个新用户，用于注册功能
-- bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd);//修改用户信息，用于修改密码
-```
-
-```
-LoginDialog.cpp
-- bool LoginDialog::LoginUser(QString account, QString password);//用于进行登录的操作
-```
+- 排序：在排序方面使用的是快速排序，本函数基于用户的名字进行了排序，能够极大提高文件的使用性，也可以让管理员看到用户信息有序的排列，提高可观性
+    详见函数：`void user_Crl::userlist_sort(int l , int r)`
+- 查找：使用的二分查找进行查找，由于对用户的名字进行了排序，因此在用户登录时对用户信息的搜索使用了二分查找，能够提高登录查找数据的效率
+    详见函数:`bool user_Crl::checkUser_Name(QString name)`
+    
 #### 管理员系统
 #### 用户系统
 
@@ -693,6 +687,7 @@ string md5::getMD5(string source)；//使用md5加密算法对密码进行加密
     - 实现了用户数据的读取、存入、修改
     - 用md5加密算法实现了用户密码的加密
     - 在文件中加入了qt-material-widgets-master静态库，使ui界面更简洁人性化
+    - 文件编码问题，使用了"GBK"编码
 2. 开发中遇到的问题
     - 已解决
         - 窗口无边框
@@ -700,9 +695,9 @@ string md5::getMD5(string source)；//使用md5加密算法对密码进行加密
         - 登录注册修改密码遇到的多种情况进行分情况讨论
         - 在注册时User_Data.dat文件内的数据自动更新
         - 密码在User_Data.dat中的密码加密，避免直接被人盗取
+        - 用户列表的查找方式时间复杂度太大，将用户列表排序后用二分查找会减少查找时间
     - 未解决
         - 密码加密不可逆，如果使用非对称可逆加密SRA加密算法更具有科学性
-        - 用户列表的查找方式时间复杂度太大，如果将用户列表排序后用二分查找会减少查找时间
 3. 收获和想法
 > 我的收获：通过本次开发，我学会了QT软件的基本使用，学会了静态库基本使用，熟悉了一个软件从设计，开发到测试和报告的整个流程，进一步掌握了C/C++语言基础语法的使用，同时也明白了一些前端设计的基础，对C/C++语言语法的掌握更进了一步。<br>
 > 在撰写实验报告的过程中，我了解了软件工程的一些基础知识，例如软件流程图，软件层次图，数据流图等概念，学会了从整体布局，局部分析完成的思维逻辑，受益匪浅。同时我也学会了markdown的基础语法，能够使文本的编      写更加规矩整洁，提高可读性。<br>
