@@ -589,6 +589,10 @@ void Widget::on_ticketList_clicked():
     void Widget::setticketdata(const QList<ticket>&ticketlist)
 void Widget::on_userList_clicked():
     void Widget::setuserdata(const QList<user>&)
+void Widget::setticketdata(const QList<ticket>&ticketlist)
+    void Widget::setticketWidgetsingleticket(const ticket& it)
+void Widget::on_searchticketbtn_clicked()
+    void Widget::setsearchticketWidgetsingleticket(const ticket& it)
 void Widget::on_adduserButton_clicked():
     string md5::getMD5(string source)
     void Widget::saveuser()
