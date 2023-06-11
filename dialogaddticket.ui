@@ -99,7 +99,7 @@
           <string notr="true">background-color: rgb(87, 253, 255);</string>
          </property>
          <property name="text">
-          <string>save</string>
+          <string>保存</string>
          </property>
         </widget>
        </item>
@@ -109,7 +109,7 @@
           <string notr="true">background-color: rgb(87, 253, 255);</string>
          </property>
          <property name="text">
-          <string>cancle</string>
+          <string>取消</string>
          </property>
         </widget>
        </item>
