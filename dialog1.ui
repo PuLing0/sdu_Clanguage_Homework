@@ -52,7 +52,17 @@ alternate-background-color: rgb(221, 244, 255);</string>
    </column>
    <column>
     <property name="text">
+     <string>出发日期</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>出发时间</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>到达日期</string>
     </property>
    </column>
    <column>

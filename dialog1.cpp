@@ -82,7 +82,9 @@ void dialog1::on_pushButton_clicked()
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].id));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].beginpoint));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].endpoint));
+            ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].beginDay));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].begintime));
+            ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].endDay));
             ui->tableWidget_2->setItem(row, column++, new QTableWidgetItem(tickets[i].endtime));
 
             QString t1; //临时容器，存储历时
