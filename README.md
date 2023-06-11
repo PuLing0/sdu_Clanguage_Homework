@@ -687,6 +687,7 @@ void on_Btn_Reg_clicked();//注册用户
 
 ```
 string md5::getMD5(string source)；//使用md5加密算法对密码进行加密
+设计了操作较为直观，可阅读性高的基于Qt的可视化程序界面
 ```
 
 ## 总结
