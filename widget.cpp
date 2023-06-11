@@ -65,12 +65,8 @@ Widget::Widget(QWidget *parent) :
     ui->searchuserwidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
 
     //设置自适应行高
-    //ui->ticketWidget->resizeRowsToContents();
-    //ui->searchticketWidget->resizeRowsToContents();
     ui->userWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//自动设置行高
     ui->searchuserwidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//自动设置行高
-    //ui->userWidget->resizeRowToContents(2);
-    //ui->searchuserwidget->resizeRowToContents(2);
 
     //设置表格选择模式
     ui->ticketWidget->setSelectionBehavior ( QAbstractItemView::SelectRows); //设置车票信息单元格选择行为，以行为单位
@@ -256,6 +252,32 @@ void Widget::loadinguserdata()
     fuser.close();
 
 }
+//在列车列表显示单个车票数据
+void Widget::setticketWidgetsingleticket(const ticket& it)
+{
+    int rowcont=ui->ticketWidget->rowCount();//记录当前的行数
+    ui->ticketWidget->insertRow(rowcont);//插入新的一行
+    ui->ticketWidget->setItem(rowcont,0,new QTableWidgetItem(it.id));//显示列车号
+    ui->ticketWidget->setItem(rowcont,1,new QTableWidgetItem(it.beginpoint));//显示始发站
+    ui->ticketWidget->setItem(rowcont,2,new QTableWidgetItem(it.endpoint));//显示终点站
+    ui->ticketWidget->setItem(rowcont,3,new QTableWidgetItem(it.begintime));//显示发车时间
+    ui->ticketWidget->setItem(rowcont,4,new QTableWidgetItem(it.endtime));//显示到站时间
+    ui->ticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it.amount)));//显示车票数量
+    ui->ticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it.price)));//显示车票价格
+}
+//在查询列车列表显示单个车票数据
+void Widget::setsearchticketWidgetsingleticket(const ticket& it)
+{
+    int rowcont=ui->searchticketWidget->rowCount();//记录当前的行数
+    ui->searchticketWidget->insertRow(rowcont);//插入新的一行
+    ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it.id));//显示列车号
+    ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it.beginpoint));//显示始发站
+    ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it.endpoint));//显示终点站
+    ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it.begintime));//显示发车时间
+    ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it.endtime));//显示到站时间
+    ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it.amount)));//显示车票数量
+    ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it.price)));//显示车票价格
+}
 
 //显示车票数据
 void Widget::setticketdata(const QList<ticket>&ticketlist)
@@ -270,15 +292,7 @@ void Widget::setticketdata(const QList<ticket>&ticketlist)
     //将车票信息显示到表格中
     for(QList<ticket>::const_iterator it=ticketlist.begin();it!=ticketlist.end();it++)
     {
-        int rowcont=ui->ticketWidget->rowCount();//记录当前的行数
-        ui->ticketWidget->insertRow(rowcont);//插入新的一行
-        ui->ticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-        ui->ticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-        ui->ticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-        ui->ticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示发车时间
-        ui->ticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-        ui->ticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-        ui->ticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+        setticketWidgetsingleticket(*it);
     }
 
 }
@@ -456,15 +470,7 @@ void Widget::on_addticketButton_clicked()
             //如果信息完全无冲突，则添加该车次
             if(it==ticketlist.end())
             {
-                ui->ticketWidget->insertRow(ui->ticketWidget->rowCount());//获取列车当前表格的行数
-                ui->ticketWidget->scrollToBottom();//将表格置于底端
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,0,new QTableWidgetItem(id));//显示列车号
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,1,new QTableWidgetItem(ba));//显示始发站
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,2,new QTableWidgetItem(ea));//显示终点站
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,3,new QTableWidgetItem(bt));//显示开车时间
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,4,new QTableWidgetItem(et));//显示到站时间
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,5,new QTableWidgetItem(t));//显示车票数
-                ui->ticketWidget->setItem(ui->ticketWidget->rowCount()-1,6,new QTableWidgetItem(pr));//显示票价
+
                 ticket newt;//创建新的车票对象
                 newt.id=id;//设置列车号
                 newt.beginpoint=ba;//设置始发站
@@ -474,6 +480,7 @@ void Widget::on_addticketButton_clicked()
                 newt.amount=t.toInt();//设置车票数
                 newt.price=pr.toDouble();//设置票价
                 ticketlist.push_back(newt);//加入车次列表中
+                setticketdata(ticketlist);
             }
         }
     }
@@ -572,15 +579,7 @@ void Widget::on_searchticketbtn_clicked()
                 //找到后就显示该车次的信息
                 if(it->beginpoint==ba&&it->endpoint==ea)
                 {
-                    int rowcont=ui->searchticketWidget->rowCount();//获取当前查找列车表格行数
-                    ui->searchticketWidget->insertRow(rowcont);//添加新一行
-                    ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-                    ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-                    ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-                    ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
-                    ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-                    ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                    ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                    setsearchticketWidgetsingleticket(*it);
                 }
             }
         }
@@ -593,15 +592,7 @@ void Widget::on_searchticketbtn_clicked()
                 //找到后就显示该车次的信息
                 if(it->beginpoint==ba)
                 {
-                    int rowcont=ui->searchticketWidget->rowCount();//获取当前查找列车表格行数
-                    ui->searchticketWidget->insertRow(rowcont);//添加新一行
-                    ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-                    ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-                    ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-                    ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
-                    ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-                    ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                    ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                    setsearchticketWidgetsingleticket(*it);
                 }
             }
         }
@@ -614,15 +605,7 @@ void Widget::on_searchticketbtn_clicked()
                 //找到后就显示该车次的信息
                 if(it->endpoint==ea)
                 {
-                    int rowcont=ui->searchticketWidget->rowCount();//获取当前查找列车表格行数
-                    ui->searchticketWidget->insertRow(rowcont);//添加新一行
-                    ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-                    ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-                    ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-                    ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
-                    ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-                    ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                    ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                    setsearchticketWidgetsingleticket(*it);
                 }
             }
         }
@@ -645,15 +628,7 @@ void Widget::on_searchticketbtn_clicked()
             //如果符合条件
             if(rbt==strbt&&ret==stret)
             {
-                int rowcont=ui->searchticketWidget->rowCount();//获取查找车次表格的行数
-                ui->searchticketWidget->insertRow(rowcont);//在表格中添加新一行
-                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
-                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                setsearchticketWidgetsingleticket(*it);
             }
          }
     }
@@ -667,15 +642,7 @@ void Widget::on_searchticketbtn_clicked()
             //如果符合条件
             if(it->id==searchid)
             {
-                int rowcont=ui->searchticketWidget->rowCount();//获取查找车次表格的行数
-                ui->searchticketWidget->insertRow(rowcont);//在表格中添加新一行
-                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
-                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                setsearchticketWidgetsingleticket(*it);
             }
          }
     }
@@ -693,15 +660,7 @@ void Widget::on_searchticketbtn_clicked()
             //如果符合条件
             if(it->endpoint==ea&&rbt==strbt&&ret==stret)
             {
-                int rowcont=ui->searchticketWidget->rowCount();//获取查找车次表格的行数
-                ui->searchticketWidget->insertRow(rowcont);//在表格中添加新一行
-                ui->searchticketWidget->setItem(rowcont,0,new QTableWidgetItem(it->id));//显示列车号
-                ui->searchticketWidget->setItem(rowcont,1,new QTableWidgetItem(it->beginpoint));//显示始发站
-                ui->searchticketWidget->setItem(rowcont,2,new QTableWidgetItem(it->endpoint));//显示终点站
-                ui->searchticketWidget->setItem(rowcont,3,new QTableWidgetItem(it->begintime));//显示开车时间
-                ui->searchticketWidget->setItem(rowcont,4,new QTableWidgetItem(it->endtime));//显示到站时间
-                ui->searchticketWidget->setItem(rowcont,5,new QTableWidgetItem(QString::number(it->amount)));//显示车票数量
-                ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it->price)));//显示车票价格
+                setsearchticketWidgetsingleticket(*it);
             }
          }
     }

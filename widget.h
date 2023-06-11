@@ -29,6 +29,10 @@ public:
     void setticketdata(const QList<ticket>&);
     //将用户信息显示在表格中
     void setuserdata(const QList<user>&);
+    //在列车表格显示一个车票数据
+    void setticketWidgetsingleticket(const ticket& );
+    //在列车查询表格显示一个车票数据
+    void setsearchticketWidgetsingleticket(const ticket& );
     //保存车票修改按钮
     void saveticket();
     //保存用户修改按钮
