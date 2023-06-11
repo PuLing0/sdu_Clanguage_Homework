@@ -147,6 +147,7 @@ void Widget_User::check()
     }        
     else
     {
+        ui->tableWidget->setSortingEnabled(false);
         int i = 0;
         int row = 0, column = 0;
         while(i < tickets.size() - 1)
@@ -185,6 +186,7 @@ void Widget_User::check()
             }
             i++;
         }
+        ui->tableWidget->setSortingEnabled(true);
         ui->label_5->setText("查询成功!");
     }
 }
@@ -259,6 +261,8 @@ void Widget_User::on_pushButton_3_clicked()
     connect(t, SIGNAL(send(bool, ticket)), this, SLOT(get(bool, ticket))); //窗口间传ticket
     if(!mode)
     {
+        t->setWindowFlags(t->windowFlags() |Qt::Dialog);
+        t->setWindowModality(Qt::ApplicationModal); //阻塞除当前窗体之外的所有的窗体
         t->show();
     }
     else
