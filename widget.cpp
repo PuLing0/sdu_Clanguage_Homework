@@ -120,7 +120,25 @@ Widget::Widget(QWidget *parent) :
     connect(RightClick,SIGNAL(triggered(QAction*)),this,SLOT(RightClickDelete(QAction*)));
 
 }
+//快排，用于车票链表排序
+void Widget::ticketlist_sort(int l , int r)
+{
+    if (l >= r) return;
 
+    int i = l - 1, j = r + 1;
+    ticket t = ticketlist[i + j >> 1];
+
+    while (i < j)
+    {
+        do i ++; while(ticketlist[i].begintime < t.begintime);
+        do j --; while(ticketlist[j].begintime > t.begintime);
+        if (i < j)
+            qSwap(ticketlist[i] , ticketlist[j]);
+    }
+
+    ticketlist_sort(l , j);
+    ticketlist_sort(j + 1 , r);
+}
 //将车票，用户数据读入链表中
 void Widget::loadingticketdata()
 {
@@ -165,7 +183,7 @@ void Widget::loadingticketdata()
     //关闭文件
     fticket.close();
     //根据发车时间排序
-    qSort(ticketlist.begin(), ticketlist.end(),[](const ticket &infoA,const ticket &infoB){return infoA.begintime < infoB.endtime;});
+    ticketlist_sort(0,ticketlist.size()-1);
 }
 //将用户信息读入链表
 void Widget::loadinguserdata()
@@ -485,7 +503,7 @@ void Widget::on_addticketButton_clicked()
                 newt.price=pr.toDouble();//设置票价
                 ticketlist.push_back(newt);//加入车次列表中
                 //根据发车时间排序
-                qSort(ticketlist.begin(), ticketlist.end(),[](const ticket &infoA,const ticket &infoB){return infoA.begintime < infoB.endtime;});
+                ticketlist_sort(0,ticketlist.size()-1);
 
                 setticketdata(ticketlist);
             }
@@ -781,7 +799,7 @@ void Widget::on_changeticketbtn_clicked()
                     QMessageBox::information(this,"提示","修改成功");//提示
 
                     //根据发车时间排序
-                    qSort(ticketlist.begin(), ticketlist.end(),[](const ticket &infoA,const ticket &infoB){return infoA.begintime < infoB.endtime;});
+                    ticketlist_sort(0,ticketlist.size()-1);
 
                     setticketdata(ticketlist);//显示更改后车票的信息
                     setuserdata(userlist);//显示更改后的用户

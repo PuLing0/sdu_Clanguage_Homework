@@ -37,7 +37,8 @@ public:
     void saveticket();
     //保存用户修改按钮
     void saveuser();
-
+    //排序
+    void ticketlist_sort(int  , int );
 public slots:
 
     //添加用户信息按钮
