@@ -1064,29 +1064,3 @@ void on_Btn_Reg_clicked();//注册用户
 
 ### 运行示例
 [演示视频](https://www.bilibili.com/video/BV1JN411k7jd/)
-1. 首先运行程序进入登录界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.png"><br>
-2. 点击注册用户并输入注册用户信息
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.1.png"><br>
-3. 输入刚才注册的用户信息并点击登录
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.2.png">
-4. 进入用户界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B2.png">
-5. 双击购买g800
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B2.1.png">
-6. 点击进入个人中心界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B3.png">
-7. 查询已购买票据
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B4.png">
-8. 双击改签返回购买界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B5.png">
-9. 双击改签选择要改的票据y9000
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B6.png">
-10. 再次进入个人中心界面查询
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B7.png">
-11. 双击退票
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B8.png">
-12. 返回购票界面查询
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B9.png">
-13. 关闭程序，再次打开时使用管理员账户
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B10.png">
