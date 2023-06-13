@@ -25,7 +25,11 @@ adduserdialog::~adduserdialog()
     delete ui;
 }
 
-//当注册按钮被按下时触发，用于获取注册账户的信息
+/*
+  * 当注册按钮被按下时触发，用于获取注册账户的信息
+  * 传入参数：无
+  * 返回值：无
+  */
 void adduserdialog::btnclicked()
 {
 
@@ -38,7 +42,11 @@ void adduserdialog::btnclicked()
     this->hide();//关闭对话框
 }
 
-//用于性别选择，其中男性返回1，女性返回0，默认是男性
+/*
+  * 用于性别选择，其中男性返回1，女性返回0，默认是男性
+  * 传入参数：无
+  * 返回值：bool
+  */
 bool adduserdialog::Gender_Choose()
 {
     if (ui->Rd_Female->isChecked())
