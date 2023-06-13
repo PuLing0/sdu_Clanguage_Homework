@@ -26,9 +26,9 @@ public:
     void loadingticketdata();
     void loadinguserdata();
     //将列车信息显示在表格中
-    void setticketdata(const QList<ticket>&);
+    void setticketdata();
     //将用户信息显示在表格中
-    void setuserdata(const QList<user>&);
+    void setuserdata();
     //在列车表格显示一个车票数据
     void setticketWidgetsingleticket(const ticket& );
     //在列车查询表格显示一个车票数据
