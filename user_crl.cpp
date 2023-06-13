@@ -11,7 +11,11 @@
 
 using std::string;
 
-//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
+/**
+  * @brief  默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
+  * @param  无
+  * @retval 无
+  */
 user_Crl::user_Crl()
 {
     QFile file("..\\Train\\User_Data.dat");
@@ -60,6 +64,15 @@ user_Crl::user_Crl()
 //    }
 }
 
+/**
+  * @brief  添加一个新用户，用于注册功能
+  * @param  ac 用户账号
+  * @param  psd 用户密码
+  * @param  gd 用户性别
+  * @param  nm 用户姓名
+  * @param  op 用户权限
+  * @retval 注册成功返回1，注册失败返回0
+  */
 //添加一个新用户，用于注册功能
 bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
 {

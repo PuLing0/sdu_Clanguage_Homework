@@ -23,7 +23,7 @@ void chgpdDialog::paintEvent(QPaintEvent *event)
 }
 
 /**
-  * @brief  构造函数，创建修改密码页面
+  * @brief  默认构造函数，创建修改密码页面
   * @param  parent父级窗口
   * @retval 无
   */

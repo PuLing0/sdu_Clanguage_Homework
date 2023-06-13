@@ -161,7 +161,7 @@ string md5::getMD5(string source)
 }
 
 /**
-  * @brief  构造函数，用于初始化类的成员变量
+  * @brief  默认构造函数，用于初始化类的成员变量
   * @param  无
   * @retval 无
   */
