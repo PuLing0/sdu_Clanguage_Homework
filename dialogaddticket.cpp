@@ -27,35 +27,55 @@ dialogaddticket::~dialogaddticket()
     delete ui;
 }
 
-//按下添加按钮时触发，记录添加按钮被按下，关闭对话框
+/*
+  * 按下添加按钮时触发，记录添加按钮被按下，关闭对话框
+  * 传入参数：无
+  * 返回值：无
+  */
 void dialogaddticket::saveclicked()
 {
     this->flap=1;
     this->hide();
 }
 
-//获取添加的列车的列车号
+/*
+  * 获取添加的列车的列车号
+  * 传入参数：无
+  * 返回值：添加的列车的列车号
+  */
 QString dialogaddticket::getid()
 {
     QString s=ui->IdlineEdit->text();
     return s;
 }
 
-//获取添加列车的始发站
+/*
+  * 获取添加列车的始发站
+  * 传入参数：无
+  * 返回值：添加列车的始发站
+  */
 QString dialogaddticket::getba()
 {
     QString s=ui->BalineEdit->text();
     return s;
 }
 
-//获取添加列车的终点站
+/*
+  * 获取添加列车的终点站
+  * 传入参数：无
+  * 返回值：添加列车的终点站
+  */
 QString dialogaddticket::getea()
 {
     QString s=ui->EalineEdit->text();
     return s;
 }
 
-//获取添加列车的发车时间
+/*
+  * 获取添加列车的发车时间
+  * 传入参数：无
+  * 返回值：添加列车的发车时间
+  */
 QString dialogaddticket::getbt()
 {
     QDateTime time=ui->BtdateTimeEdit->dateTime();//获取时间
@@ -63,7 +83,11 @@ QString dialogaddticket::getbt()
     return s;
 }
 
-//获取添加列车的到站时间
+/*
+  * 获取添加列车的到站时间
+  * 传入参数：无
+  * 返回值：添加列车的到站时间
+  */
 QString dialogaddticket::getet()
 {
     QDateTime time=ui->EtdateTimeEdit->dateTime();//获取时间
@@ -71,14 +95,22 @@ QString dialogaddticket::getet()
     return s;
 }
 
-//获取添加列车的车票数
+/*
+  * 获取添加列车的车票数
+  * 传入参数：无
+  * 返回值：添加列车的车票数
+  */
 QString dialogaddticket::getticket()
 {
     QString s=ui->TicketlineEdit->text();
     return s;
 }
 
-//获取添加列车的票价
+/*
+  * 获取添加列车的票价
+  * 传入参数：无
+  * 返回值：添加列车的票价
+  */
 QString dialogaddticket::getprice()
 {
     QString s=ui->PrlineEdit->text();
