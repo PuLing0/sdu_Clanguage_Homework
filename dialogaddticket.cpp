@@ -27,10 +27,10 @@ dialogaddticket::~dialogaddticket()
     delete ui;
 }
 
-/*
-  * 按下添加按钮时触发，记录添加按钮被按下，关闭对话框
-  * 传入参数：无
-  * 返回值：无
+/**
+  * @brief 按下添加按钮时触发，记录添加按钮被按下，关闭对话框
+  * @param 无
+  * @retval 无
   */
 void dialogaddticket::saveclicked()
 {
@@ -38,10 +38,10 @@ void dialogaddticket::saveclicked()
     this->hide();
 }
 
-/*
-  * 获取添加的列车的列车号
-  * 传入参数：无
-  * 返回值：添加的列车的列车号
+/**
+  * @brief 获取添加的列车的列车号
+  * @param 无
+  * @retval 添加的列车的列车号
   */
 QString dialogaddticket::getid()
 {
@@ -49,10 +49,10 @@ QString dialogaddticket::getid()
     return s;
 }
 
-/*
-  * 获取添加列车的始发站
-  * 传入参数：无
-  * 返回值：添加列车的始发站
+/**
+  * @brief 获取添加列车的始发站
+  * @param 无
+  * @retval 添加列车的始发站
   */
 QString dialogaddticket::getba()
 {
@@ -60,10 +60,10 @@ QString dialogaddticket::getba()
     return s;
 }
 
-/*
-  * 获取添加列车的终点站
-  * 传入参数：无
-  * 返回值：添加列车的终点站
+/**
+  * @brief 获取添加列车的终点站
+  * @param 无
+  * @retval 添加列车的终点站
   */
 QString dialogaddticket::getea()
 {
@@ -71,10 +71,10 @@ QString dialogaddticket::getea()
     return s;
 }
 
-/*
-  * 获取添加列车的发车时间
-  * 传入参数：无
-  * 返回值：添加列车的发车时间
+/**
+  * @brief 获取添加列车的发车时间
+  * @param 无
+  * @retval 添加列车的发车时间
   */
 QString dialogaddticket::getbt()
 {
@@ -83,10 +83,10 @@ QString dialogaddticket::getbt()
     return s;
 }
 
-/*
-  * 获取添加列车的到站时间
-  * 传入参数：无
-  * 返回值：添加列车的到站时间
+/**
+  * @brief 获取添加列车的到站时间
+  * @param 无
+  * @retval 添加列车的到站时间
   */
 QString dialogaddticket::getet()
 {
@@ -95,10 +95,10 @@ QString dialogaddticket::getet()
     return s;
 }
 
-/*
-  * 获取添加列车的车票数
-  * 传入参数：无
-  * 返回值：添加列车的车票数
+/**
+  * @brief 获取添加列车的车票数
+  * @param 无
+  * @retval 添加列车的车票数
   */
 QString dialogaddticket::getticket()
 {
@@ -106,10 +106,10 @@ QString dialogaddticket::getticket()
     return s;
 }
 
-/*
-  * 获取添加列车的票价
-  * 传入参数：无
-  * 返回值：添加列车的票价
+/**
+  * @brief 获取添加列车的票价
+  * @param 无
+  * @retval 添加列车的票价
   */
 QString dialogaddticket::getprice()
 {
