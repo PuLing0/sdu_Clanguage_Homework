@@ -121,10 +121,10 @@ Widget::Widget(QWidget *parent) :
 
 }
 
-/*
-  * 快排，用于车票链表排序
-  * 传入参数：l=0，r数据数量减1
-  * 返回值：无
+/**
+  * @brief 快排，用于车票链表排序
+  * @param l=0，r数据数量减1
+  * @retval 无
   */
 void Widget::ticketlist_sort(int l , int r)
 {
@@ -145,10 +145,10 @@ void Widget::ticketlist_sort(int l , int r)
     ticketlist_sort(j + 1 , r);
 }
 
-/*
-  * 将车票，用户数据读入链表中
-  * 传入参数：无
-  * 返回值：无
+/**
+  * @brief 将车票，用户数据读入链表中
+  * @param 无
+  * @retval 无
   */
 void Widget::loadingticketdata()
 {
@@ -196,10 +196,10 @@ void Widget::loadingticketdata()
     ticketlist_sort(0,ticketlist.size()-1);
 }
 
-/*
-  * 将用户信息读入链表
-  * 传入参数：无
-  * 返回值：无
+/**
+  * @brief 将用户信息读入链表
+  * @param 无
+  * @retval 无
   */
 void Widget::loadinguserdata()
 {
@@ -285,10 +285,10 @@ void Widget::loadinguserdata()
 
 }
 
-/*
-  * 在列车列表显示单个车票数据
-  * 传入参数： it一个车票
-  * 返回值：无
+/**
+  * @brief 在列车列表显示单个车票数据
+  * @param it一个车票
+  * @retval 无
   */
 void Widget::setticketWidgetsingleticket(const ticket& it)
 {
@@ -303,10 +303,10 @@ void Widget::setticketWidgetsingleticket(const ticket& it)
     ui->ticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it.price)));//显示车票价格
 }
 
-/*
-  * 在查询列车列表显示单个车票数据
-  * 传入参数： it一个车票
-  * 返回值：无
+/**
+  * @brief 在查询列车列表显示单个车票数据
+  * @param it一个车票
+  * @retval 无
   */
 void Widget::setsearchticketWidgetsingleticket(const ticket& it)
 {
@@ -321,10 +321,10 @@ void Widget::setsearchticketWidgetsingleticket(const ticket& it)
     ui->searchticketWidget->setItem(rowcont,6,new QTableWidgetItem(QString::number(it.price)));//显示车票价格
 }
 
-/*
-  * 显示车票数据
-  * 传入参数：ticketlist车票信息链表
-  * 返回值：无
+/**
+  * @brief 显示车票数据
+  * @param ticketlist车票信息链表
+  * @retval 无
   */
 void Widget::setticketdata(const QList<ticket>&ticketlist)
 {
@@ -343,10 +343,10 @@ void Widget::setticketdata(const QList<ticket>&ticketlist)
 
 }
 
-/*
-  * 显示用户信息
-  * 传入参数：userlist用户链表
-  * 返回值：无
+/**
+  * @brief 显示用户信息
+  * @param userlist用户链表
+  * @retval 无
   */
 void Widget::setuserdata(const QList<user>&)
 {
@@ -379,10 +379,10 @@ void Widget::setuserdata(const QList<user>&)
 }
 
 
-/*
-  * 列车信息列表按钮功能的实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 列车信息列表按钮功能的实现
+  * @param 无
+  * @retval 无
   */
 void Widget::on_ticketList_clicked()
 {
@@ -406,10 +406,10 @@ void Widget::on_ticketList_clicked()
     setticketdata(ticketlist);
 }
 
-/*
-  * 用户信息列表
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 用户信息列表
+  * @param 无
+  * @retval 无
   */
 void Widget::on_userList_clicked()
 {
@@ -429,10 +429,10 @@ void Widget::on_userList_clicked()
     setuserdata(userlist);
 }
 
-/*
-  * 添加用户按钮
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 添加用户按钮
+  * @param 无
+  * @retval 无
   */
 void Widget::on_adduserButton_clicked()
 {
@@ -494,10 +494,10 @@ void Widget::on_adduserButton_clicked()
 
 }
 
-/*
-  * 添加列车信息按钮功能的实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 添加列车信息按钮功能的实现
+  * @param 无
+  * @retval 无
   */
 void Widget::on_addticketButton_clicked()
 {
@@ -561,10 +561,10 @@ void Widget::on_addticketButton_clicked()
     saveticket();
 }
 
-/*
-  * 在列车信息列表右键单击时触发，显示菜单
-  * 传入参数： pos点坐标
-  * 返回值：无
+/**
+  * @brief 在列车信息列表右键单击时触发，显示菜单
+  * @param pos点坐标
+  * @retval 无
   */
 void Widget::RightClickSlot(QPoint pos)
 {
@@ -579,10 +579,10 @@ void Widget::RightClickSlot(QPoint pos)
 
 }
 
-/*
-  * 在列车信息列表右键单击时判断是否删除
-  * 传入参数： act鼠标单击事件
-  * 返回值：无
+/**
+  * @brief 在列车信息列表右键单击时判断是否删除
+  * @param act鼠标单击事件
+  * @retval 无
   */
 void Widget::RightClickDelete(QAction *act)
 {
@@ -633,10 +633,10 @@ void Widget::RightClickDelete(QAction *act)
     saveuser();
 }
 
-/*
-  * 查询车票按钮功能的实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 查询车票按钮功能的实现
+  * @param 无
+  * @retval 无
   */
 void Widget::on_searchticketbtn_clicked()
 {
@@ -752,10 +752,10 @@ void Widget::on_searchticketbtn_clicked()
     }
 }
 
-/*
-  * 查询用户按钮功能的实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 查询用户按钮功能的实现
+  * @param 无
+  * @retval 无
   */
 void Widget::on_searchuserbtn_clicked()
 {
@@ -791,10 +791,10 @@ void Widget::on_searchuserbtn_clicked()
     }
 }
 
-/*
-  * 修改列车信息按钮功能的实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 修改列车信息按钮功能的实现
+  * @param 无
+  * @retval 无
   */
 void Widget::on_changeticketbtn_clicked()
 {
@@ -889,10 +889,10 @@ void Widget::on_changeticketbtn_clicked()
     }
 }
 
-/*
-  * 时钟功能的实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 时钟功能的实现
+  * @param 无
+  * @retval 无
   */
 void Widget::timerUpdate()
 {
@@ -902,10 +902,10 @@ void Widget::timerUpdate()
     ui->TimeLabel->setText(s); //屏显
 }
 
-/*
-  * 保存车票修改功能实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 保存车票修改功能实现
+  * @param 无
+  * @retval 无
   */
 void Widget::saveticket()
 {
@@ -928,10 +928,10 @@ void Widget::saveticket()
     //关闭文件
     fticket.close();
 }
-/*
-  * 保存用户修改功能实现
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 保存用户修改功能实现
+  * @param 无
+  * @retval 无
   */
 void Widget::saveuser()
 {
@@ -972,10 +972,10 @@ void Widget::saveuser()
     fuser.close();
 
 }
-/*
-  * 退出功能
-  * 传入参数： 无
-  * 返回值：无
+/**
+  * @brief 退出功能
+  * @param 无
+  * @retval 无
   */
 void Widget::on_Exit_clicked()
 {
