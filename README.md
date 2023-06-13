@@ -284,20 +284,10 @@ public slots:
     //计时器
     void timerUpdate();
 };
-
 ```
 
 ```
 chgdialog.h
-#ifndef CHGPDDIALOG_H
-#define CHGPDDIALOG_H
-
-#include <QWidget>
-
-namespace Ui {
-class chgpdDialog;
-}
-
 class chgpdDialog : public QWidget
 {
     Q_OBJECT
@@ -324,18 +314,10 @@ private:
     QPoint reltvPos; // 相对坐标
     bool m_bMove; // 是否移动
 };
-
-#endif // CHGPDDIALOG_H
 ```
 
 ```
 logindialog.h
-#ifndef LOGINDIALOG_H
-#define LOGINDIALOG_H
-
-#include <QString>
-
-
 class LoginDialog
 {
 public:
@@ -343,19 +325,10 @@ public:
 public:
     LoginDialog();//默认构造函数
 };
-
-#endif // LOGINDIALOG_H
-
 ```
 
 ```
 md5.h
-#ifndef MD5_H
-#define MD5_H
-
-#include <string>
-using std::string;
-
 class md5
 {
 public:
@@ -374,22 +347,10 @@ public:
     然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。*/
     string getMD5(string source);
 };
-
-#endif // MD5_H
-
 ```
 
 ```
 regdialog.h
-#ifndef REGDIALOG_H
-#define REGDIALOG_H
-
-#include <QWidget>
-
-namespace Ui {
-class RegDialog;
-}
-
 class RegDialog : public QWidget
 {
     Q_OBJECT
@@ -416,20 +377,10 @@ private:
     QPoint reltvPos; // 相对坐标
     bool m_bMove; // 是否移动
 };
-
-#endif // REGDIALOG_H
-
 ```
 
 ```
 user_crl.h
-#ifndef USER_CRL_H
-#define USER_CRL_H
-
-#include <user.h>
-#include <QList>
-#include <QString>
-
 class user_Crl
 {
     QList<user> userList;//创建一个用户链表，用于存储每一个用户的信息
@@ -444,26 +395,10 @@ public:
     bool checkUser_Account(QString account);//检查账号是否已经存在
     bool checkUser_OP(QString ac);//根据用户的账号返回该用户的权限
 };
-
-#endif // USER_CRL_H
-
 ```
 
 ```
 mainwindow.h
-#ifndef _MAINWINDOWH_H
-#define _MAINWINDOWH_H
-
-#include <QMainWindow>
-#include <QTimer>
-#include <QMouseEvent>
-#include <QGraphicsDropShadowEffect>
-#include <QDebug>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class framelessWidget; }
-QT_END_NAMESPACE
-
 class framelessWidget : public QWidget
 {
     Q_OBJECT
@@ -506,8 +441,6 @@ private slots:
     void on_btn_chg_clicked();//修改密码按钮
 
 };
-#endif // _MAINWINDOWH_H
-
 ```
 
 ### 调用关系
