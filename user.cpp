@@ -2,43 +2,76 @@
 #include <QDebug>
 #include "ticket.h"
 
+/**
+  * @brief  默认构造函数，新建一个用户
+  * @param  parent父级窗口
+  * @retval 无
+  */
 user::user()
 {
 
 }
 
-//带参构造函数，根据提供的数据来生成对应用户
+/**
+  * @brief  带参构造函数，根据提供的数据来生成对应用户
+  * @param  ac 用户账号
+  * @param  psd 用户密码
+  * @param  gd 用户性别
+  * @param  nm 用户姓名
+  * @param  op 用户权限
+  * @retval 无
+  */
 user::user(QString ac, QString psd, bool gd, QString nm, bool op)
     : account(ac) , password(psd) , gender(gd) , name(nm) , Over_Power(op)
 {
 
 }
 
-//将用户账号设置为ac
+/**
+  * @brief  将用户账号设置为ac
+  * @param  ac 用户账号
+  * @retval 无
+  */
 void user::setAccount(QString ac)
 {
     account = ac;
 }
 
-//将用户密码设置为ps
+/**
+  * @brief  将用户密码设置为ps
+  * @param  ps 用户密码
+  * @retval 无
+  */
 void user::setPassword(QString ps)
 {
     password = ps;
 }
 
-//将用户性别设置为gd
+/**
+  * @brief  将用户性别设置为gd
+  * @param  gd 用户性别
+  * @retval 无
+  */
 void user::setGender(bool gd)
 {
     gender = gd;
 }
 
-//将用户名设置为nm
+/**
+  * @brief  将用户名设置为nm
+  * @param  nm 用户姓名
+  * @retval 无
+  */
 void user::setName(QString nm)
 {
     name = nm;
 }
 
-//将用户权限设置为op
+/**
+  * @brief  将用户权限设置为op
+  * @param  op 用户权限
+  * @retval 无
+  */
 void user::setOP(bool op)
 {
     Over_Power = op;

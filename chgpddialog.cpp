@@ -8,6 +8,11 @@
 
 using std::string;
 
+/**
+  * @brief  绘制一个带边框的窗口
+  * @param  event 当前绘制事件
+  * @retval 无
+  */
 void chgpdDialog::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -17,6 +22,11 @@ void chgpdDialog::paintEvent(QPaintEvent *event)
     painter.drawRect(rect().adjusted(0, 0, -1, -1));
 }
 
+/**
+  * @brief  构造函数，创建修改密码页面
+  * @param  parent父级窗口
+  * @retval 无
+  */
 chgpdDialog::chgpdDialog(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::chgpdDialog)
@@ -31,12 +41,21 @@ chgpdDialog::chgpdDialog(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint |Qt::WindowStaysOnTopHint);
 }
 
+/**
+  * @brief  析构函数，用于删除修改密码窗口
+  * @param  无
+  * @retval 无
+  */
 chgpdDialog::~chgpdDialog()
 {
     delete ui;
 }
 
-// 返回到mainwindow
+/**
+  * @brief  返回到mainwindow
+  * @param  无
+  * @retval 无
+  */
 void chgpdDialog::on_btn_back_clicked()
 {
     framelessWidget * mw = new framelessWidget();
@@ -46,7 +65,11 @@ void chgpdDialog::on_btn_back_clicked()
     this->hide();
 }
 
-// 确认修改密码
+/**
+  * @brief  确认修改密码
+  * @param  无
+  * @retval 无
+  */
 void chgpdDialog::on_btn_chg_clicked()
 {
     QString account = ui->L_Acount->text();
@@ -57,7 +80,11 @@ void chgpdDialog::on_btn_chg_clicked()
     uc->ChgUser(account , oldpsd , newpsd , renewpsd);
 }
 
-// 鼠标按下事件处理函数
+/**
+  * @brief  鼠标按下事件处理函数
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void chgpdDialog::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) // 左键按下
@@ -68,14 +95,23 @@ void chgpdDialog::mousePressEvent(QMouseEvent *event)
     return QWidget::mousePressEvent(event);
 }
 
-// 鼠标移动事件处理函数
+/**
+  * @brief  鼠标移动事件处理函数
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void chgpdDialog::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_bMove) move(event->globalPos() - reltvPos);
     return QWidget::mouseMoveEvent(event);
 }
 
-// 鼠标释放事件处理函数
+
+/**
+  * @brief  鼠标释放事件处理函数
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void chgpdDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     m_bMove = false; // 松开后要置为false

@@ -4,6 +4,11 @@
 #include "regdialog.h"
 #include "chgpddialog.h"
 
+/**
+  * @brief  默认构造函数，创建登录主页面
+  * @param  parent父级窗口
+  * @retval 无
+  */
 framelessWidget::framelessWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::framelessWidget)
@@ -65,12 +70,21 @@ framelessWidget::framelessWidget(QWidget *parent)
     });
 }
 
+/**
+  * @brief  析构函数，用于删除登陆主页面
+  * @param  无
+  * @retval 无
+  */
 framelessWidget::~framelessWidget()
 {
     delete ui;
 }
 
-/* 给centralwidget添加一个mainwidget，设置遮罩及遮挡锯齿边缘的board*/
+/**
+  * @brief  给centralwidget添加一个mainwidget，设置遮罩及遮挡锯齿边缘的board
+  * @param  无
+  * @retval 无
+  */
 void framelessWidget::Init()
 {
 // 获取遮罩的轮廓并给mainWidget设置遮罩
@@ -86,7 +100,11 @@ void framelessWidget::Init()
     ui->mainWidget->setStyleSheet(mainStyle);
 }
 
-// 鼠标按下事件(记录拉伸窗口或移动窗口时的起始坐标（左上角）)
+/**
+  * @brief  鼠标按下事件(记录拉伸窗口或移动窗口时的起始坐标（左上角）)
+  * @param  event鼠标事件
+  * @retval 无
+  */
 void framelessWidget::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
@@ -96,7 +114,11 @@ void framelessWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-// 鼠标移动事件
+/**
+  * @brief  鼠标移动事件
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void framelessWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if(event->buttons() == Qt::NoButton) // 如果鼠标按钮没有被按下
@@ -172,7 +194,11 @@ void framelessWidget::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-// 窗口变化事件
+/**
+  * @brief  鼠标移动事件
+  * @param  event 窗口事件
+  * @retval 无
+  */
 void framelessWidget::resizeEvent(QResizeEvent *event)
 {
     //边界变换大小
@@ -186,7 +212,11 @@ void framelessWidget::resizeEvent(QResizeEvent *event)
     ui->mainWidget->setMask(mask);
 }
 
-//点击最大化按钮事件
+/**
+  * @brief  点击最大化按钮事件
+  * @param  无
+  * @retval 无
+  */
 void framelessWidget::controlWindowScale()
 {
 #ifdef Q_OS_WIN
@@ -224,8 +254,11 @@ void framelessWidget::controlWindowScale()
 #endif
 }
 
-
-//登录按钮
+/**
+  * @brief  登录按钮
+  * @param  无
+  * @retval 无
+  */
 void framelessWidget::on_btn_login_clicked()
 {
     LoginDialog *Log = new LoginDialog();
@@ -244,7 +277,11 @@ void framelessWidget::on_btn_login_clicked()
     }
 }
 
-//注册按钮
+/**
+  * @brief  注册按钮
+  * @param  无
+  * @retval 无
+  */
 void framelessWidget::on_btn_reg_clicked()
 {
     RegDialog *reg = new RegDialog();
@@ -252,7 +289,11 @@ void framelessWidget::on_btn_reg_clicked()
     this->hide();
 }
 
-//修改密码按钮
+/**
+  * @brief  修改密码按钮
+  * @param  无
+  * @retval 无
+  */
 void framelessWidget::on_btn_chg_clicked()
 {
     chgpdDialog *chg = new chgpdDialog();
@@ -260,7 +301,11 @@ void framelessWidget::on_btn_chg_clicked()
     this->hide();
 }
 
-// 鼠标释放事件处理函数
+/**
+  * @brief  鼠标释放事件处理函数
+  * @param  鼠标事件
+  * @retval 无
+  */
 void framelessWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     mousePressed = false;
@@ -268,7 +313,11 @@ void framelessWidget::mouseReleaseEvent(QMouseEvent *event)
         controlWindowScale();
 }
 
-// 鼠标双击事件处理函数
+/**
+  * @brief  鼠标双击事件处理函数
+  * @param  鼠标事件
+  * @retval 无
+  */
 void framelessWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(event->y()<60)

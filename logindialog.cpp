@@ -6,7 +6,12 @@
 #include "widget.h"
 #include "widget_user.h"
 
-//用于进行登录的操作
+/**
+  * @brief  用于进行登录的操作
+  * @param  account 用户的账号
+  * @param password 用户的密码
+  * @retval 登陆成功返回1，登陆失败返回0
+  */
 bool LoginDialog::LoginUser(QString account, QString password)
 {
     bool flag = false;
@@ -55,7 +60,11 @@ bool LoginDialog::LoginUser(QString account, QString password)
     return flag;
 }
 
-//默认构造函数
+/**
+  * @brief  默认构造函数，用于登录功能
+  * @param  无
+  * @retval 无
+  */
 LoginDialog::LoginDialog()
 {
 

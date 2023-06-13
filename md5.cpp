@@ -43,6 +43,12 @@ const unsigned int s[]={7,12,17,22,7,12,17,22,7,12,17,22,7,
                           15,21,6,10,15,21,6,10,15,21,6,10,15,21};
 const char str16[]="0123456789abcdef";
 
+/**
+  * @brief  MD5主循环函数，用于处理每个512位的分组。
+            根据索引 i 的不同值，选择不同的运算方式，并更新临时变量。
+  * @param  M[] 用于存储当前处理的512位数据分组的内容
+  * @retval 无
+  */
 /*MD5主循环函数，用于处理每个512位的分组。
 根据索引 i 的不同值，选择不同的运算方式，并更新临时变量。*/
 void md5::mainLoop(unsigned int M[])
@@ -85,7 +91,11 @@ void md5::mainLoop(unsigned int M[])
     dtemp = d + dtemp;
 }
 
-//填充函数，将输入的字符串填充为64字节的整数倍，并添加长度信息。
+/**
+  * @brief  填充函数，将输入的字符串填充为64字节的整数倍，并添加长度信息。
+  * @param  str 输入的字符串
+  * @retval 指向填充后数据的动态数组的指针
+  */
 unsigned int* md5::add(string str)
 {
     unsigned int num = ((str.length() + 8) / 64) + 1; // 以512位,64个字节为一组
@@ -103,7 +113,11 @@ unsigned int* md5::add(string str)
     return strByte;
 }
 
-//将整数转换为16进制字符串表示。
+/**
+  * @brief  将整数转换为16进制字符串表示
+  * @param  a 待转换的整数
+  * @retval 转换后的16进制字符串
+  */
 string md5::changeHex(int a)
 {
     int b;
@@ -123,8 +137,12 @@ string md5::changeHex(int a)
     return str;
 }
 
-/*计算给定字符串的MD5哈希值。初始化临时变量并调用 add 函数对输入字符串进行填充，
-然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。*/
+/**
+  * @brief  计算给定字符串的MD5哈希值。初始化临时变量并调用 add 函数对输入字符串进行填充，
+            然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。
+  * @param  source 要计算MD5哈希值的输入字符串
+  * @retval 计算得到的MD5哈希值的16进制字符串表示
+  */
 string md5::getMD5(string source)
 {
     atemp = A; // 初始化
@@ -142,7 +160,11 @@ string md5::getMD5(string source)
     return changeHex(atemp).append(changeHex(btemp)).append(changeHex(ctemp)).append(changeHex(dtemp));
 }
 
-//构造函数，用于初始化类的成员变量
+/**
+  * @brief  构造函数，用于初始化类的成员变量
+  * @param  无
+  * @retval 无
+  */
 md5::md5()
 {
 

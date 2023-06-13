@@ -8,7 +8,11 @@
 
 using std::string;
 
-
+/**
+  * @brief  绘制一个带边框的窗口
+  * @param  event 当前绘制事件
+  * @retval 无
+  */
 void RegDialog::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -18,7 +22,11 @@ void RegDialog::paintEvent(QPaintEvent *event)
     painter.drawRect(rect().adjusted(0, 0, -1, -1));
 }
 
-//默认构造函数
+/**
+  * @brief  默认构造函数，创建注册用户页面
+  * @param  parent父级窗口
+  * @retval 无
+  */
 RegDialog::RegDialog(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RegDialog)
@@ -33,13 +41,21 @@ RegDialog::RegDialog(QWidget *parent) :
 
 }
 
-//默认析构函数
+/**
+  * @brief  析构函数，用于删除注册用户窗口
+  * @param  无
+  * @retval 无
+  */
 RegDialog::~RegDialog()
 {
     delete ui;
 }
 
-//用于性别选择，其中男性返回1，女性返回0，默认是男性
+/**
+  * @brief  用于性别选择
+  * @param  无
+  * @retval 男性返回1，女性返回0，默认是男性
+  */
 bool RegDialog::Gender_Choose()
 {
     if (ui->Rd_Female->isChecked())
@@ -51,7 +67,11 @@ bool RegDialog::Gender_Choose()
     return false;
 }
 
-//返回mainwindow
+/**
+  * @brief  返回到mainwindow
+  * @param  无
+  * @retval 无
+  */
 void RegDialog::on_Btn_Back_clicked()
 {
     framelessWidget * mw = new framelessWidget();
@@ -61,7 +81,11 @@ void RegDialog::on_Btn_Back_clicked()
     this->hide();
 }
 
-//注册用户
+/**
+  * @brief  注册用户
+  * @param  无
+  * @retval 无
+  */
 void RegDialog::on_Btn_Reg_clicked()
 {
     QString name = ui->L_Name->text();
@@ -75,7 +99,11 @@ void RegDialog::on_Btn_Reg_clicked()
     ui->L_pswd->clear();
 }
 
-//鼠标按下事件处理函数
+/**
+  * @brief  鼠标按下事件处理函数
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void RegDialog::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) // 左键按下
@@ -86,14 +114,22 @@ void RegDialog::mousePressEvent(QMouseEvent *event)
     return QWidget::mousePressEvent(event);
 }
 
-//鼠标移动事件处理函数
+/**
+  * @brief  鼠标移动事件处理函数
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void RegDialog::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_bMove) move(event->globalPos() - reltvPos);
     return QWidget::mouseMoveEvent(event);
 }
 
-//鼠标释放事件处理函数
+/**
+  * @brief  鼠标释放事件处理函数
+  * @param  event 鼠标事件
+  * @retval 无
+  */
 void RegDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     m_bMove = false; // 松开后要置为false
