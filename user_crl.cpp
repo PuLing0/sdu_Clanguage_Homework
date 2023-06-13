@@ -177,8 +177,14 @@ bool user_Crl::AddUser(QString ac, QString psd, bool gd, QString nm, bool op)
     return false;
 }
 
-
-//修改用户信息，用于修改密码
+/**
+  * @brief  修改用户信息，用于修改密码
+  * @param  ac 用户账号
+  * @param  oldpsd 用户旧密码
+  * @param  newpd 用户新密码
+  * @param  renewpd 用户重复输入的新密码
+  * @retval 修改密码成功返回1，注册失败返回0
+  */
 bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renewpd)
 {
     md5 m;
@@ -291,7 +297,12 @@ bool user_Crl::ChgUser(QString ac , QString oldpd , QString newpd, QString renew
     }
 }
 
-//用于用户登录
+/**
+  * @brief  用于用户登录
+  * @param  ac 用户账号
+  * @param  psd 用户密码
+  * @retval 用户登录成功返回1，注册失败返回0
+  */
 bool user_Crl::LoginUser(QString ac, QString psd)
 {
 //    qDebug() << "你的密码是："  << psd << Qt::endl << "这个密码加密之后是: " << _psd << Qt::endl;
@@ -307,8 +318,11 @@ bool user_Crl::LoginUser(QString ac, QString psd)
     }
 }
 
-
-//检查用户名是否已经存在，若存在返回true
+/**
+  * @brief  检查用户名是否已经存在
+  * @param  name 用户姓名
+  * @retval 若用户名存在返回true，不存在返回false
+  */
 bool user_Crl::checkUser_Name(QString name)
 {
     int l = 0 , r = userList.size() - 1;
@@ -323,6 +337,11 @@ bool user_Crl::checkUser_Name(QString name)
     return (userList[l].name == name);
 }
 
+/**
+  * @brief  检查账号是否已经存在
+  * @param  account 用户账号
+  * @retval 若用户账号存在返回true，不存在返回false
+  */
 //检查账号是否已经存在，若存在返回true
 bool user_Crl::checkUser_Account(QString account)
 {
@@ -339,7 +358,11 @@ bool user_Crl::checkUser_Account(QString account)
     return flag;
 }
 
-//根据用户的账号返回该用户的权限，若是管理员返回1，普通用户返回0
+/**
+  * @brief  根据用户的账号返回该用户的权限
+  * @param  ac 用户账号
+  * @retval 若是管理员返回1，普通用户返回0
+  */
 bool user_Crl::checkUser_OP(QString ac)
 {
     QList<user>::Iterator iter1;
@@ -359,7 +382,12 @@ bool user_Crl::checkUser_OP(QString ac)
     return false;//默认返回false
 }
 
-//快排，用于用户链表排序
+/**
+  * @brief  快排，用于用户链表排序
+  * @param  l 当前排序中链表的最左端
+  * @param  r 当前排序中链表的最右端
+  * @retval 无
+  */
 void user_Crl::userlist_sort(int l , int r)
 {
     if (l >= r) return;
@@ -379,6 +407,12 @@ void user_Crl::userlist_sort(int l , int r)
     userlist_sort(j + 1 , r);
 }
 
+/**
+  * @brief  验证用户是否存在以及密码是否正确，用于登录功能和修改密码的检验功能
+  * @param  account 用户账号
+  * @param  password 用户密码
+  * @retval 若账号及对应密码匹配返回1，不匹配返回0
+  */
 //验证用户是否存在以及密码是否正确，用于登录功能和修改密码的检验功能，正确返回1，错误返回0
 bool user_Crl::checkUser_Password(QString account, QString password)
 {
@@ -403,6 +437,12 @@ bool user_Crl::checkUser_Password(QString account, QString password)
     return flag;
 }
 
+/**
+  * @brief  用于检查这个用户的名字和账号是不是已经存在,用于注册功能
+  * @param  ac 用户账号
+  * @param  nm 用户名
+  * @retval 若二者都不存在返回1，否则返回0
+  */
 //用于检查这个用户的名字和账号是不是已经存在,用于注册功能，若不存在返回1，若存在返回0
 bool user_Crl::checkUser_Reg(QString ac, QString nm)
 {
