@@ -48,6 +48,11 @@ Widget_User::~Widget_User()
     delete ui;
 }
 
+/**
+  * @brief 设置当前用户
+  * @param 所设置用户
+  * @retval 无
+  */
 void Widget_User::setUser(user t)
 {
     /*设置当前用户*/
@@ -56,6 +61,11 @@ void Widget_User::setUser(user t)
     ui->label_4->setText("用户名:"+currentUser.getid()); //屏幕左上角显示用户名
 }
 
+/**
+  * @brief 查询按钮
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::on_pushButton_clicked()
 {
     /*查询按键*/
@@ -63,6 +73,11 @@ void Widget_User::on_pushButton_clicked()
     check(); //查询票据
 }
 
+/**
+  * @brief 读取票据文件
+  * @param 无
+  * @retval 是否读取成功
+  */
 bool Widget_User::read()
 {
     /*读取票据文件*/
@@ -95,11 +110,23 @@ bool Widget_User::read()
     }
 }
 
-void Widget_User::closeEvent(QCloseEvent *event){
+/**
+  * @brief 关闭窗口槽
+  * @param event 关闭窗口信号
+  * @retval 无
+  */
+void Widget_User::closeEvent(QCloseEvent *event)
+{
+    /*关闭窗口槽*/
     updateTicketData();
     save();
 }
 
+/**
+  * @brief 读取用户已购票据
+  * @param 无
+  * @retval 是否读取成功
+  */
 bool Widget_User::readUsertickets()
 {
     /*读取用户已购票据*/
@@ -132,7 +159,11 @@ bool Widget_User::readUsertickets()
     }
 }
 
-
+/**
+  * @brief 查询票据实现
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::check()
 {
     /*查询票据实现*/
@@ -191,6 +222,11 @@ void Widget_User::check()
     }
 }
 
+/**
+  * @brief 刷新列表
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::tableUpdate()
 {
     /*刷新列表*/
@@ -199,6 +235,11 @@ void Widget_User::tableUpdate()
     ui->label_7->setText("列表已更新");
 }
 
+/**
+  * @brief 购买、改签实现
+  * @param row 双击单元格所在行 column 双击单元格所在列
+  * @retval 无
+  */
 void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
 {
     /*购买、改签实现*/
@@ -254,6 +295,11 @@ void Widget_User::on_tableWidget_cellDoubleClicked(int row, int column)
     }
 }
 
+/**
+  * @brief 个人中心按钮
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::on_pushButton_3_clicked()
 {
     /*个人中心按钮*/
@@ -272,6 +318,11 @@ void Widget_User::on_pushButton_3_clicked()
     }
 }
 
+/**
+  * @brief 退出登录按钮
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::on_pushButton_4_clicked()
 {
     /*退出登录按钮*/
@@ -280,6 +331,11 @@ void Widget_User::on_pushButton_4_clicked()
     close();
 }
 
+/**
+  * @brief 保存用户购买票据
+  * @param 无
+  * @retval 是否保存成功
+  */
 bool Widget_User::save()
 {
     /*保存用户购买票据*/
@@ -308,6 +364,12 @@ bool Widget_User::save()
         return false;
     }
 }
+
+/**
+  * @brief 更新票据记录文件
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::updateTicketData()
 {
     /*更新票据记录文件*/
@@ -327,6 +389,11 @@ void Widget_User::updateTicketData()
     }
 }
 
+/**
+  * @brief 窗口间传ticket实现
+  * @param m 当前状态 a 所改/退票据
+  * @retval 无
+  */
 void Widget_User::get(bool m, ticket a)
 {
     /*窗口间传ticket实现*/
@@ -345,6 +412,11 @@ void Widget_User::get(bool m, ticket a)
     }
 }
 
+/**
+  * @brief 退票实现
+  * @param a 所退票据
+  * @retval 是否退票成功
+  */
 bool Widget_User::refund(ticket a)
 {
     /*退票实现*/
@@ -364,6 +436,11 @@ bool Widget_User::refund(ticket a)
     }
 }
 
+/**
+  * @brief 时钟实现
+  * @param 无
+  * @retval 无
+  */
 void Widget_User::timerUpdate()
 {
     /*时钟实现*/
