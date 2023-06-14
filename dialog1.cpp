@@ -26,6 +26,11 @@ dialog1::~dialog1()
     delete ui;
 }
 
+/**
+  * @brief 设置当前用户
+  * @param 所设置的用户
+  * @retval 无
+  */
 void dialog1::setUser(user t)
 {
     /*设置当前用户*/
@@ -34,9 +39,14 @@ void dialog1::setUser(user t)
     ui->label->setText("用户名：" + currentUser.getid()); //窗口左上角显示用户名
 }
 
+/**
+  * @brief 改签退票槽
+  * @param row 双击单元格所在行 column 双击单元格所在列
+  * @retval 无
+  */
 void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
 {
-    /*改签退票信号*/
+    /*改签退票槽*/
     if(column == 8)
     { //若双击改签单元格
         ticket t;
@@ -68,6 +78,11 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column)
     }
 }
 
+/**
+  * @brief 已购买票据查询按钮
+  * @param 无
+  * @retval 无
+  */
 void dialog1::on_pushButton_clicked()
 {
     /*已购买票据查询按钮*/
@@ -104,6 +119,11 @@ void dialog1::on_pushButton_clicked()
     }
 }
 
+/**
+  * @brief 退出按钮
+  * @param 无
+  * @retval 无
+  */
 void dialog1::on_pushButton_2_clicked()
 {
     /*退出按钮*/
