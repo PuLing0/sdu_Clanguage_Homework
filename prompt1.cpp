@@ -17,11 +17,22 @@ prompt1::~prompt1()
     delete ui;
 }
 
+/**
+  * @brief 确定按钮
+  * @param 无
+  * @retval 无
+  */
 void prompt1::on_pushButton_clicked()
 {
+    /*确定按钮*/
     this->close();
 }
 
+/**
+  * @brief 设置提示框文本
+  * @param 所设置文本
+  * @retval 无
+  */
 void prompt1::setText(QString a){
     /*设置提示框文本*/
     ui->textEdit->setText(a);
