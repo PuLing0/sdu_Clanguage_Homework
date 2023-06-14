@@ -71,6 +71,9 @@ public:
     int amount;//车票数
     double price;//车票价格
 };
+```
+
+```
 class user
 {
 public:
@@ -79,7 +82,7 @@ public:
     bool gender;//用户性别，1是男性，2是女性
     QString name;//用户名
     bool Over_Power;//用户权限，1是管理员，2是普通用户
-    QList<ticket> tickets;
+    QList<ticket> tickets;//用来装载用户的车票数据
 };
 
 ```
@@ -134,8 +137,11 @@ private slots:
 protected:
     void closeEvent(QCloseEvent *event); //关闭窗口动作
 };
+```
 
-class user{
+```
+class user
+{
     user();//默认构造函数
     user(QString ac , QString psd , bool gd , QString nm , bool op );//带参构造函数，根据提供的数据来生成对应用户
     void setAccount(QString ac);//将用户账号设置为ac
@@ -151,18 +157,19 @@ class user{
     QList<ticket> getTickets() const; //获取用户已购票据
     void setTickets(QList<ticket> t); //设置用户已购票据
 };
+```
+
+```
 ticket.h
 class ticket
 {
 public:
     ticket();//构造函数
-    bool operator ==(const ticket l)
-    {
-        /*判断两票相同与否*/
-        if(id == l.id) return true;
-        return false;
-    }
+    bool operator ==(const ticket l)；//判断两票相同与否
 };
+```
+
+```
 class dialog1
 {
     public:
@@ -179,6 +186,7 @@ private slots:
     void on_pushButton_2_clicked(); //退出按钮
 }
 ```
+
 ```
 adduserdialog.h
 class adduserdialog
@@ -187,12 +195,11 @@ public:
     ~adduserdialog();
 
     bool Gender_Choose();//用于性别选择，其中男性返回1，女性返回0，默认是男性
-    bool gender;//用户性别，1是男性，2是女性
-    bool Over_Power;//用户权限，1是管理员，2是普通用户
 
 public slots:
     void btnclicked();//记录注册按钮的点击
 };
+
 ```
 ```
 changeticketdialog.h
@@ -214,9 +221,9 @@ public:
     QString getfinprice();//获取想要修改的列车的改后的车价
     
     void changebtnclicked();//修改按钮按下时触发
-    int flap;//记录是否为修改按钮按下
 };
 ```
+
 ```
 dialogaddticket.h
 class dialogaddticket
@@ -236,6 +243,7 @@ public slots:
     void saveclicked();//保存按钮按下式触发
 };
 ```
+
 ```
 Widget.h
 class Widget
@@ -284,24 +292,12 @@ public slots:
     //计时器
     void timerUpdate();
 };
-
 ```
 
 ```
 chgdialog.h
-#ifndef CHGPDDIALOG_H
-#define CHGPDDIALOG_H
-
-#include <QWidget>
-
-namespace Ui {
-class chgpdDialog;
-}
-
 class chgpdDialog : public QWidget
 {
-    Q_OBJECT
-
 public:
     explicit chgpdDialog(QWidget *parent = nullptr);//构造函数
     ~chgpdDialog();//析构函数
@@ -318,24 +314,11 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-
-private:
-    Ui::chgpdDialog *ui;
-    QPoint reltvPos; // 相对坐标
-    bool m_bMove; // 是否移动
 };
-
-#endif // CHGPDDIALOG_H
 ```
 
 ```
 logindialog.h
-#ifndef LOGINDIALOG_H
-#define LOGINDIALOG_H
-
-#include <QString>
-
-
 class LoginDialog
 {
 public:
@@ -343,19 +326,10 @@ public:
 public:
     LoginDialog();//默认构造函数
 };
-
-#endif // LOGINDIALOG_H
-
 ```
 
 ```
 md5.h
-#ifndef MD5_H
-#define MD5_H
-
-#include <string>
-using std::string;
-
 class md5
 {
 public:
@@ -374,26 +348,12 @@ public:
     然后通过 mainLoop 处理每个512位分组，最后将结果转换为16进制字符串形式并返回。*/
     string getMD5(string source);
 };
-
-#endif // MD5_H
-
 ```
 
 ```
 regdialog.h
-#ifndef REGDIALOG_H
-#define REGDIALOG_H
-
-#include <QWidget>
-
-namespace Ui {
-class RegDialog;
-}
-
 class RegDialog : public QWidget
 {
-    Q_OBJECT
-
 public:
     explicit RegDialog(QWidget *parent = nullptr);//默认构造函数
     ~RegDialog();//默认析构函数
@@ -410,29 +370,13 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;// 鼠标按下事件处理函数
     void mouseMoveEvent(QMouseEvent *event) override; // 鼠标移动事件处理函数
     void mouseReleaseEvent(QMouseEvent *event) override;// 鼠标释放事件处理函数
-
-private:
-    Ui::RegDialog *ui;
-    QPoint reltvPos; // 相对坐标
-    bool m_bMove; // 是否移动
 };
-
-#endif // REGDIALOG_H
-
 ```
 
 ```
 user_crl.h
-#ifndef USER_CRL_H
-#define USER_CRL_H
-
-#include <user.h>
-#include <QList>
-#include <QString>
-
 class user_Crl
 {
-    QList<user> userList;//创建一个用户链表，用于存储每一个用户的信息
 public:
     user_Crl();//默认构造函数，用于用户链表的初始化，将文件中的内容导入链表
     bool AddUser(QString ac , QString psd , bool gd , QString nm , bool op);//添加一个新用户，用于注册功能
@@ -444,48 +388,17 @@ public:
     bool checkUser_Account(QString account);//检查账号是否已经存在
     bool checkUser_OP(QString ac);//根据用户的账号返回该用户的权限
 };
-
-#endif // USER_CRL_H
-
 ```
 
 ```
 mainwindow.h
-#ifndef _MAINWINDOWH_H
-#define _MAINWINDOWH_H
-
-#include <QMainWindow>
-#include <QTimer>
-#include <QMouseEvent>
-#include <QGraphicsDropShadowEffect>
-#include <QDebug>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class framelessWidget; }
-QT_END_NAMESPACE
-
 class framelessWidget : public QWidget
 {
-    Q_OBJECT
-
 public:
     framelessWidget(QWidget *parent = nullptr);
     ~framelessWidget();
 
 private:
-    Ui::framelessWidget *ui;
-    int cornerRadius = 20;// 窗口圆角半径
-    QPoint lastPos; // 上次鼠标位置
-    QWidget *border = nullptr;// 窗口边框
-    QGraphicsDropShadowEffect *windowShadow; // 窗口阴影效果
-
-    bool mousePressed = false;// 鼠标按下标志位
-    //鼠标状态
-    enum {AT_LEFT = 1, AT_TOP = 2,  AT_RIGHT = 4, AT_BOTTOM = 8,
-          AT_TOP_LEFT = 3, AT_TOP_RIGHT = 6, AT_BOTTOM_LEFT = 9, AT_BOTTOM_RIGHT = 12};
-    int mouseState;// 当前鼠标状态
-    bool maximized = false;// 窗口最大化标志位
-
     void Init();// 给centralwidget添加一个mainwidget，设置遮罩及遮挡锯齿边缘的board
     void mousePressEvent(QMouseEvent *event);// 鼠标按下事件(记录拉伸窗口或移动窗口时的起始坐标（左上角）)
     void mouseMoveEvent(QMouseEvent *event);// 鼠标移动事件处理函数
@@ -506,8 +419,6 @@ private slots:
     void on_btn_chg_clicked();//修改密码按钮
 
 };
-#endif // _MAINWINDOWH_H
-
 ```
 
 ### 调用关系
@@ -546,6 +457,7 @@ bool Widget_User::refund(ticket a):
     currentUser.refund(a)
     void Widget_User::tableUpdate()
 ```
+
 ```
 dialog1.cpp
 void dialog1::setUser(user t):
@@ -554,6 +466,7 @@ void dialog1::on_tableWidget_2_cellDoubleClicked(int row, int column):
     void dialog1::send(bool mode, ticket a)
     void dialog1::on_pushButton_clicked()
 ```
+
 ```
 adduserdialog.cpp
 adduserdialog::adduserdialog(QWidget *parent):
@@ -561,16 +474,19 @@ adduserdialog::adduserdialog(QWidget *parent):
 void adduserdialog::btnclicked():
     bool adduserdialog::Gender_Choose()
 ```
+
 ```
 changeticketdialog.cpp
 changeticketdialog::changeticketdialog(QWidget *parent):
     void changeticketdialog::changebtnclicked()
 ```
+
 ```
 dialogaddticket.cpp
 dialogaddticket::dialogaddticket(QWidget *parent):
     void dialogaddticket::saveclicked()
 ```
+
 ```
 widget.cpp
 Widget::Widget(QWidget *parent):
@@ -676,7 +592,7 @@ void on_Btn_Reg_clicked();//注册用户
 - 查找：使用的二分查找进行查找，由于对用户的名字进行了排序，因此在用户登录时对用户信息的搜索使用了二分查找，能够提高登录查找数据的效率。
     详见函数:`bool user_Crl::checkUser_Name(QString name)`<br>
 - 插入：基于二分查找，找到对应的位置进行插入用户信息，提高了运行的效率，降低了时间复杂度。
-    
+  
 #### 管理员系统
 - 查找：通过遍历链表查找对应的用户，车票
 - 插入：将新增的车票信息按照开车时间升序插入到链表中
@@ -782,36 +698,16 @@ void on_Btn_Reg_clicked();//注册用户
 |chenshuocheng|chenshuocheng|chenshuocheng|男|普通用户|
 
 ### 可查询票据记录
-#### 查询实例1：2023-07-11 北京-上海
-|车次|发站|到站|出发日期|出发时间|到达日期|到达时间|车票剩余数量|票价|
-|-----|----|----|-----------|-----|-----------|-----|----|----|
-|D2023|北京|上海|2023-07-11|07:37|2023-07-11|09:32|2|250.00|
-|D2231|北京|上海|2023-07-11|07:43|2023-07-11|09:23|2|251.00|
-|G213|北京|上海|2023-07-11|15:55|2023-07-11|20:33|2|252.00|
-|L21|北京|上海|2023-07-11|05:19|2023-07-11|08:43|2|253.00|
-|T21|北京|上海|2023-07-11|11:40|2023-07-11|16:02|2|254.00|
-|A380|北京|上海|2023-07-11|20:15|2023-07-11|22:14|2|255.00|
-|M231|北京|上海|2023-07-11|21:01|2023-07-11|23:09|2|256.00|
-|G9094|北京|上海|2023-07-11|10:49|2023-07-11|13:11|2|257.00|
-|N1023|北京|上海|2023-07-11|13:47|2023-07-11|14:21|2|258.00|
-|D2139|北京|上海|2023-07-11|01:39|2023-07-11|03:26|2|259.00|
-|D1413|北京|上海|2023-07-11|16:43|2023-07-11|18:10|2|290.00|
-|K1493|北京|上海|2023-07-11|10:35|2023-07-11|12:01|2|221.00|
-|K1432|北京|上海|2023-07-11|13:17|2023-07-11|16:21|2|243.00|
-|K879|北京|上海|2023-07-11|20:30|2023-07-11|21:44|2|254.00|
-|Z2391|北京|上海|2023-07-11|21:14|2023-07-11|22:10|2|267.00|
-|UFO|北京|上海|2023-07-11|00:00|2023-07-11|00:01|0|2686.00|
 
-#### 查询实例2：2023-07-11 hn hb
-|车次|发站|到站|出发日期|出发时间|到达日期|到达时间|车票剩余数量|票价|
+#### 查询实例：2023-07-11 德州 莫斯科
+
+|车次|发站|到站|出发日期|出发时间|到达日期|到达时间|车票总量|票价|
 |-----|----|----|-----------|-----|-----------|-----|----|----|
-|k123|德州|莫斯科|2023-07-11|15:00|2023-07-11|16:00|32|200.00|
 |g20|德州|莫斯科|2023-07-11|10:00|2023-07-11|15:00|32|200.00|
 |g099|德州|莫斯科|2023-07-11|13:00|2023-07-11|14:00|32|200.00|
 |k011|德州|莫斯科|2023-07-11|01:00|2023-07-11|09:00|32|200.00|
 |g9000|德州|莫斯科|2023-07-11|12:00|2023-07-11|15:00|32|200.00|
 |g2999|德州|莫斯科|2023-07-11|19:00|2023-07-11|23:00|32|200.00|
-|g16|德州|莫斯科|2023-07-11|16:00|2023-07-11|20:00|32|200.00|
 |g800|德州|莫斯科|2023-07-11|12:00|2023-07-11|19:00|32|200.00|
 |g009|德州|莫斯科|2023-07-11|08:00|2023-07-11|10:00|32|200.00|
 |y9000|德州|莫斯科|2023-07-11|03:00|2023-07-11|23:00|32|200.00|
@@ -819,25 +715,12 @@ void on_Btn_Reg_clicked();//注册用户
 |g231|德州|莫斯科|2023-07-11|12:00|2023-07-11|15:00|32|200.00|
 |d1345|德州|莫斯科|2023-07-11|22:14|2023-07-11|22:14|2|233.00|
 
+** 备注：**账户里某些用户已经购买车票，这里的车票总量是指车票余量和用户购买车票的和
+
 #### 票据总览
+
 |车次|发站|到站|出发日期|出发时间|到达日期|到达时间|车票剩余数量|票价|
 |-----|----|----|-----------|-----|-----------|-----|----|----|
-|D2023|北京|上海|2023-07-11|07:37|2023-07-11|09:32|2|250.00|
-|D2231|北京|上海|2023-07-11|07:43|2023-07-11|09:23|2|251.00|
-|G213|北京|上海|2023-07-11|15:55|2023-07-11|20:33|2|252.00|
-|L21|北京|上海|2023-07-11|05:19|2023-07-11|08:43|2|253.00|
-|T21|北京|上海|2023-07-11|11:40|2023-07-11|16:02|2|254.00|
-|A380|北京|上海|2023-07-11|20:15|2023-07-11|22:14|2|255.00|
-|M231|北京|上海|2023-07-11|21:01|2023-07-11|23:09|2|256.00|
-|G9094|北京|上海|2023-07-11|10:49|2023-07-11|13:11|2|257.00|
-|N1023|北京|上海|2023-07-11|13:47|2023-07-11|14:21|2|258.00|
-|D2139|北京|上海|2023-07-11|01:39|2023-07-11|03:26|2|259.00|
-|D1413|北京|上海|2023-07-11|16:43|2023-07-11|18:10|2|290.00|
-|K1493|北京|上海|2023-07-11|10:35|2023-07-11|12:01|2|221.00|
-|K1432|北京|上海|2023-07-11|13:17|2023-07-11|16:21|2|243.00|
-|K879|北京|上海|2023-07-11|20:30|2023-07-11|21:44|2|254.00|
-|Z2391|北京|上海|2023-07-11|21:14|2023-07-11|22:10|2|267.00|
-|UFO|北京|上海|2023-07-11|00:00|2023-07-11|00:01|0|2686.00|
 |T951|成都|北京|2023-07-27|12:10|2023-07-27|20:25|1|9.00|
 |K114|长沙|上海|2023-07-31|07:40|2023-07-31|14:15|4|6.00|
 |G831|北京|广州|2023-08-03|19:25|2023-08-04|05:40|3|5.00|
@@ -1048,13 +931,11 @@ void on_Btn_Reg_clicked();//注册用户
 |T763|成都|长沙|2025-12-30|09:30|2025-12-30|16:50|5|9.00|
 |K876|上海|广州|2026-01-03|08:45|2026-01-03|16:05|3|7.00|
 |G543|长沙|成都|2026-01-07|18:00|2026-01-08|01:20|1|5.00|
-|k123|德州|莫斯科|2023-07-11|15:00|2023-07-11|16:00|32|200.00|
 |g20|德州|莫斯科|2023-07-11|10:00|2023-07-11|15:00|32|200.00|
 |g099|德州|莫斯科|2023-07-11|13:00|2023-07-11|14:00|32|200.00|
 |k011|德州|莫斯科|2023-07-11|01:00|2023-07-11|09:00|32|200.00|
 |g9000|德州|莫斯科|2023-07-11|12:00|2023-07-11|15:00|32|200.00|
 |g2999|德州|莫斯科|2023-07-11|19:00|2023-07-11|23:00|32|200.00|
-|g16|德州|莫斯科|2023-07-11|16:00|2023-07-11|20:00|32|200.00|
 |g800|德州|莫斯科|2023-07-11|12:00|2023-07-11|19:00|32|200.00|
 |g009|德州|莫斯科|2023-07-11|08:00|2023-07-11|10:00|32|200.00|
 |y9000|德州|莫斯科|2023-07-11|03:00|2023-07-11|23:00|32|200.00|
@@ -1064,29 +945,3 @@ void on_Btn_Reg_clicked();//注册用户
 
 ### 运行示例
 [演示视频](https://www.bilibili.com/video/BV1JN411k7jd/)
-1. 首先运行程序进入登录界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.png"><br>
-2. 点击注册用户并输入注册用户信息
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.1.png"><br>
-3. 输入刚才注册的用户信息并点击登录
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B1.2.png">
-4. 进入用户界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B2.png">
-5. 双击购买g800
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B2.1.png">
-6. 点击进入个人中心界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B3.png">
-7. 查询已购买票据
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B4.png">
-8. 双击改签返回购买界面
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B5.png">
-9. 双击改签选择要改的票据y9000
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B6.png">
-10. 再次进入个人中心界面查询
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B7.png">
-11. 双击退票
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B8.png">
-12. 返回购票界面查询
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B9.png">
-13. 关闭程序，再次打开时使用管理员账户
-   <img src="https://github.com/PuLing0/sdu_Clanguage_Homework/raw/master/Image/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B/%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B10.png">
