@@ -77,6 +77,11 @@ void user::setOP(bool op)
     Over_Power = op;
 }
 
+/**
+  * @brief  用户购票
+  * @param  a 所购票据
+  * @retval 是否购买成功
+  */
 bool user::buy(ticket a)
 {
     /*用户购票*/
@@ -92,6 +97,11 @@ bool user::buy(ticket a)
     }
 }
 
+/**
+  * @brief  获取用户已购票据
+  * @param  无
+  * @retval 用户已购票据列表
+  */
 QList<ticket> user::getTickets() const
 {
     /*获取用户已购票据*/
@@ -104,6 +114,11 @@ void user::setTickets(QList<ticket> t)
     tickets = t;
 }
 
+/**
+  * @brief  用户改签
+  * @param  a 用户所改票据，b 用户改后票据
+  * @retval 是否改签成功
+  */
 bool user::change(ticket a, ticket b)
 {
     /*用户改签*/
@@ -120,6 +135,11 @@ bool user::change(ticket a, ticket b)
     }
 }
 
+/**
+  * @brief  用户退票
+  * @param  a 用户所退票据
+  * @retval 是否退票成功
+  */
 bool user::refund(ticket a)
 {
     /*用户退票*/
@@ -134,6 +154,11 @@ bool user::refund(ticket a)
     }
 }
 
+/**
+  * @brief  获取用户名
+  * @param  无
+  * @retval 用户名
+  */
 QString user::getid() const
 {
     /*获取用户名*/
